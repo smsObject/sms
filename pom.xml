@@ -11,9 +11,11 @@
     <modules>
         <module>biz/sms-biz</module>
         <module>dal/sms-dal</module>
-        <module>web/sms-web</module>
+        <module>model/sms-model</module>
         <module>tools/sms-common</module>
         <module>tools/sms-deploy</module>
+        <module>web/sms-web</module>
     </modules>
+
 
 </project>
