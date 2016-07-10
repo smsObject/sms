@@ -12,5 +12,6 @@
 
     <artifactId>sms-dal</artifactId>
     <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
 
 </project>

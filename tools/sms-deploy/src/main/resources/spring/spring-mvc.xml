@@ -1,0 +1,82 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.1.xsd">
+
+    <aop:aspectj-autoproxy />
+    <context:component-scan base-package="com.sms.web.controllers" />
+    <!-- REST中根据URL后缀自动判定Content-Type及相应的View -->
+    <bean id="contentNegotiationManager"
+          class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <!-- 扩展名至mimeType的映射,即 /user.json => application/json -->
+        <property name="favorPathExtension" value="true" />
+        <!-- 用于开启 /userinfo/123?format=json 的支持 -->
+        <property name="favorParameter" value="false" />
+        <property name="parameterName" value="format" />
+        <!-- 是否忽略Accept Header -->
+        <property name="ignoreAcceptHeader" value="false" />
+        <property name="mediaTypes"> <!--扩展名到MIME的映射；favorPathExtension, favorParameter是true时起作用 -->
+            <value>
+                json=application/json
+                <!-- xml=application/xml -->
+                html=text/html
+            </value>
+        </property>
+        <!-- 默认的content type -->
+        <property name="defaultContentType" value="text/html" />
+    </bean>
+    <!-- 内容协商视图解析器；根据客户端不同的请求决定不同的view进行响应 -->
+    <!-- 会自动根据解析的contentType来决定使用哪个视图解析器（默认使用整个web应用中的viewResolver） -->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+        <property name="order" value="0" />
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="1"></property>
+        <!-- 内容协商管理器 用于决定media type -->
+        <property name="contentNegotiationManager" ref="contentNegotiationManager" />
+        <!-- 默认视图 放在解析链最后 -->
+        <property name="defaultViews">
+            <list>
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" >
+                    <property name="objectMapper">
+                        <bean class="com.fasterxml.jackson.databind.ObjectMapper">
+                            <property name="dateFormat">
+                                <bean class="java.text.SimpleDateFormat">
+                                    <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/>
+                                </bean>
+                            </property>
+                        </bean>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 设置上传文件的最大尺寸为5MB -->
+        <property name="defaultEncoding" value="UTF-8" />
+        <property name="maxUploadSize" value="10428800" />
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="order" value="1" />
+        <property name="prefix" value="/WEB-INF/views/html" />
+        <property name="suffix" value=".html" />
+    </bean>
+
+    <mvc:resources location="/WEB-INF/resources/js/" mapping="/resources/js/**" />
+    <mvc:resources location="/WEB-INF/resources/images/" mapping="/resources/images/**" />
+    <mvc:resources location="/WEB-INF/resources/css/" mapping="/resources/css/**" />
+    <mvc:resources location="/WEB-INF/resources/3rdparty/" mapping="/resources/3rdparty/**" />
+    <mvc:resources location="/WEB-INF/resources/build/" mapping="/resources/build/**" />
+
+    <task:annotation-driven executor="taskExecutor" />
+
+</beans>
