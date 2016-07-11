@@ -5,8 +5,7 @@
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans 
        	http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
-
-	<import resource="spring-beans.xml"/>
-	<import resource="spring-mvc.xml" />
-
+    
+		<import resource="spring-beans.xml" />
+		<import resource="spring-mvc.xml" />
 </beans>

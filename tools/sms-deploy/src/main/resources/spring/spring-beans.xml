@@ -15,48 +15,7 @@
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd"
 	   default-lazy-init="true">
 
-	<!-- 采用注释的方式配置bean -->
-	<context:annotation-config />
-
 	<!-- 配置文件位置 -->
 	<context:property-placeholder location="classpath:env/config.properties" />
-
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		  destroy-method="close">
-		<property name="driverClassName" value="${jdbc.driver}" />
-		<property name="url" value="${jdbc.url}" />
-		<property name="username" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
-	</bean>
-
-	<!-- 配置mybitasSqlSessionFactoryBean -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<!-- <property name="configLocation" value="classpath:mybatis.xml"></property> -->
-		<!-- <property name="mapperLocations" value="classpath*:cn/com/sinosoft/selfserver/dao/*.xml" /> -->
-	</bean>
-
-	<!-- 事务配置 -->
-	<bean id="transactionManager"
-		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-
-	<!-- 使用annotation注解方式配置事务 -->
-	<tx:annotation-driven transaction-manager="transactionManager" />
-
-	<!-- 配置mybatis扫描的路径 -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.sms.mapper;com.sms.dao" />
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-	</bean>
-
-	<!-- 配置spring扫描的路径 -->
-	<context:component-scan base-package="com.sms">
-		<context:exclude-filter type="annotation"
-								expression="org.springframework.stereotype.Controller" />
-		<context:exclude-filter type="annotation"
-								expression="org.springframework.web.bind.annotation.ControllerAdvice" />
-	</context:component-scan>
 
 </beans>

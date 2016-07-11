@@ -14,4 +14,12 @@
     <build>
         <finalName>sms-deploy</finalName>
     </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.hbh</groupId>
+            <artifactId>sms-web</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
