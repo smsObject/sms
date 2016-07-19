@@ -1,18 +1,12 @@
 package com.sms.sendservice.test;
 
-import com.sms.sendService.common.CyptoUtils;
-import com.sms.sendService.entity.Concentrator;
-import com.sms.sendService.entity.SendMessageData;
-import com.sms.sendService.impl.ReadMessageServiceImpl;
-import com.sms.sendService.impl.SendMessageServiceImpl;
-import org.apache.commons.codec.binary.Base64;
+import com.hbh.sms.model.entity.Concentrator;
+import com.hbh.sms.model.entity.SendMessageData;
+import com.hbh.sms.service.common.CyptoUtils;
+import com.hbh.sms.service.impl.ReadMessageServiceImpl;
+import com.hbh.sms.service.impl.SendMessageServiceImpl;
 import org.smslib.InboundMessage;
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.DESKeySpec;
-import java.security.Key;
-import java.security.SecureRandom;
+
 import java.util.List;
 
 /**
@@ -57,7 +51,5 @@ public class Test {
         System.out.println("加密后：" + encodeStr);
         System.out.println("解密后: " + CyptoUtils.decode(key, encodeStr));
     }
-
-
 
 }
