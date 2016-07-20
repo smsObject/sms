@@ -1,6 +1,5 @@
 package com.hbh.sms.service.meter;
 
-import com.hbh.sms.model.entity.Concentrator;
 import com.hbh.sms.model.entity.Meter;
 
 import java.util.List;

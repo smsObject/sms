@@ -5,9 +5,7 @@ import java.io.Serializable;
 /**
  * Created by hbh on 2016/7/6.
  */
-public class Concentrator implements Serializable {
-
-    private Integer id;
+public class Concentrator  extends  BaseDo{
     /**com组件名称*/
     private String  comPort;
     /**波特率*/
@@ -21,19 +19,11 @@ public class Concentrator implements Serializable {
     /**短信中心号*/
     private String  smsc;
 
-    public  Concentrator (String comPort , Integer baudRate ,String manufacturer , String model){
+    public Concentrator(String comPort , Integer baudRate , String manufacturer , String model){
         this.comPort=comPort;
         this.baudRate=baudRate;
         this.manufacturer=manufacturer;
         this.model=model;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getComPort() {

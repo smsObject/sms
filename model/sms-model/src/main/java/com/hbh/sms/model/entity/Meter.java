@@ -6,8 +6,8 @@ import java.util.Date;
 /**
  * Created by hbh on 2016/7/19.
  */
-public class Meter implements Serializable {
-    private Integer id;
+public class Meter extends BaseDo {
+
     /**编号*/
     private String meterNo;
     /**编码*/
@@ -51,14 +51,6 @@ public class Meter implements Serializable {
 
     public void setConcentratorId(Integer concentratorId) {
         this.concentratorId = concentratorId;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getMeterName() {

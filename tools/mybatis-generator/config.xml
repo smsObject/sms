@@ -20,7 +20,7 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/sms?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true"
+                        connectionURL="jdbc:mysql://localhost:3306/crm?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true"
                         userId="root" password="123456">
         </jdbcConnection>
 
@@ -28,7 +28,7 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="com.hbh.sms.model.dbo"
+        <javaModelGenerator targetPackage="com.hbh.sms.model.entity"
                             targetProject="../../model/sms-model/src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
@@ -40,11 +40,11 @@
         </sqlMapGenerator>
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.hbh.sms.dal.dao"
-                             targetProject="../../dal/flowcenter-dal/src/main/java">
+                             targetProject="../../dal/sms-dal/src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="t_concentrator" domainObjectName="Concentrator"
+        <table tableName="t_meter" domainObjectName="Meter"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
