@@ -14,4 +14,7 @@ public interface ConcentratorMapper {
     int updateByPrimaryKeySelective(Concentrator record);
 
     int updateByPrimaryKey(Concentrator record);
+
+    int count(Concentrator reccord);
+
 }

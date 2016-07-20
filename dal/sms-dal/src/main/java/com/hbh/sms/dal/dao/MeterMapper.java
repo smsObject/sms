@@ -14,4 +14,6 @@ public interface MeterMapper {
     int updateByPrimaryKeySelective(Meter record);
 
     int updateByPrimaryKey(Meter record);
+
+    int count(Meter record);
 }
