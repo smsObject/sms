@@ -1,6 +1,7 @@
 package com.hbh.sms.service.meter;
 
 import com.hbh.sms.model.entity.Meter;
+import com.sms.common.Result;
 
 import java.util.List;
 
@@ -12,5 +13,6 @@ public interface MeterService {
     public List<Meter> list(Meter meter);
     public void update(Meter meter);
     public void  delete(Integer id);
-    public List<Meter> page(Meter meter);
+    public Result<Meter> getMeterById(Integer id);
+    public Result<List<Meter>> page(Meter meter);
 }

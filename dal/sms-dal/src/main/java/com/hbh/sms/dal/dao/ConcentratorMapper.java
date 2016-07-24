@@ -2,6 +2,8 @@ package com.hbh.sms.dal.dao;
 
 import com.hbh.sms.model.entity.Concentrator;
 
+import java.util.List;
+
 public interface ConcentratorMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -15,6 +17,8 @@ public interface ConcentratorMapper {
 
     int updateByPrimaryKey(Concentrator record);
 
-    int count(Concentrator reccord);
+    int count(Concentrator record);
+
+    List<Concentrator> list(Concentrator record);
 
 }

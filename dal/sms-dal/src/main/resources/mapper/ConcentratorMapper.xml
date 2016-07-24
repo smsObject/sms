@@ -26,6 +26,19 @@
     from t_concentrator
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="count" parameterType="com.hbh.sms.model.entity.Concentrator" >
+    SELECT 
+    <include refid="Base_Column_list" />
+    FROM t_concentrator
+    <include refid="queryWhere" />
+  </select>
+  <select id="list" parameterType="com.hbh.sms.model.entity.Concentrator">
+    SELECT 
+    <include refid="Base_Column_list" />
+    FROM  t_concentrator
+    <include refid="queryWhere" />
+    limit
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_concentrator
     where id = #{id,jdbcType=INTEGER}

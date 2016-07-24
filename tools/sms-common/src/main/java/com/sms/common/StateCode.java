@@ -6,7 +6,8 @@ package com.sms.common;
 public enum StateCode {
 
     SUCCESS(1 , "成功"),
-    ERROR(-1 ,"请求失败");
+    ERROR(-1 ,"请求失败"),
+    PARAMETERS_FAILED(-2,"参数不全");
 
     private int code ;
     private String message ;

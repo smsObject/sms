@@ -7,9 +7,15 @@ import java.util.List;
  */
 
 public class Result<T> {
-    private  T data;
-    private List<T> dateList;
+    private static final long serialVersionUID = -8004892467677559723L;
+    /* 结果数据 */
+    private T data;
+    /** 返回数据总条数 */
+    private Integer totalCount;
+    /* 状态码 */
     private StateCode stateCode;
+    /* 状态描述辅助信息 */
+    private String statusText;
 
     public T getData() {
         return data;
@@ -19,19 +25,27 @@ public class Result<T> {
         this.data = data;
     }
 
-    public List<T> getDateList() {
-        return dateList;
-    }
-
-    public void setDateList(List<T> dateList) {
-        this.dateList = dateList;
-    }
-
     public StateCode getStateCode() {
         return stateCode;
     }
 
     public void setStateCode(StateCode stateCode) {
         this.stateCode = stateCode;
+    }
+
+    public Integer getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(Integer totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public String getStatusText() {
+        return statusText;
+    }
+
+    public void setStatusText(String statusText) {
+        this.statusText = statusText;
     }
 }
