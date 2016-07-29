@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface MeterService {
     public void add(Meter meter);
-    public List<Meter> list(Meter meter);
+    public Result<List<Meter>> list(Meter meter);
     public void update(Meter meter);
     public void  delete(Integer id);
     public Result<Meter> getMeterById(Integer id);

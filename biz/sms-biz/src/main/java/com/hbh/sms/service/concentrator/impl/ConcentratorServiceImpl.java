@@ -22,7 +22,12 @@ public class ConcentratorServiceImpl implements ConcentratorService {
     private ConcentratorMapper concentratorMapper;
 
     public void add(Concentrator concentrator) {
-
+        if (concentrator == null) return;
+        try {
+            concentratorMapper.insert(concentrator);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public List<Concentrator> list(Concentrator concentrator) {
@@ -42,11 +47,21 @@ public class ConcentratorServiceImpl implements ConcentratorService {
     }
 
     public void update(Concentrator concentrator) {
-
+        if (concentrator == null) return;
+        try {
+            concentratorMapper.updateByPrimaryKey(concentrator);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void delete(Integer id) {
-
+        if (id == null || id == 0 ) return;
+        try {
+            concentratorMapper.deleteByPrimaryKey(id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public Result<List<Concentrator>> page(Concentrator concentrator) {
