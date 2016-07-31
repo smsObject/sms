@@ -16,11 +16,11 @@ import java.util.List;
 @Service("readMessageService")
 public class ReadMessageServiceImpl implements ReadMessageService {
 
-    public List<InboundMessage> readMessage(Concentrator concentrator) {
+    public List<InboundMessage> readMessage(Concentrator concentrator , InboundMessage.MessageClasses messageClasses) {
         //网关
         SerialModemGateway gateway= GatewayCenter.getGateway(concentrator);
         gateway.setInbound(true);   //设置true，表示该网关可以接收短信,根据需求修改
-        return MessageCenter.readMessage(gateway);
+        return MessageCenter.readMessage(gateway ,messageClasses);
     }
 
 }

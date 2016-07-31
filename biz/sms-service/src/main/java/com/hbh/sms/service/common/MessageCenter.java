@@ -32,12 +32,14 @@ public class MessageCenter {
         return  b;
     }
 
-    public static List<InboundMessage>  readMessage(SerialModemGateway gateway){
+    public static List<InboundMessage>  readMessage(SerialModemGateway gateway , InboundMessage.MessageClasses messageClasses){
             try {
                 List<InboundMessage> msgList = new ArrayList<InboundMessage>();
-                Service.getInstance().addGateway(gateway);
-                Service.getInstance().startService();
-                Service.getInstance().readMessages(msgList, InboundMessage.MessageClasses.UNREAD);
+                if (Service.getInstance().getServiceStatus() != Service.ServiceStatus.STARTED){
+                    Service.getInstance().addGateway(gateway);  //将网关添加到短信猫服务中
+                    Service.getInstance().startService();   //启动服务，进入短信发送就绪状态
+                }
+                Service.getInstance().readMessages(msgList, messageClasses);
                 return msgList;
             }catch (Exception ex){
                 ex.printStackTrace();

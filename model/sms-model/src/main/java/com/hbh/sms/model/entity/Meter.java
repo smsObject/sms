@@ -2,7 +2,6 @@ package com.hbh.sms.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-
 /**
  * Created by hbh on 2016/7/19.
  */

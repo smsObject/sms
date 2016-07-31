@@ -25,17 +25,21 @@ public class Test {
     @org.junit.Test
     public  void  testSend(){
         SendMessageServiceImpl sendMessageService =new SendMessageServiceImpl();
-        Concentrator concentrator = new Concentrator("COM3" , 19200 , "SIEMENS" ,"TC35i");
-        SendMessageData messageData = new SendMessageData("18205815108" , "smsCenter message!");
-        boolean b= sendMessageService.sendMessage(concentrator , messageData);
-        System.out.print(b);
+//        Concentrator concentrator = new Concentrator("COM3" , 19200 , "SIEMENS" ,"TC35i");
+//        SendMessageData messageData = new SendMessageData("18205815108" , "smsCenter message!");
+//        boolean b= sendMessageService.sendMessage(concentrator , messageData);
+//        System.out.print(b);
     }
 
     @org.junit.Test
     public void testRead(){
         ReadMessageServiceImpl readMessageService =new ReadMessageServiceImpl();
-        Concentrator concentrator = new Concentrator("COM3" , 19200 , "SIEMENS" ,"TC35i");
-        List<InboundMessage> results= readMessageService.readMessage(concentrator);
+        Concentrator concentrator = new Concentrator();
+        concentrator.setBaudRate(19200);
+        concentrator.setComPort("COM4");
+        concentrator.setManufacturer("SIEMENS");
+        concentrator.setModel("TC35i");
+        List<InboundMessage> results= readMessageService.readMessage(concentrator,InboundMessage.MessageClasses.ALL);
         for (InboundMessage msg : results){
             System.out.println(msg);
         }

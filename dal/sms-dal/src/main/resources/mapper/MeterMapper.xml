@@ -3,31 +3,53 @@
 <mapper namespace="com.hbh.sms.dal.dao.MeterMapper" >
   <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.Meter" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="meterNo" property="meterno" jdbcType="VARCHAR" />
-    <result column="meterCode" property="metercode" jdbcType="VARCHAR" />
-    <result column="controllerId" property="controllerid" jdbcType="INTEGER" />
-    <result column="meterName" property="metername" jdbcType="VARCHAR" />
-    <result column="fixDate" property="fixdate" jdbcType="TIMESTAMP" />
-    <result column="useType" property="usetype" jdbcType="SMALLINT" />
-    <result column="userType" property="usertype" jdbcType="SMALLINT" />
-    <result column="baseValue" property="basevalue" jdbcType="REAL" />
-    <result column="buyWay" property="buyway" jdbcType="SMALLINT" />
-    <result column="meterModel" property="metermodel" jdbcType="SMALLINT" />
-    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
-    <result column="createUser" property="createuser" jdbcType="VARCHAR" />
-    <result column="updateDate" property="updatedate" jdbcType="TIMESTAMP" />
-    <result column="updateUser" property="updateuser" jdbcType="VARCHAR" />
+    <result column="meterNo" property="meterNo" jdbcType="VARCHAR" />
+    <result column="meterCode" property="meterCode" jdbcType="VARCHAR" />
+    <result column="controllerId" property="concentratorId" jdbcType="INTEGER" />
+    <result column="meterName" property="meterName" jdbcType="VARCHAR" />
+    <result column="fixDate" property="fixDate" jdbcType="TIMESTAMP" />
+    <result column="useType" property="useType" jdbcType="SMALLINT" />
+    <result column="userType" property="userType" jdbcType="SMALLINT" />
+    <result column="baseValue" property="baseValue" jdbcType="REAL" />
+    <result column="buyWay" property="buyWay" jdbcType="SMALLINT" />
+    <result column="meterModel" property="meterModel" jdbcType="SMALLINT" />
+    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="createUser" property="createUser" jdbcType="VARCHAR" />
+    <result column="updateDate" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="updateUser" property="updateUser" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, meterNo, meterCode, controllerId, meterName, fixDate, useType, userType, baseValue, 
+    id, meterNo, meterCode, controllerId, meterName, fixDate, useType, userType, baseValue,
     buyWay, meterModel, createDate, createUser, updateDate, updateUser
   </sql>
+  <sql id="meterWhere" >
+    <where>
+      <if test="meterNo != null and meterNo !='' ">
+        AND meterNo = #{meterNo}
+      </if>
+    </where>
+  </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_meter
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="count" parameterType="com.hbh.sms.model.entity.Meter" resultType="java.lang.Integer">
+    SELECT  count(*)
+    FROM    t_meter
+    <include refid="meterWhere" />
+  </select>
+
+  <select id="list" resultMap="BaseResultMap" parameterType="com.hbh.sms.model.entity.Meter" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM t_meter
+    <include refid="meterWhere" />
+    limit 0 , 100
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_meter
     where id = #{id,jdbcType=INTEGER}

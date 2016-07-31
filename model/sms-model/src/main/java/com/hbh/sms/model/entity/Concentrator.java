@@ -19,12 +19,9 @@ public class Concentrator  extends  BaseDo{
     /**短信中心号*/
     private String  smsc;
 
-    public Concentrator(String comPort , Integer baudRate , String manufacturer , String model){
-        this.comPort=comPort;
-        this.baudRate=baudRate;
-        this.manufacturer=manufacturer;
-        this.model=model;
-    }
+    private Integer isOnline;
+
+    private  String name;
 
     public String getComPort() {
         return comPort;
@@ -72,5 +69,21 @@ public class Concentrator  extends  BaseDo{
 
     public void setSmsc(String smsc) {
         this.smsc = smsc;
+    }
+
+    public Integer getIsOnline() {
+        return isOnline;
+    }
+
+    public void setIsOnline(Integer isOnline) {
+        this.isOnline = isOnline;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

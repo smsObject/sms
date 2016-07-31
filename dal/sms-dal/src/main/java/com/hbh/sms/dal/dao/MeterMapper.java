@@ -20,4 +20,5 @@ public interface MeterMapper {
     int count(Meter record);
 
     List<Meter> list(Meter record);
+
 }

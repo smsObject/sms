@@ -7,16 +7,19 @@ import com.sms.common.Result;
 import com.sms.common.ResultUtil;
 import com.sms.common.StateCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by hbh on 2016/7/19.
  */
+@Service("meterService")
 public class MeterServiceImpl implements MeterService {
 
     @Autowired
     private MeterMapper meterMapper;
+
     public void add(Meter meter) {
         if (meter == null) return;
         try {

@@ -3,41 +3,36 @@
 <mapper namespace="com.hbh.sms.dal.dao.ConcentratorMapper" >
   <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.Concentrator" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="comPort" property="comport" jdbcType="VARCHAR" />
-    <result column="baudRate" property="baudrate" jdbcType="INTEGER" />
+    <result column="comPort" property="comPort" jdbcType="VARCHAR" />
+    <result column="baudRate" property="baudRate" jdbcType="INTEGER" />
     <result column="manufacturer" property="manufacturer" jdbcType="VARCHAR" />
     <result column="model" property="model" jdbcType="VARCHAR" />
     <result column="is_online" property="isOnline" jdbcType="SMALLINT" />
     <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="smsc" property="smsc" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
-    <result column="createUser" property="createuser" jdbcType="VARCHAR" />
-    <result column="updateDate" property="updatedate" jdbcType="TIMESTAMP" />
-    <result column="updateUser" property="updateuser" jdbcType="VARCHAR" />
+    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="createUser" property="createUser" jdbcType="VARCHAR" />
+    <result column="updateDate" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="updateUser" property="updateUser" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, comPort, baudRate, manufacturer, model, is_online, code, smsc, name, createDate, 
+    id, comPort, baudRate, manufacturer, model, is_online, code, smsc, name, createDate,
     createUser, updateDate, updateUser
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
+    select *
     from t_concentrator
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="count" parameterType="com.hbh.sms.model.entity.Concentrator" >
-    SELECT 
-    <include refid="Base_Column_list" />
+  <select id="count" parameterType="com.hbh.sms.model.entity.Concentrator" resultType="java.lang.Integer">
+    SELECT count(1)
     FROM t_concentrator
-    <include refid="queryWhere" />
   </select>
   <select id="list" parameterType="com.hbh.sms.model.entity.Concentrator">
-    SELECT 
-    <include refid="Base_Column_list" />
+    SELECT *
     FROM  t_concentrator
-    <include refid="queryWhere" />
-    limit
+    limit #{start} , #{pageSize}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_concentrator
