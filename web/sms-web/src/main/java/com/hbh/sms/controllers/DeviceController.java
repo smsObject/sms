@@ -86,8 +86,12 @@ public class DeviceController {
 
     @RequestMapping("/concentratorPage")
     @ResponseBody
-    public Result<List<Concentrator>> gsmPage(Concentrator concentrator){
-        return concentratorService.page(concentrator);
+    public PageUtil gsmPage(Concentrator concentrator){
+        Result<List<Concentrator>> result = concentratorService.page(concentrator);
+        PageUtil pageUtil = new PageUtil();
+        pageUtil.setRows(result.getData());
+        pageUtil.setTotal(result.getTotalCount());
+        return pageUtil;
     }
 
     @RequestMapping("/addMeter")

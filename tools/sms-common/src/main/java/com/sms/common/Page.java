@@ -1,36 +1,30 @@
 package com.sms.common;
 
+import java.io.Serializable;
+
 /**
  * Created by hbh on 2016/7/24.
  */
-public class Page {
-    private static final Integer DEFAULT_PAGENO=1;
+public class Page implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private static final Integer DEFAULT_OFFSET=0;
     private static final Integer DEFAULT_PAGESIZE=20;
-    private Integer pageNo    =  DEFAULT_PAGENO;
-    private Integer pageSize  =  DEFAULT_PAGESIZE;
-    private Integer totalCount ;
+    private Integer offset = DEFAULT_OFFSET;
+    private Integer limit =DEFAULT_PAGESIZE;
 
-    public Integer getPageNo() {
-        return pageNo;
+    public Integer getOffset() {
+        return offset;
     }
 
-    public void setPageNo(Integer pageNo) {
-        this.pageNo = pageNo;
+    public void setOffset(Integer offset) {
+        this.offset = offset;
     }
 
-    public Integer getPageSize() {
-        return pageSize;
+    public Integer getLimit() {
+        return limit;
     }
 
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public Integer getTotalCount() {
-        return totalCount;
-    }
-
-    public void setTotalCount(Integer totalCount) {
-        this.totalCount = totalCount;
+    public void setLimit(Integer limit) {
+        this.limit = limit;
     }
 }

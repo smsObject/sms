@@ -18,99 +18,78 @@ GSM设备管理
         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
         <h2>GSM设备列表</h2>
     </header>
-    <!-- widget div-->
-    <div>
-        <div class="widget-body no-padding">
-            <div class="widget-body-toolbar">
-            </div>
-            <table id="datatable_col_reorder" class="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <th>编号</th>
-                    <th>名称</th>
-                    <th>组件端口名</th>
-                    <th>波特率</th>
-                    <th>生产商</th>
-                    <th>型号</th>
-                    <th>短信中心号码</th>
-                    <th>创建时间</th>
-                    <th>创建人</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>91</td>
-                    <td>Neil</td>
-                    <td>1-550-664-4050</td>
-                    <td>Aenean Euismod LLP</td>
-                    <td>28842</td>
-                    <td>Corby</td>
-                    <td>07/27/14</td>
-                    <td>Corby</td>
-                    <td>Corby</td>
-                </tr>
-                <tr>
-                    <td>100</td>
-                    <td>Cathleen</td>
-                    <td>1-883-567-6065</td>
-                    <td>Eu Corporation</td>
-                    <td>4286</td>
-                    <td>Rotheux-Rimi?re</td>
-                    <td>07/16/13</td>
-                    <td>Corby</td>
-                    <td>Corby</td>
-                </tr>
-                </tbody>
-            </table>
-
-        </div>
-        <!-- end widget content -->
-
-    </div>
-    <!-- end widget div -->
-
 </div>
-
 </body>
-<script type="text/javascript" >
-    pageSetUp();
+<script type="text/javascript">
+    $(function () {
+        var columns = [
+            {	field: 'state',
+                checkbox: true,
+                align: 'center',
+            },
+            {	field: 'meterNo',
+                title:'编号',
+                align: 'center',
+            },
+            {
+                field: 'meterCode',
+                title:'名称',
+                align: 'center',
+            },
+            {
+                field: 'concentratorId',
+                title:'组件端口名',
+                align: 'center',
+            },
+            {
+                field: 'meterName',
+                title:'波特率',
+                align: 'center',
+            },
+            {
+                field: 'fixDate',
+                title:'生产商',
+                align: 'center',
+            },
+            {
+                field: 'useType',
+                title:'型号',
+                align: 'center',
+            },
+            {
+                field: 'userType',
+                title:'短信中心号码',
+                align: 'center',
+            },
+            {
+                field: 'basicValue',
+                title:'创建时间',
+                align: 'center',
+            },
+            {
+                field: 'buyWay',
+                title:'创建人',
+                align: 'center',
+            }
+        ];
 
-
-    loadDataTableScripts();
-    function loadDataTableScripts() {
-
-        loadScript("../../resources/js/plugin/datatables/jquery.dataTables-cust.min.js", dt_2);
-
-        function dt_2() {
-            loadScript("../../resources/js/plugin/datatables/ColReorder.min.js", dt_3);
-        }
-
-        function dt_3() {
-            loadScript("../../resources/js/plugin/datatables/FixedColumns.min.js", dt_4);
-        }
-
-        function dt_4() {
-            loadScript("../../resources/js/plugin/datatables/ColVis.min.js", dt_5);
-        }
-
-        function dt_5() {
-            loadScript("../../resources/js/plugin/datatables/ZeroClipboard.js", dt_6);
-        }
-
-        function dt_6() {
-            loadScript("../../resources/js/plugin/datatables/media/js/TableTools.min.js", dt_7);
-        }
-
-        function dt_7() {
-            loadScript("../../resources/js/plugin/datatables/DT_bootstrap.js", runDataTables);
-        }
-    }
-
-    function runDataTables() {
-        $('#datatable_col_reorder').dataTable({
-            "sPaginationType" : "bootstrap"
+        $('#table').bootstrapTable({
+            columns:columns,
+            url:'/device/concentratorPage',
+            method:'get',
+            pageNumber:1,
+            pageSize:15,
+            pageList:[10, 15, 20],
+            singleSelect:true,
+            pagination:true,
+            striped:true,
+            clickToSelect:true,
+            sidePagination:'server'
         });
-    }
+    });
+    //$table.bootstrapTable('getSelections');
+    //$table.bootstrapTable('load', data);
+    //$table.bootstrapTable('insertRow', {index: 1, row: row});
 </script>
 </body>
 </html>
