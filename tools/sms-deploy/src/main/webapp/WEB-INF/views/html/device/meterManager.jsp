@@ -9,6 +9,99 @@
 <html>
 <head>
     <title>仪表管理</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="../resources/css/bootstrap-theme.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="../resources/js/libs/jquery-2.0.2.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="../resources/js/bootstrap.min.js"></script>
+
+    <!-- 最新的 Bootstrap table 文件 -->
+    <script src="../resources/js/bootstrap-table.js"></script>
+    <link rel="stylesheet" href="../resources/css/bootstrap-table.css">
+
+    <script type="text/javascript">
+        $(function () {
+            var columns = [
+                {	field: 'state',
+                    checkbox: true,
+                    align: 'center',
+                },
+                {	field: 'meterNo',
+                    title:'编号',
+                    align: 'center',
+                },
+                {
+                    field: 'meterCode',
+                    title:'编码',
+                    align: 'center',
+                },
+                {
+                    field: 'concentratorId',
+                    title:'所属集中器',
+                    align: 'center',
+                },
+                {
+                    field: 'meterName',
+                    title:'仪表名称',
+                    align: 'center',
+                },
+                {
+                    field: 'fixDate',
+                    title:'安装时间',
+                    align: 'center',
+                },
+                {
+                    field: 'useType',
+                    title:'使用类型',
+                    align: 'center',
+                },
+                {
+                    field: 'userType',
+                    title:'用户类型',
+                    align: 'center',
+                },
+                {
+                    field: 'basicValue',
+                    title:'基础值',
+                    align: 'center',
+                },
+                {
+                    field: 'buyWay',
+                    title:'付费方式',
+                    align: 'center',
+                },
+                {
+                    field: 'meterModel',
+                    title:'仪表型号',
+                    align: 'center',
+                }
+            ];
+
+            $('#table').bootstrapTable({
+                columns:columns,
+                url:'/device/meterPage',
+                method:'get',
+                pageNumber:1,
+                pageSize:15,
+                pageList:[10, 15, 20],
+                singleSelect:true,
+                pagination:true,
+                striped:true,
+                clickToSelect:true,
+                sidePagination:'server'
+            });
+        });
+        //$table.bootstrapTable('getSelections');
+        //$table.bootstrapTable('load', data);
+        //$table.bootstrapTable('insertRow', {index: 1, row: row});
+    </script>
+
 </head>
 <body>
 <a class="btn btn-primary btn-sm" href="javascript:void(0);">查询</a>
@@ -17,112 +110,6 @@
 <a class="btn btn-primary btn-sm" href="javascript:void(0);">新增</a>
 <a class="btn btn-danger btn-sm" href="javascript:void(0);">删除</a>
 
-<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-2" data-widget-editbutton="false">
-    <!-- widget options:
-    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-
-    data-widget-colorbutton="false"
-    data-widget-editbutton="false"
-    data-widget-togglebutton="false"
-    data-widget-deletebutton="false"
-    data-widget-fullscreenbutton="false"
-    data-widget-custombutton="false"
-    data-widget-collapsed="true"
-    data-widget-sortable="false"
-
-    -->
-    <header>
-        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-        <h2>仪表信息列表</h2>
-
-    </header>
-
-    <!-- widget div-->
-    <div>
-
-        <div class="widget-body no-padding">
-            <div class="widget-body-toolbar">
-
-            </div>
-            <table id="datatable_col_reorder" class="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Company</th>
-                    <th>Zip</th>
-                    <th>City</th>
-                    <th>Date</th>
-                </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-
-        </div>
-        <!-- end widget content -->
-
-    </div>
-    <!-- end widget div -->
-
-</div>
-<script src="../../resources/js/plugin/datatables/jquery.dataTables-cust.min.js" type="text/javascript" ></script>
+<table id="table" > </table>
 </body>
-<script src="../../resources/js/plugin/datatables/FixedColumns.min.js" type="text/javascript" ></script>
-</body>
-<script src="../../resources/js/plugin/datatables/ColVis.min.js" type="text/javascript" ></script>
-</body>
-<script src="../../resources/js/plugin/datatables/ZeroClipboard.js" type="text/javascript" ></script>
-</body>
-<script src="../../resources/js/plugin/datatables/media/js/TableTools.min.js" type="text/javascript" ></script>
-</body>
-<script src="../../resources/js/plugin/datatables/DT_bootstrap.js" type="text/javascript" ></script>
-</body>
-
-<script type="text/javascript" >
-
-    $(document).ready(function() {
-        $('#datatable_col_reorder').dataTable({
-            "bProcessing": false, // 是否显示取数据时的那个等待提示
-            "bServerSide": true,//这个用来指明是通过服务端来取数据
-            "sAjaxSource": "../device/meterPage",//这个是请求的地址
-            "fnServerData": retrieveData // 获取数据的处理函数
-        });
-    });
-
-    // 3个参数的名字可以随便命名,但必须是3个参数,少一个都不行
-    function retrieveData( sSource111,aoData111, fnCallback111) {
-        $.ajax({
-            url : sSource111,//这个就是请求地址对应sAjaxSource
-            data : {"aoData":JSON.stringify(aoData111)},//这个是把datatable的一些基本数据传给后台,比如起始位置,每页显示的行数
-            type : 'post',
-            dataType : 'json',
-            async : false,
-            success : function(result) {
-                console.log(result);
-                //fnCallback111(result);//把返回的数据传给这个方法就可以了,datatable会自动绑定数据的
-            },
-            error : function(msg) {
-            }
-        });
-    }
-
-    function runDataTables() {
-        /*
-         * COL ORDER
-         */
-//    ,
-//        "sDom" : "R<'dt-top-row'Clf>r<'dt-wrapper't><'dt-row dt-bottom-row'<'row'<'col-sm-6'i><'col-sm-6 text-right'p>>",
-//                "fnInitComplete" : function(oSettings, json) {
-//            $('.ColVis_Button').addClass('btn btn-default btn-sm').html('Columns <i class="icon-arrow-down"></i>');
-//        }
-//
-//        $('#datatable_col_reorder').dataTable({
-//            "sPaginationType" : "bootstrap"
-//        });
-
-
-    }
-</script>
 </html>

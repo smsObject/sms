@@ -13,6 +13,6 @@ public interface BizDeviceService {
 
     public  boolean sendMessage(Concentrator concentrator , SendMessageData messageData);
 
-    public Result<Concentrator> scanner();
+    public Result<List<Concentrator>> scanner();
 
 }

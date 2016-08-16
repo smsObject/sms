@@ -6,6 +6,7 @@ import com.hbh.sms.model.entity.SendMessageData;
 import com.hbh.sms.service.concentrator.ConcentratorService;
 import com.hbh.sms.service.message.BizDeviceService;
 import com.hbh.sms.service.meter.MeterService;
+import com.sms.common.PageUtil;
 import com.sms.common.Result;
 import com.sms.common.ResultUtil;
 import com.sms.common.StateCode;
@@ -44,8 +45,9 @@ public class DeviceController {
     }
 
     @RequestMapping("/scanner")
-    public Result<Concentrator> scanner(){
-
+    @ResponseBody
+    public Result<List<Concentrator>> scanner(){
+       return bizDeviceService.scanner();
     }
 
     @RequestMapping("/readMeterData")
@@ -73,11 +75,16 @@ public class DeviceController {
 
     @RequestMapping("/meterPage")
     @ResponseBody
-    public Result<List<Meter>> meterPage(Meter meter){
-       return  meterService.page(meter);
+    public PageUtil meterPage(Meter meter)
+    {
+        Result<List<Meter>> result=  meterService.page(meter);
+        PageUtil pageUtil = new PageUtil();
+        pageUtil.setRows(result.getData());
+        pageUtil.setTotal(result.getTotalCount());
+        return  pageUtil;
     }
 
-    @RequestMapping("/gsmPage")
+    @RequestMapping("/concentratorPage")
     @ResponseBody
     public Result<List<Concentrator>> gsmPage(Concentrator concentrator){
         return concentratorService.page(concentrator);
@@ -90,6 +97,16 @@ public class DeviceController {
         }
         try {
             meterService.add(meter);
+            return ResultUtil.newSuccessResult(StateCode.SUCCESS);
+        }catch (Exception e){
+            return ResultUtil.newFailedResult(StateCode.ERROR);
+        }
+    }
+
+    @RequestMapping("/addConcentrator")
+    public Result addConcentrator (Concentrator concentrator){
+        try {
+            concentratorService.add(concentrator);
             return ResultUtil.newSuccessResult(StateCode.SUCCESS);
         }catch (Exception e){
             return ResultUtil.newFailedResult(StateCode.ERROR);
