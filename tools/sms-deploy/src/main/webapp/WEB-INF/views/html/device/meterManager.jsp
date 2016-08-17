@@ -124,10 +124,6 @@
         //$table.bootstrapTable('load', data);
         //$table.bootstrapTable('insertRow', {index: 1, row: row});
 
-
-
-
-
     </script>
 
 </head>

@@ -6,7 +6,6 @@ import java.util.Date;
  * Created by hbh on 2016/7/19.
  */
 public class Meter extends BaseDo {
-
     /**编号*/
     private String meterNo;
     /**编码*/

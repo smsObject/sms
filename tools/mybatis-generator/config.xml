@@ -44,7 +44,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="t_meter" domainObjectName="Meter"
+        <table tableName="t_meterData" domainObjectName="MeterData"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
