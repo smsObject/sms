@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hbh.sms.dal.dao.MeterDataMapper" >
+  <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.MeterData" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="meterId" property="meterid" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="REAL" />
+    <result column="upLoadTime" property="uploadtime" jdbcType="TIMESTAMP" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.hbh.sms.model.entity.MeterData" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_meterdata (meterId, code, value, 
+      upLoadTime, unit, createTime
+      )
+    values (#{meterid,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{value,jdbcType=REAL}, 
+      #{uploadtime,jdbcType=TIMESTAMP}, #{unit,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hbh.sms.model.entity.MeterData" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_meterdata
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="meterid != null" >
+        meterId,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+      <if test="uploadtime != null" >
+        upLoadTime,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="meterid != null" >
+        #{meterid,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=REAL},
+      </if>
+      <if test="uploadtime != null" >
+        #{uploadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="list" resultMap="BaseResultMap" parameterType="com.hbh.sms.model.entity.MeterData">
+    SELECT * FROM t_meterdata
+    <where>
+
+    </where>
+  </select>
+</mapper>
