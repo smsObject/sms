@@ -7,23 +7,15 @@ public class MeterData extends  BaseDo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer meterid;
+    private Integer meterId;
 
     private String code;
 
     private Float value;
 
-    private Date uploadtime;
+    private Date uploadTime;
 
     private String unit;
-
-    public Integer getMeterid() {
-        return meterid;
-    }
-
-    public void setMeterid(Integer meterid) {
-        this.meterid = meterid;
-    }
 
     public String getCode() {
         return code;
@@ -41,19 +33,27 @@ public class MeterData extends  BaseDo implements Serializable {
         this.value = value;
     }
 
-    public Date getUploadtime() {
-        return uploadtime;
-    }
-
-    public void setUploadtime(Date uploadtime) {
-        this.uploadtime = uploadtime;
-    }
-
     public String getUnit() {
         return unit;
     }
 
     public void setUnit(String unit) {
         this.unit = unit == null ? null : unit.trim();
+    }
+
+    public Integer getMeterId() {
+        return meterId;
+    }
+
+    public void setMeterId(Integer meterId) {
+        this.meterId = meterId;
+    }
+
+    public Date getUploadTime() {
+        return uploadTime;
+    }
+
+    public void setUploadTime(Date uploadTime) {
+        this.uploadTime = uploadTime;
     }
 }

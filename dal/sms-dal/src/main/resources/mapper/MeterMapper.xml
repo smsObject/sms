@@ -47,7 +47,7 @@
     <include refid="Base_Column_List" />
     FROM t_meter
     <include refid="meterWhere" />
-    limit 0 , 100
+    limit #{offset} , #{limit}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

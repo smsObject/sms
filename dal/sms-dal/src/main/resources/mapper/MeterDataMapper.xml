@@ -3,12 +3,12 @@
 <mapper namespace="com.hbh.sms.dal.dao.MeterDataMapper" >
   <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.MeterData" >
     <result column="id" property="id" jdbcType="INTEGER" />
-    <result column="meterId" property="meterid" jdbcType="INTEGER" />
+    <result column="meterId" property="meterId" jdbcType="INTEGER" />
     <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="value" property="value" jdbcType="REAL" />
-    <result column="upLoadTime" property="uploadtime" jdbcType="TIMESTAMP" />
+    <result column="upLoadTime" property="uploadTime" jdbcType="TIMESTAMP" />
     <result column="unit" property="unit" jdbcType="VARCHAR" />
-    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <insert id="insert" parameterType="com.hbh.sms.model.entity.MeterData" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -68,10 +68,26 @@
     </trim>
   </insert>
   
-  <select id="list" resultMap="BaseResultMap" parameterType="com.hbh.sms.model.entity.MeterData">
-    SELECT * FROM t_meterdata
+  <sql id="queyWhere" >
     <where>
-
+      <if test="meterId !=null and meterId !=0">
+        AND meterId = #{meterId}
+      </if>
+      <if test="code !=null and code !=''">
+        AND  code = #{code}
+      </if>
     </where>
+  </sql>
+  <select id="list" resultMap="BaseResultMap" parameterType="com.hbh.sms.model.entity.MeterData">
+    SELECT *
+    FROM t_meterdata
+    <include refid="queyWhere" />
+    limit #{offset} , #{limit}
   </select>
+
+  <select id="count" resultType="java.lang.Integer" parameterType="com.hbh.sms.model.entity.MeterData" >
+    SELECT count(1) FROM t_meterdata
+    <include refid="queyWhere" />
+  </select>
+
 </mapper>

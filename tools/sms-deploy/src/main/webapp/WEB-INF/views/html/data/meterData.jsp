@@ -8,7 +8,7 @@ To change this template use File | Settings | File Templates.
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>GSM设备管理</title>
+    <title>仪表数据管理</title>
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
 
@@ -32,48 +32,28 @@ To change this template use File | Settings | File Templates.
                 align: 'center',
             },
             {
-                field: 'id',
+                field: 'meterId',
+                title: '仪表id',
+                align: 'center',
+            },
+            {
+                field: 'code',
                 title: '编号',
                 align: 'center',
             },
             {
-                field: 'name',
-                title: '名称',
+                field: 'value',
+                title: '数据',
                 align: 'center',
             },
             {
-                field: 'comPort',
-                title: '组件名',
+                field: 'unit',
+                title: '单位',
                 align: 'center',
             },
             {
-                field: 'baudRate',
-                title: '波特率',
-                align: 'center',
-            },
-            {
-                field: 'manufacturer',
-                title: '生产商',
-                align: 'center',
-            },
-            {
-                field: 'model',
-                title: '型号',
-                align: 'center',
-            },
-            {
-                field: 'isOnline',
-                title: '是否在线',
-                align: 'center',
-            },
-            {
-                field: 'createDate',
-                title: '创建时间',
-                align: 'center',
-            },
-            {
-                field: 'createUser',
-                title: '创建人',
+                field: 'uploadTime',
+                title: '上传时间',
                 align: 'center',
             }
         ];
@@ -81,7 +61,7 @@ To change this template use File | Settings | File Templates.
         $(function () {
             $('#table').bootstrapTable({
                 columns: columns,
-                url: '/device/concentratorPage',
+                url: '/meterData/page',
                 method: 'get',
                 pageNumber: 1,
                 pageSize: 15,
