@@ -35,58 +35,57 @@ public class DeviceController {
     private ConcentratorService concentratorService;
 
     @RequestMapping("/meterManager")
-    public String meterManager(){
+    public String meterManager() {
         return "device/meterManager";
     }
 
     @RequestMapping("/gsmManager")
-    public String gsmManager(){
+    public String gsmManager() {
         return "device/gsmManager";
     }
 
     @RequestMapping("/scanner")
     @ResponseBody
-    public Result<List<Concentrator>> scanner(){
-       return bizDeviceService.scanner();
+    public Result<List<Concentrator>> scanner() {
+        return bizDeviceService.scanner();
     }
 
     @RequestMapping("/readMeterData")
-    public Result readMeterData(Meter meter){
+    @ResponseBody
+    public Result readMeterData(Meter meter) {
         //获取GSM信息  查询仪表id查询仪表数据
         //获取发送对象
-
-        Integer id= meter.getId();
-        if (id == null || id == 0){
+        Integer id = meter.getId();
+        if (id == null || id == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
-            Result<Meter> result= meterService.getMeterById(id);
-            if (result.getData() != null ){
-                Meter meter1= result.getData();
-                Result<Concentrator> result1 =concentratorService.getConcentratorById(meter1.getId());
-                if (result1.getData() != null){
-                    Concentrator concentrator= result1.getData();
-                    SendMessageData messageData = new SendMessageData(meter1.getMeterCode() , "0013");
-                    if (bizDeviceService.sendMessage(concentrator , messageData))
-                        return ResultUtil.newFailedResult(StateCode.SUCCESS);
-                }
+        Result<Meter> result = meterService.getMeterById(id);
+        if (result.getData() != null) {
+            Meter meter1 = result.getData();
+            Result<Concentrator> result1 = concentratorService.getConcentratorById(meter1.getId());
+            if (result1.getData() != null) {
+                Concentrator concentrator = result1.getData();
+                SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), "0013");
+                if (bizDeviceService.sendMessage(concentrator, messageData))
+                    return ResultUtil.newFailedResult(StateCode.SUCCESS);
             }
+        }
         return ResultUtil.newFailedResult(StateCode.ERROR);
     }
 
     @RequestMapping("/meterPage")
     @ResponseBody
-    public PageUtil meterPage(Meter meter)
-    {
-        Result<List<Meter>> result=  meterService.page(meter);
+    public PageUtil meterPage(Meter meter) {
+        Result<List<Meter>> result = meterService.page(meter);
         PageUtil pageUtil = new PageUtil();
         pageUtil.setRows(result.getData());
         pageUtil.setTotal(result.getTotalCount());
-        return  pageUtil;
+        return pageUtil;
     }
 
     @RequestMapping("/concentratorPage")
     @ResponseBody
-    public PageUtil gsmPage(Concentrator concentrator){
+    public PageUtil gsmPage(Concentrator concentrator) {
         Result<List<Concentrator>> result = concentratorService.page(concentrator);
         PageUtil pageUtil = new PageUtil();
         pageUtil.setRows(result.getData());
@@ -95,37 +94,37 @@ public class DeviceController {
     }
 
     @RequestMapping("/addMeter")
-    public Result addMeter(Meter meter){
-        if (meter.getMeterNo() != null){
+    public Result addMeter(Meter meter) {
+        if (meter.getMeterNo() != null) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
         try {
             meterService.add(meter);
             return ResultUtil.newSuccessResult(StateCode.SUCCESS);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResultUtil.newFailedResult(StateCode.ERROR);
         }
     }
 
     @RequestMapping("/addConcentrator")
-    public Result addConcentrator (Concentrator concentrator){
+    public Result addConcentrator(Concentrator concentrator) {
         try {
             concentratorService.add(concentrator);
             return ResultUtil.newSuccessResult(StateCode.SUCCESS);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResultUtil.newFailedResult(StateCode.ERROR);
         }
     }
 
     @RequestMapping("/deleteMeter")
-    public Result deleteMeter(Integer id){
-        if (id == null || id == 0){
+    public Result deleteMeter(Integer id) {
+        if (id == null || id == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
         try {
             meterService.delete(id);
             return ResultUtil.newSuccessResult(StateCode.SUCCESS);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResultUtil.newFailedResult(StateCode.ERROR);
         }
     }
