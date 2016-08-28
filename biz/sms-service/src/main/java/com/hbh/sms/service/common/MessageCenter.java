@@ -35,7 +35,8 @@ public class MessageCenter {
     public static List<InboundMessage>  readMessage(SerialModemGateway gateway , InboundMessage.MessageClasses messageClasses){
             try {
                 List<InboundMessage> msgList = new ArrayList<InboundMessage>();
-                if (Service.getInstance().getServiceStatus() != Service.ServiceStatus.STARTED){
+                System.out.println(Service.getInstance().getServiceStatus());
+                if (Service.getInstance().getServiceStatus() == Service.ServiceStatus.STOPPED){
                     Service.getInstance().addGateway(gateway);  //将网关添加到短信猫服务中
                     Service.getInstance().startService();   //启动服务，进入短信发送就绪状态
                 }

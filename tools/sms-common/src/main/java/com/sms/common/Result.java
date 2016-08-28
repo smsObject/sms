@@ -17,6 +17,10 @@ public class Result<T> {
     /* 状态描述辅助信息 */
     private String statusText;
 
+    public  boolean isSuccess(){
+        if (this.stateCode.getCode() == 1) return  true;
+        else return false;
+    }
     public T getData() {
         return data;
     }

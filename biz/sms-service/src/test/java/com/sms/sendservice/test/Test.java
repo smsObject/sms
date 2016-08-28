@@ -39,10 +39,15 @@ public class Test {
         concentrator.setComPort("COM4");
         concentrator.setManufacturer("SIEMENS");
         concentrator.setModel("TC35i");
+        long t=System.currentTimeMillis();
         List<InboundMessage> results= readMessageService.readMessage(concentrator,InboundMessage.MessageClasses.ALL);
-        for (InboundMessage msg : results){
-            System.out.println(msg);
-        }
+//        for (InboundMessage msg : results){
+//            System.out.println(msg);
+//        }
+        long l=System.currentTimeMillis();
+        System.out.println(l-t);
+        List<InboundMessage> results1= readMessageService.readMessage(concentrator,InboundMessage.MessageClasses.ALL);
+        System.out.println("耗时"+(System.currentTimeMillis()-l));
     }
 
     @org.junit.Test

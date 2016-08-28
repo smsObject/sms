@@ -22,5 +22,4 @@ public class ReadMessageServiceImpl implements ReadMessageService {
         gateway.setInbound(true);   //设置true，表示该网关可以接收短信,根据需求修改
         return MessageCenter.readMessage(gateway ,messageClasses);
     }
-
 }

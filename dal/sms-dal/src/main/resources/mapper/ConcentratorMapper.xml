@@ -29,10 +29,14 @@
     SELECT count(1)
     FROM t_concentrator
   </select>
-  <select id="list" parameterType="com.hbh.sms.model.entity.Concentrator" resultMap="BaseResultMap">
+  <select id="page" parameterType="com.hbh.sms.model.entity.Concentrator" resultMap="BaseResultMap">
     SELECT *
     FROM  t_concentrator
     limit #{offset} , #{limit}
+  </select>
+  <select id="list" parameterType="com.hbh.sms.model.entity.Concentrator" resultMap="BaseResultMap">
+    SELECT *
+    FROM  t_concentrator
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_concentrator

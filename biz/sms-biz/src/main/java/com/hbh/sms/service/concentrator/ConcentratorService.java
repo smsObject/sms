@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface ConcentratorService {
     public void add(Concentrator concentrator);
-    public List<Concentrator> list(Concentrator concentrator);
+    public Result<List<Concentrator>> list(Concentrator concentrator);
     public Result<Concentrator> getConcentratorById(Integer id);
     public void update(Concentrator concentrator);
     public void  delete(Integer id);

@@ -93,11 +93,21 @@ To change this template use File | Settings | File Templates.
                 sidePagination: 'server'
             });
 
-
             $("#scanner").click(function(){
-
+                $.ajax({
+                    url:"../device/scanner",
+                    success:function (data) {
+                        if (data.stateCode == "ERROR"){
+                            alert("服务器端错误！");
+                        }else{
+                            console.log(data.data);
+                        }
+                    },
+                    error:function () {
+                        alert("请求失败！");
+                    }
+                });
             });
-
         });
         //$table.bootstrapTable('getSelections');
         //$table.bootstrapTable('load', data);
@@ -105,7 +115,7 @@ To change this template use File | Settings | File Templates.
     </script>
 </head>
 <body>
-<a class="btn btn-primary btn-sm" id="scanner" href="javascript:void(0);">查询</a>
+<a class="btn btn-primary btn-sm" id="scanner" href="javascript:void(0);">扫描</a>
 <table id="table"  > </table>
 </body>
 </html>

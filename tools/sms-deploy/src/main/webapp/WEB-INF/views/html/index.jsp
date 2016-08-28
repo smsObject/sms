@@ -350,32 +350,8 @@
 <!-- BOOTSTRAP JS -->
 <script src="../../resources/js/bootstrap/bootstrap.min.js"></script>
 
-<!-- CUSTOM NOTIFICATION -->
-<script src="../../resources/js/notification/SmartNotification.min.js"></script>
-
-<!-- JARVIS WIDGETS -->
-<script src="../../resources/js/smartwidgets/jarvis.widget.min.js"></script>
-
-<!-- EASY PIE CHARTS -->
-<script src="../../resources/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
-
-<!-- SPARKLINES -->
-<script src="../../resources/js/plugin/sparkline/jquery.sparkline.min.js"></script>
-
 <!-- JQUERY VALIDATE -->
 <script src="../../resources/js/plugin/jquery-validate/jquery.validate.min.js"></script>
-
-<!-- JQUERY MASKED INPUT -->
-<script src="../../resources/js/plugin/masked-input/jquery.maskedinput.min.js"></script>
-
-<!-- JQUERY SELECT2 INPUT -->
-<script src="../../resources/js/plugin/select2/select2.min.js"></script>
-
-<!-- JQUERY UI + Bootstrap Slider -->
-<script src="../../resources/js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
-
-<!-- browser msie issue fix -->
-<script src="../../resources/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
 
 <!--[if IE 7]>
 
@@ -383,24 +359,21 @@
 
 <![endif]-->
 
-<!-- Demo purpose only -->
-<script src="../../resources/js/demo.js"></script>
-
 <!-- MAIN APP JS FILE -->
 <script src="../../resources/js/app.js"></script>
 
 <!-- Your GOOGLE ANALYTICS CODE Below -->
 <script type="text/javascript">
 
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-43548732-3']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
+//    var _gaq = _gaq || [];
+//    _gaq.push(['_setAccount', 'UA-43548732-3']);
+//    _gaq.push(['_trackPageview']);
+//
+//    (function() {
+//        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+//    })();
 
 </script>
 

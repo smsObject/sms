@@ -28,12 +28,14 @@
 
 </head>
 <body>
-<a class="btn btn-primary btn-sm" id="search" href="javascript:void(0);">查询</a>
+<!--<a class="btn btn-primary btn-sm" id="search" href="javascript:void(0);">查询</a>
 <a class="btn btn-primary btn-sm" id="refresh" href="javascript:void(0);">刷新</a>
-<a class="btn btn-primary btn-sm" id="readMeter" href="javascript:void(0);">抄表</a>
 <a class="btn btn-primary btn-sm" id="add" href="javascript:void(0);">新增</a>
 <a class="btn btn-danger btn-sm" id="delete" href="javascript:void(0);">删除</a>
-
+ -->
+<a class="btn btn-primary btn-sm" id="readMeter" href="javascript:void(0);">抄表</a>
+<a class="btn btn-primary btn-sm" id="open" href="javascript:void(0);">开阀</a>
+<a class="btn btn-primary btn-sm" id="close" href="javascript:void(0);">关阀</a>
 <table id="table"  > </table>
 </body>
 </html>

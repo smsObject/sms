@@ -25,23 +25,31 @@ public class ConcentratorServiceImpl implements ConcentratorService {
         if (concentrator == null) return;
         try {
             concentratorMapper.insert(concentrator);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public List<Concentrator> list(Concentrator concentrator) {
-        return null;
-    }
-
-    public Result<Concentrator> getConcentratorById(Integer id) {
-        if (id == null || id == 0){
+    public Result<List<Concentrator>> list(Concentrator concentrator) {
+        if (concentrator == null) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
         try {
-            Concentrator concentrator =  concentratorMapper.selectByPrimaryKey(id);
+            List<Concentrator> concentrators = concentratorMapper.list(concentrator);
+            return ResultUtil.newSuccessResult(concentrators);
+        } catch (Exception e) {
+            return ResultUtil.newFailedResult(StateCode.ERROR);
+        }
+    }
+
+    public Result<Concentrator> getConcentratorById(Integer id) {
+        if (id == null || id == 0) {
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        }
+        try {
+            Concentrator concentrator = concentratorMapper.selectByPrimaryKey(id);
             return ResultUtil.newSuccessResult(concentrator);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResultUtil.newFailedResult(StateCode.ERROR);
         }
     }
@@ -50,29 +58,29 @@ public class ConcentratorServiceImpl implements ConcentratorService {
         if (concentrator == null) return;
         try {
             concentratorMapper.updateByPrimaryKey(concentrator);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void delete(Integer id) {
-        if (id == null || id == 0 ) return;
+        if (id == null || id == 0) return;
         try {
             concentratorMapper.deleteByPrimaryKey(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public Result<List<Concentrator>> page(Concentrator concentrator) {
-        if (concentrator == null){
+        if (concentrator == null) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
         try {
-            int size= concentratorMapper.count(concentrator);
-            List<Concentrator> concentrators=concentratorMapper.list(concentrator);
-            return ResultUtil.newSuccessResult(concentrators,size);
-        }catch (Exception e){
+            int size = concentratorMapper.count(concentrator);
+            List<Concentrator> concentrators = concentratorMapper.page(concentrator);
+            return ResultUtil.newSuccessResult(concentrators, size);
+        } catch (Exception e) {
             return ResultUtil.newFailedResult(StateCode.ERROR);
         }
     }

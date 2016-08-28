@@ -5,6 +5,7 @@ import com.hbh.sms.service.DeviceService;
 import com.hbh.sms.service.common.DeviceCenter;
 import com.sms.common.Result;
 import com.sms.common.ResultUtil;
+import com.sms.common.StateCode;
 import org.smslib.helper.CommPortIdentifier;
 import org.smslib.helper.SerialPort;
 import org.springframework.stereotype.Service;
@@ -23,16 +24,17 @@ public class DeviceServiceImpl implements DeviceService {
     private static CommPortIdentifier portId;
     static Enumeration portList;
     static int bauds[] = {9600, 19200, 57600, 115200};    //检测端口所支持的波特率
+
     //AT+CGMM  TC35i AT+CGMI SIEMENS
     public Result<List<Concentrator>> scanner() {
         portList = CommPortIdentifier.getPortIdentifiers();
         System.out.println("短信设备检查中中……");
-        List<Concentrator> concentrators = new ArrayList<Concentrator>() ;
-        while (portList.hasMoreElements()){
+        List<Concentrator> concentrators = new ArrayList<Concentrator>();
+        while (portList.hasMoreElements()) {
             portId = (CommPortIdentifier) portList.nextElement();
-            if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL){
-                System.out.println("找到串口: "+portId.getName());
-                for (int i =0 ; i <bauds.length ; i++){
+            if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
+                System.out.println("找到串口: " + portId.getName());
+                for (int i = 0; i < bauds.length; i++) {
                     System.out.print("  Trying at " + bauds[i] + "...");
                     SerialPort serialPort = null;
                     InputStream inStream;
@@ -45,13 +47,12 @@ public class DeviceServiceImpl implements DeviceService {
                         outStream = serialPort.getOutputStream();
                         serialPort.enableReceiveTimeout(1000);
 
-
-                        DeviceCenter deviceCenter = new DeviceCenter(inStream , outStream);
-                        boolean b =deviceCenter.isOnline();
-                        if (b){
+                        DeviceCenter deviceCenter = new DeviceCenter(inStream, outStream);
+                        boolean b = deviceCenter.isOnline();
+                        if (b) {
                             String model = deviceCenter.getDeviceByCmd("AT+CGMM");
                             String manufacturer = deviceCenter.getDeviceByCmd("AT+CGMI");
-                            Concentrator concentrator = new Concentrator() ;
+                            Concentrator concentrator = new Concentrator();
                             concentrator.setComPort(portId.getName());
                             concentrator.setModel(model);
                             concentrator.setBaudRate(bauds[i]);
@@ -61,23 +62,22 @@ public class DeviceServiceImpl implements DeviceService {
                         }
                     } catch (Exception e) {
                         System.out.println("  没有发现设备!");
-                    }finally {
+                        return ResultUtil.newFailedResult(StateCode.ERROR);
+                    } finally {
                         try {
-                            if (serialPort != null)
-                                serialPort.close();
-                        }catch (Exception e){
+                            if (serialPort != null) serialPort.close();
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }
-
             }
         }
         return ResultUtil.newSuccessResult(concentrators);
     }
 
-    public static void main (String[] args){
-        DeviceServiceImpl deviceService= new DeviceServiceImpl();
+    public static void main(String[] args) {
+        DeviceServiceImpl deviceService = new DeviceServiceImpl();
         Result<List<Concentrator>> result = deviceService.scanner();
         System.out.print(result.getData().get(0).getBaudRate());
         System.out.print("");
