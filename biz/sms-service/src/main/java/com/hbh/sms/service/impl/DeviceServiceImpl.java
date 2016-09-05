@@ -57,7 +57,9 @@ public class DeviceServiceImpl implements DeviceService {
                             concentrator.setModel(model);
                             concentrator.setBaudRate(bauds[i]);
                             concentrator.setManufacturer(manufacturer);
+                            concentrator.setIsOnline(1);//在线
                             concentrators.add(concentrator);
+                            System.out.println("检测完毕并返回!");
                             break;
                         }
                     } catch (Exception e) {

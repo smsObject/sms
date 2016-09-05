@@ -47,7 +47,20 @@ public class DeviceController {
     @RequestMapping("/scanner")
     @ResponseBody
     public Result<List<Concentrator>> scanner() {
-        return bizDeviceService.scanner();
+        Result<List<Concentrator>> result= bizDeviceService.scanner();
+        if (result.isSuccess()){
+            for (Concentrator concentrator :result.getData()){
+                Concentrator concentrator1 = new Concentrator();
+                concentrator1.setComPort(concentrator.getComPort());
+                Result<List<Concentrator>> list=concentratorService.list(concentrator1);
+                if (list.isSuccess() && list.getData().size() == 0){
+                    concentratorService.add(concentrator);
+                }else  if(list.isSuccess()){
+                    concentratorService.updateByComPort(concentrator);
+                }
+            }
+        }
+        return result;
     }
 
     @RequestMapping("/readMeterData")

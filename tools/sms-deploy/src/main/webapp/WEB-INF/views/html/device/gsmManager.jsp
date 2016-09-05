@@ -100,7 +100,17 @@ To change this template use File | Settings | File Templates.
                         if (data.stateCode == "ERROR"){
                             alert("服务器端错误！");
                         }else{
-                            console.log(data.data);
+                            var result= data.data;
+                            var length= result.length;
+                            var str="";
+                            for(var i = 0; i <length; i++){
+                                str+=" 组件名称:"+result[i].comPort+"  ";
+                            }
+                            if (length != 0){
+                                alert("检测到设备: "+str + "已更新入库");
+                            }else{
+                                alert("没有检测到任何设备");
+                            }
                         }
                     },
                     error:function () {

@@ -84,4 +84,16 @@ public class ConcentratorServiceImpl implements ConcentratorService {
             return ResultUtil.newFailedResult(StateCode.ERROR);
         }
     }
+
+    public void updateByComPort(Concentrator concentrator) {
+        if (concentrator == null ){
+            return;
+        }
+        try{
+            concentratorMapper.updateByComPort(concentrator);
+        }catch (Exception e){
+
+        }
+        return;
+    }
 }

@@ -26,8 +26,13 @@ public class readMessageJobDetail {
         if (result.isSuccess()){
             for (Concentrator concentrator :result.getData()){
                 System.out.println("任务执行中。。。。。。");
-                List<InboundMessage> listMessage=readMessageService.readMessage(concentrator, InboundMessage.MessageClasses.ALL);
-                System.out.println("数据"+listMessage.size());
+                List<InboundMessage> listMessage = null;
+                try{
+                  listMessage=readMessageService.readMessage(concentrator, InboundMessage.MessageClasses.ALL);
+                    System.out.println("数据"+listMessage.size());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         }else {
             System.out.println("数据库查询失败!");
