@@ -63,8 +63,8 @@
       )
     values (#{comPort,jdbcType=VARCHAR}, #{baudRate,jdbcType=INTEGER}, #{manufacturer,jdbcType=VARCHAR},
       #{model,jdbcType=VARCHAR}, #{isOnline,jdbcType=SMALLINT}, #{code,jdbcType=VARCHAR}, 
-      #{smsc,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, 
-      #{createuser,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, #{updateuser,jdbcType=VARCHAR}
+      #{smsc,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, now(),
+      #{createUser,jdbcType=VARCHAR}, now(), #{createUser,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.hbh.sms.model.entity.Concentrator" >

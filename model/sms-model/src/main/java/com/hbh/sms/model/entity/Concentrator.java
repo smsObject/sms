@@ -23,5 +23,4 @@ public class Concentrator  extends  BaseDo{
     private Integer isOnline;
 
     private  String name;
-
 }

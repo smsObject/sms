@@ -41,6 +41,8 @@ public class ConcentratorServiceImplTest extends BaseTest {
         concentrator.setBaudRate(9999);
         concentrator.setManufacturer("SMS");
         concentrator.setIsOnline(1);//在线
+        concentrator.setCreateUser("me");
+        concentrator.setCode("ABAC");
         Result<Integer> result = concentratorService.add(concentrator);
     }
 
