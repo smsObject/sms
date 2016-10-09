@@ -1,8 +1,9 @@
 package com.hbh.sms.biz.concentrator.impl;
 
 import com.hbh.sms.biz.BaseTest;
-import com.hbh.sms.biz.model.entity.Concentrator;
-import com.hbh.sms.biz.service.concentrator.ConcentratorService;
+import com.hbh.sms.model.entity.Concentrator;
+import com.hbh.sms.service.concentrator.ConcentratorService;
+import com.sms.common.Result;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +41,7 @@ public class ConcentratorServiceImplTest extends BaseTest {
         concentrator.setBaudRate(9999);
         concentrator.setManufacturer("SMS");
         concentrator.setIsOnline(1);//在线
-        concentratorService.add(concentrator);
+        Result<Integer> result = concentratorService.add(concentrator);
     }
 
     /**

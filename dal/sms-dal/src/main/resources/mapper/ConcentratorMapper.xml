@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hbh.sms.biz.dal.dao.ConcentratorMapper" >
-  <resultMap id="BaseResultMap" type="com.hbh.sms.biz.model.entity.Concentrator" >
+<mapper namespace="com.hbh.sms.dal.dao.ConcentratorMapper" >
+  <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.Concentrator" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="comPort" property="comPort" jdbcType="VARCHAR" />
     <result column="baudRate" property="baudRate" jdbcType="INTEGER" />
@@ -32,18 +32,18 @@
     from t_concentrator
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="count" parameterType="com.hbh.sms.biz.model.entity.Concentrator" resultType="java.lang.Integer">
+  <select id="count" parameterType="com.hbh.sms.model.entity.Concentrator" resultType="java.lang.Integer">
     SELECT count(1)
     FROM t_concentrator
     <include refid="queryWhere"/>
   </select>
-  <select id="page" parameterType="com.hbh.sms.biz.model.entity.Concentrator" resultMap="BaseResultMap">
+  <select id="page" parameterType="com.hbh.sms.model.entity.Concentrator" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List" />
     FROM  t_concentrator
     <include refid="queryWhere"/>
     limit #{offset} , #{limit}
   </select>
-  <select id="list" parameterType="com.hbh.sms.biz.model.entity.Concentrator" resultMap="BaseResultMap">
+  <select id="list" parameterType="com.hbh.sms.model.entity.Concentrator" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List" />
     FROM  t_concentrator
     <include refid="queryWhere" />
@@ -52,7 +52,7 @@
     delete from t_concentrator
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.hbh.sms.biz.model.entity.Concentrator" >
+  <insert id="insert" parameterType="com.hbh.sms.model.entity.Concentrator" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -67,7 +67,7 @@
       #{createuser,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, #{updateuser,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.hbh.sms.biz.model.entity.Concentrator" >
+  <insert id="insertSelective" parameterType="com.hbh.sms.model.entity.Concentrator" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -149,7 +149,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hbh.sms.biz.model.entity.Concentrator" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbh.sms.model.entity.Concentrator" >
     update t_concentrator
     <set >
       <if test="comPort != null" >
@@ -191,7 +191,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hbh.sms.biz.model.entity.Concentrator" >
+  <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.Concentrator" >
     update t_concentrator
     set comPort = #{comPort,jdbcType=VARCHAR},
       baudRate = #{baudRate,jdbcType=INTEGER},
@@ -205,7 +205,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <update id="updateByComPort" parameterType="com.hbh.sms.biz.model.entity.Concentrator">
+  <update id="updateByComPort" parameterType="com.hbh.sms.model.entity.Concentrator">
     update t_concentrator
     set baudRate = #{baudRate,jdbcType=INTEGER},
       manufacturer = #{manufacturer,jdbcType=VARCHAR},

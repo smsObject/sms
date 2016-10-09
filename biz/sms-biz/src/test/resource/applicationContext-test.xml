@@ -11,7 +11,7 @@
         ">
 
 	<aop:aspectj-autoproxy />
-	<context:component-scan base-package="com.hbh.sms.service" />
+	<context:component-scan base-package="com.hbh.sms" />
 
 	<import resource="springbeans-datasource-test.xml"/>
 </beans>
