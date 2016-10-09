@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 /**
  * ConcentratorServiceImpl Tester.
  *
@@ -51,7 +53,6 @@ public class ConcentratorServiceImplTest extends BaseTest {
      */
     @Test
     public void testList() throws Exception {
-//TODO: Test goes here... 
     }
 
     /**
@@ -59,7 +60,6 @@ public class ConcentratorServiceImplTest extends BaseTest {
      */
     @Test
     public void testGetConcentratorById() throws Exception {
-//TODO: Test goes here... 
     }
 
     /**
@@ -67,7 +67,6 @@ public class ConcentratorServiceImplTest extends BaseTest {
      */
     @Test
     public void testUpdate() throws Exception {
-//TODO: Test goes here... 
     }
 
     /**
@@ -75,15 +74,12 @@ public class ConcentratorServiceImplTest extends BaseTest {
      */
     @Test
     public void testDelete() throws Exception {
-//TODO: Test goes here... 
     }
 
-    /**
-     * Method: page(Concentrator concentrator)
-     */
     @Test
     public void testPage() throws Exception {
-//TODO: Test goes here... 
+        Concentrator concentrator = new Concentrator();
+        Result<List<Concentrator>> result  = concentratorService.page(concentrator);
     }
 
     /**
@@ -91,8 +87,5 @@ public class ConcentratorServiceImplTest extends BaseTest {
      */
     @Test
     public void testUpdateByComPort() throws Exception {
-//TODO: Test goes here... 
     }
-
-
-} 
+}
