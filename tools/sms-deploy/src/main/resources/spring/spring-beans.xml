@@ -22,7 +22,7 @@
 
 	<context:component-scan base-package="com.hbh.sms" />
 
-	<bean id="readMessageJobDetail" class="com.hbh.sms.service.job.readMessageJobDetail" />
+	<bean id="readMessageJobDetail" class="com.hbh.sms.biz.service.job.readMessageJobDetail" />
 
 	<bean id="myTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject">

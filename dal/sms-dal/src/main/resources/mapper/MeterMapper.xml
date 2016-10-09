@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hbh.sms.dal.dao.MeterMapper" >
-  <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.Meter" >
+<mapper namespace="com.hbh.sms.biz.dal.dao.MeterMapper" >
+  <resultMap id="BaseResultMap" type="com.hbh.sms.biz.model.entity.Meter" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="meterNo" property="meterNo" jdbcType="VARCHAR" />
     <result column="meterCode" property="meterCode" jdbcType="VARCHAR" />
@@ -36,13 +36,13 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
-  <select id="count" parameterType="com.hbh.sms.model.entity.Meter" resultType="java.lang.Integer">
+  <select id="count" parameterType="com.hbh.sms.biz.model.entity.Meter" resultType="java.lang.Integer">
     SELECT  count(*)
     FROM    t_meter
     <include refid="meterWhere" />
   </select>
 
-  <select id="list" resultMap="BaseResultMap" parameterType="com.hbh.sms.model.entity.Meter" >
+  <select id="list" resultMap="BaseResultMap" parameterType="com.hbh.sms.biz.model.entity.Meter" >
     SELECT
     <include refid="Base_Column_List" />
     FROM t_meter
@@ -54,7 +54,7 @@
     delete from t_meter
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.hbh.sms.model.entity.Meter" >
+  <insert id="insert" parameterType="com.hbh.sms.biz.model.entity.Meter" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -69,7 +69,7 @@
       #{metermodel,jdbcType=SMALLINT}, #{createdate,jdbcType=TIMESTAMP}, #{createuser,jdbcType=VARCHAR}, 
       #{updatedate,jdbcType=TIMESTAMP}, #{updateuser,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.hbh.sms.model.entity.Meter" >
+  <insert id="insertSelective" parameterType="com.hbh.sms.biz.model.entity.Meter" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -163,7 +163,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hbh.sms.model.entity.Meter" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbh.sms.biz.model.entity.Meter" >
     update t_meter
     <set >
       <if test="meterno != null" >
@@ -211,7 +211,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.Meter" >
+  <update id="updateByPrimaryKey" parameterType="com.hbh.sms.biz.model.entity.Meter" >
     update t_meter
     set meterNo = #{meterno,jdbcType=VARCHAR},
       meterCode = #{metercode,jdbcType=VARCHAR},

@@ -1,10 +1,9 @@
 package com.sms.sendservice.test;
 
-import com.hbh.sms.model.entity.Concentrator;
-import com.hbh.sms.model.entity.SendMessageData;
-import com.hbh.sms.service.common.CyptoUtils;
-import com.hbh.sms.service.impl.ReadMessageServiceImpl;
-import com.hbh.sms.service.impl.SendMessageServiceImpl;
+import com.hbh.sms.biz.model.entity.Concentrator;
+import com.hbh.sms.biz.service.common.CyptoUtils;
+import com.hbh.sms.biz.service.impl.ReadMessageServiceImpl;
+import com.hbh.sms.biz.service.impl.SendMessageServiceImpl;
 import org.smslib.InboundMessage;
 
 import java.util.List;
