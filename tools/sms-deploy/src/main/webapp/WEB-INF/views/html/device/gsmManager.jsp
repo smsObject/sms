@@ -93,11 +93,31 @@ To change this template use File | Settings | File Templates.
                 sidePagination: 'server'
             });
 
-
             $("#scanner").click(function(){
-
+                $.ajax({
+                    url:"../device/scanner",
+                    success:function (data) {
+                        if (data.stateCode == "ERROR"){
+                            alert("服务器端错误！");
+                        }else{
+                            var result= data.data;
+                            var length= result.length;
+                            var str="";
+                            for(var i = 0; i <length; i++){
+                                str+=" 组件名称:"+result[i].comPort+"  ";
+                            }
+                            if (length != 0){
+                                alert("检测到设备: "+str + "已更新入库");
+                            }else{
+                                alert("没有检测到任何设备");
+                            }
+                        }
+                    },
+                    error:function () {
+                        alert("请求失败！");
+                    }
+                });
             });
-
         });
         //$table.bootstrapTable('getSelections');
         //$table.bootstrapTable('load', data);
@@ -105,7 +125,7 @@ To change this template use File | Settings | File Templates.
     </script>
 </head>
 <body>
-<a class="btn btn-primary btn-sm" id="scanner" href="javascript:void(0);">查询</a>
+<a class="btn btn-primary btn-sm" id="scanner" href="javascript:void(0);">扫描</a>
 <table id="table"  > </table>
 </body>
 </html>

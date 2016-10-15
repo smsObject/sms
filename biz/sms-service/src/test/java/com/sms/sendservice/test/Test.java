@@ -1,7 +1,6 @@
 package com.sms.sendservice.test;
 
 import com.hbh.sms.model.entity.Concentrator;
-import com.hbh.sms.model.entity.SendMessageData;
 import com.hbh.sms.service.common.CyptoUtils;
 import com.hbh.sms.service.impl.ReadMessageServiceImpl;
 import com.hbh.sms.service.impl.SendMessageServiceImpl;
@@ -20,11 +19,11 @@ public class Test {
     //DES共有四种工作模式-->>ECB：电子密码本模式、CBC：加密分组链接模式、CFB：加密反馈模式、OFB：输出反馈模式
     public static final String CIPHER_ALGORITHM = "DES/ECB/NoPadding";
 
-    private static String hexStr =  "0123456789ABCDEF";
+    private static String hexStr = "0123456789ABCDEF";
 
     @org.junit.Test
-    public  void  testSend(){
-        SendMessageServiceImpl sendMessageService =new SendMessageServiceImpl();
+    public void testSend() {
+        SendMessageServiceImpl sendMessageService = new SendMessageServiceImpl();
 //        Concentrator concentrator = new Concentrator("COM3" , 19200 , "SIEMENS" ,"TC35i");
 //        SendMessageData messageData = new SendMessageData("18205815108" , "smsCenter message!");
 //        boolean b= sendMessageService.sendMessage(concentrator , messageData);
@@ -32,16 +31,25 @@ public class Test {
     }
 
     @org.junit.Test
-    public void testRead(){
-        ReadMessageServiceImpl readMessageService =new ReadMessageServiceImpl();
+    public void testRead() {
+        ReadMessageServiceImpl readMessageService = new ReadMessageServiceImpl();
         Concentrator concentrator = new Concentrator();
         concentrator.setBaudRate(19200);
         concentrator.setComPort("COM4");
         concentrator.setManufacturer("SIEMENS");
         concentrator.setModel("TC35i");
-        List<InboundMessage> results= readMessageService.readMessage(concentrator,InboundMessage.MessageClasses.ALL);
-        for (InboundMessage msg : results){
-            System.out.println(msg);
+        long t = System.currentTimeMillis();
+        try {
+            List<InboundMessage> results = readMessageService.readMessage(concentrator, InboundMessage.MessageClasses.ALL);
+//        for (InboundMessage msg : results){
+//            System.out.println(msg);
+//        }
+            long l = System.currentTimeMillis();
+            System.out.println(l - t);
+            List<InboundMessage> results1 = readMessageService.readMessage(concentrator, InboundMessage.MessageClasses.ALL);
+            System.out.println("耗时" + (System.currentTimeMillis() - l));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

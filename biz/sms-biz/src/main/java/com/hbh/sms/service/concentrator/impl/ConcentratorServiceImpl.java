@@ -7,7 +7,6 @@ import com.sms.common.Result;
 import com.sms.common.ResultUtil;
 import com.sms.common.StateCode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,59 +20,94 @@ public class ConcentratorServiceImpl implements ConcentratorService {
     @Autowired
     private ConcentratorMapper concentratorMapper;
 
-    public void add(Concentrator concentrator) {
-        if (concentrator == null) return;
+    public Result<Integer> add(Concentrator concentrator) {
+        if (concentrator == null) return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "参数不能为空");
+        Result<Integer> result = null;
         try {
-            concentratorMapper.insert(concentrator);
-        }catch (Exception e){
+            int id = concentratorMapper.insert(concentrator);
+            result = ResultUtil.newSuccessResult(id);
+        } catch (Exception e) {
             e.printStackTrace();
+            result = ResultUtil.newFailedResult(StateCode.ERROR);
         }
+        return result;
     }
 
-    public List<Concentrator> list(Concentrator concentrator) {
-        return null;
+    public Result<List<Concentrator>> list(Concentrator concentrator) {
+        if (concentrator == null) {
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        }
+        try {
+            List<Concentrator> concentrators = concentratorMapper.list(concentrator);
+            return ResultUtil.newSuccessResult(concentrators);
+        } catch (Exception e) {
+            return ResultUtil.newFailedResult(StateCode.ERROR);
+        }
     }
 
     public Result<Concentrator> getConcentratorById(Integer id) {
-        if (id == null || id == 0){
+        if (id == null || id == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
         try {
-            Concentrator concentrator =  concentratorMapper.selectByPrimaryKey(id);
+            Concentrator concentrator = concentratorMapper.selectByPrimaryKey(id);
             return ResultUtil.newSuccessResult(concentrator);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResultUtil.newFailedResult(StateCode.ERROR);
         }
     }
 
-    public void update(Concentrator concentrator) {
-        if (concentrator == null) return;
+    public Result<Boolean> update(Concentrator concentrator) {
+        if (concentrator == null) return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "参数不能为空");
+        Result<Boolean> result = null;
         try {
-            concentratorMapper.updateByPrimaryKey(concentrator);
-        }catch (Exception e){
+            int i = concentratorMapper.updateByPrimaryKey(concentrator);
+            result = ResultUtil.newSuccessResult(i>0);
+        } catch (Exception e) {
             e.printStackTrace();
+            result = ResultUtil.newFailedResult(StateCode.ERROR);
         }
+        return result;
     }
 
-    public void delete(Integer id) {
-        if (id == null || id == 0 ) return;
+    public Result<Boolean> delete(Integer id) {
+        if (id == null || id == 0) return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED,"参数不能为空");
+        Result<Boolean> result = null;
         try {
-            concentratorMapper.deleteByPrimaryKey(id);
-        }catch (Exception e){
+            int i = concentratorMapper.deleteByPrimaryKey(id);
+            result = ResultUtil.newSuccessResult(i>0);
+        } catch (Exception e) {
             e.printStackTrace();
+            result = ResultUtil.newFailedResult(StateCode.ERROR);
         }
+        return result;
     }
 
     public Result<List<Concentrator>> page(Concentrator concentrator) {
-        if (concentrator == null){
+        if (concentrator == null) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
         try {
-            int size= concentratorMapper.count(concentrator);
-            List<Concentrator> concentrators=concentratorMapper.list(concentrator);
-            return ResultUtil.newSuccessResult(concentrators,size);
-        }catch (Exception e){
+            int size = concentratorMapper.count(concentrator);
+            List<Concentrator> concentrators = concentratorMapper.page(concentrator);
+            return ResultUtil.newSuccessResult(concentrators, size);
+        } catch (Exception e) {
             return ResultUtil.newFailedResult(StateCode.ERROR);
         }
+    }
+
+    public Result<Boolean> updateByComPort(Concentrator concentrator) {
+        if (concentrator == null) {
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED,"参数不能为空");
+        }
+        Result<Boolean> result = null;
+        try {
+            int i = concentratorMapper.updateByComPort(concentrator);
+            result = ResultUtil.newSuccessResult(i>0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = ResultUtil.newFailedResult(StateCode.ERROR);
+        }
+        return result;
     }
 }

@@ -1,7 +1,5 @@
 package com.hbh.sms.service.common;
 
-import com.hbh.sms.service.DeviceService;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 

@@ -20,19 +20,33 @@
     id, comPort, baudRate, manufacturer, model, is_online, code, smsc, name, createDate,
     createUser, updateDate, updateUser
   </sql>
+  <sql id="queryWhere" >
+    <where>
+      <if test="comPort != null and comPort !='' " >
+        comPort = #{comPort}
+      </if>
+    </where>
+  </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select *
+    select <include refid="Base_Column_List" />
     from t_concentrator
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="count" parameterType="com.hbh.sms.model.entity.Concentrator" resultType="java.lang.Integer">
     SELECT count(1)
     FROM t_concentrator
+    <include refid="queryWhere"/>
+  </select>
+  <select id="page" parameterType="com.hbh.sms.model.entity.Concentrator" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM  t_concentrator
+    <include refid="queryWhere"/>
+    limit #{offset} , #{limit}
   </select>
   <select id="list" parameterType="com.hbh.sms.model.entity.Concentrator" resultMap="BaseResultMap">
-    SELECT *
+    SELECT <include refid="Base_Column_List" />
     FROM  t_concentrator
-    limit #{offset} , #{limit}
+    <include refid="queryWhere" />
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_concentrator
@@ -47,10 +61,10 @@
       smsc, name, createDate, 
       createUser, updateDate, updateUser
       )
-    values (#{comport,jdbcType=VARCHAR}, #{baudrate,jdbcType=INTEGER}, #{manufacturer,jdbcType=VARCHAR}, 
+    values (#{comPort,jdbcType=VARCHAR}, #{baudRate,jdbcType=INTEGER}, #{manufacturer,jdbcType=VARCHAR},
       #{model,jdbcType=VARCHAR}, #{isOnline,jdbcType=SMALLINT}, #{code,jdbcType=VARCHAR}, 
-      #{smsc,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, 
-      #{createuser,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}, #{updateuser,jdbcType=VARCHAR}
+      #{smsc,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, now(),
+      #{createUser,jdbcType=VARCHAR}, now(), #{createUser,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.hbh.sms.model.entity.Concentrator" >
@@ -138,11 +152,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.hbh.sms.model.entity.Concentrator" >
     update t_concentrator
     <set >
-      <if test="comport != null" >
-        comPort = #{comport,jdbcType=VARCHAR},
+      <if test="comPort != null" >
+        comPort = #{comPort,jdbcType=VARCHAR},
       </if>
-      <if test="baudrate != null" >
-        baudRate = #{baudrate,jdbcType=INTEGER},
+      <if test="baudRate != null" >
+        baudRate = #{baudRate,jdbcType=INTEGER},
       </if>
       <if test="manufacturer != null" >
         manufacturer = #{manufacturer,jdbcType=VARCHAR},
@@ -179,18 +193,25 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.Concentrator" >
     update t_concentrator
-    set comPort = #{comport,jdbcType=VARCHAR},
-      baudRate = #{baudrate,jdbcType=INTEGER},
+    set comPort = #{comPort,jdbcType=VARCHAR},
+      baudRate = #{baudRate,jdbcType=INTEGER},
       manufacturer = #{manufacturer,jdbcType=VARCHAR},
       model = #{model,jdbcType=VARCHAR},
-      is_online = #{isOnline,jdbcType=SMALLINT},
       code = #{code,jdbcType=VARCHAR},
       smsc = #{smsc,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
-      createDate = #{createdate,jdbcType=TIMESTAMP},
-      createUser = #{createuser,jdbcType=VARCHAR},
       updateDate = #{updatedate,jdbcType=TIMESTAMP},
       updateUser = #{updateuser,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByComPort" parameterType="com.hbh.sms.model.entity.Concentrator">
+    update t_concentrator
+    set baudRate = #{baudRate,jdbcType=INTEGER},
+      manufacturer = #{manufacturer,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR},
+      updateDate = new date(),
+      updateUser = #{updateuser,jdbcType=VARCHAR}
+    where comPort = #{comPort,jdbcType=VARCHAR}
   </update>
 </mapper>

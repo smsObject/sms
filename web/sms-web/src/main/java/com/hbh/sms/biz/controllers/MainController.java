@@ -1,4 +1,4 @@
-package com.hbh.sms.controllers;
+package com.hbh.sms.biz.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

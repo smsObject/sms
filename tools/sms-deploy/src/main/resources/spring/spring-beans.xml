@@ -22,4 +22,29 @@
 
 	<context:component-scan base-package="com.hbh.sms" />
 
+	<bean id="readMessageJobDetail" class="com.hbh.sms.service.job.readMessageJobDetail" />
+
+	<bean id="myTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="readMessageJobDetail"/>
+		</property>
+		<property name="targetMethod">
+			<value>readMessage</value>
+		</property>
+	</bean>
+
+	<!--<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">-->
+		<!--<property name="triggers">-->
+			<!--<list>-->
+				<!--<ref bean="readMessageTrigger"/>-->
+			<!--</list>-->
+		<!--</property>-->
+		<!--<property name="autoStartup" value="true"/>-->
+	<!--</bean>-->
+
+	<bean id="readMessageTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="myTask"/>
+		<property name="cronExpression" value="*/10 * * * * ?"/><!-- 每隔10秒钟触发一次 -->
+	</bean>
+
 </beans>

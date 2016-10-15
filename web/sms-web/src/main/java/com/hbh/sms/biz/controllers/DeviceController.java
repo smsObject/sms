@@ -1,4 +1,4 @@
-package com.hbh.sms.controllers;
+package com.hbh.sms.biz.controllers;
 
 import com.hbh.sms.model.entity.Concentrator;
 import com.hbh.sms.model.entity.Meter;
@@ -47,7 +47,20 @@ public class DeviceController {
     @RequestMapping("/scanner")
     @ResponseBody
     public Result<List<Concentrator>> scanner() {
-        return bizDeviceService.scanner();
+        Result<List<Concentrator>> result= bizDeviceService.scanner();
+        if (result.isSuccess()){
+            for (Concentrator concentrator :result.getData()){
+                Concentrator concentrator1 = new Concentrator();
+                concentrator1.setComPort(concentrator.getComPort());
+                Result<List<Concentrator>> list=concentratorService.list(concentrator1);
+                if (list.isSuccess() && list.getData().size() == 0){
+                    concentratorService.add(concentrator);
+                }else  if(list.isSuccess()){
+                    concentratorService.updateByComPort(concentrator);
+                }
+            }
+        }
+        return result;
     }
 
     @RequestMapping("/readMeterData")
@@ -73,20 +86,30 @@ public class DeviceController {
         return ResultUtil.newFailedResult(StateCode.ERROR);
     }
 
-    @RequestMapping("/meterPage")
+    @RequestMapping("/concentratorPage")
     @ResponseBody
-    public PageUtil meterPage(Meter meter) {
-        Result<List<Meter>> result = meterService.page(meter);
+    public PageUtil gsmPage(Concentrator concentrator) {
+        Result<List<Concentrator>> result = concentratorService.page(concentrator);
         PageUtil pageUtil = new PageUtil();
         pageUtil.setRows(result.getData());
         pageUtil.setTotal(result.getTotalCount());
         return pageUtil;
     }
 
-    @RequestMapping("/concentratorPage")
+    @RequestMapping("/addConcentrator")
+    public Result addConcentrator(Concentrator concentrator) {
+        try {
+            concentratorService.add(concentrator);
+            return ResultUtil.newSuccessResult(StateCode.SUCCESS);
+        } catch (Exception e) {
+            return ResultUtil.newFailedResult(StateCode.ERROR);
+        }
+    }
+
+    @RequestMapping("/meterPage")
     @ResponseBody
-    public PageUtil gsmPage(Concentrator concentrator) {
-        Result<List<Concentrator>> result = concentratorService.page(concentrator);
+    public PageUtil meterPage(Meter meter) {
+        Result<List<Meter>> result = meterService.page(meter);
         PageUtil pageUtil = new PageUtil();
         pageUtil.setRows(result.getData());
         pageUtil.setTotal(result.getTotalCount());
@@ -106,16 +129,6 @@ public class DeviceController {
         }
     }
 
-    @RequestMapping("/addConcentrator")
-    public Result addConcentrator(Concentrator concentrator) {
-        try {
-            concentratorService.add(concentrator);
-            return ResultUtil.newSuccessResult(StateCode.SUCCESS);
-        } catch (Exception e) {
-            return ResultUtil.newFailedResult(StateCode.ERROR);
-        }
-    }
-
     @RequestMapping("/deleteMeter")
     public Result deleteMeter(Integer id) {
         if (id == null || id == 0) {
@@ -129,4 +142,12 @@ public class DeviceController {
         }
     }
 
+    @RequestMapping("/updateMeter")
+    public Result<Boolean> updateMeter(Meter meter){
+        if (meter == null || meter.getId() == null || meter.getId().longValue() == 0){
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        }
+       Result<Boolean> result =  meterService.update(meter);
+        return result;
+    }
 }

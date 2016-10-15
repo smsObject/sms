@@ -21,4 +21,7 @@ public interface ConcentratorMapper {
 
     List<Concentrator> list(Concentrator record);
 
+    List<Concentrator> page(Concentrator record);
+
+    int  updateByComPort(Concentrator concentrator);
 }

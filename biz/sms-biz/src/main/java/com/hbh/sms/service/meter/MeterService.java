@@ -11,7 +11,7 @@ import java.util.List;
 public interface MeterService {
     public void add(Meter meter);
     public Result<List<Meter>> list(Meter meter);
-    public void update(Meter meter);
+    public Result<Boolean> update(Meter meter);
     public void  delete(Integer id);
     public Result<Meter> getMeterById(Integer id);
     public Result<List<Meter>> page(Meter meter);

@@ -1,8 +1,8 @@
 package com.hbh.sms.service.meter.impl;
 
 import com.hbh.sms.dal.dao.MeterMapper;
-import com.hbh.sms.model.entity.Meter;
 import com.hbh.sms.service.meter.MeterService;
+import com.hbh.sms.model.entity.Meter;
 import com.sms.common.Result;
 import com.sms.common.ResultUtil;
 import com.sms.common.StateCode;
@@ -24,7 +24,7 @@ public class MeterServiceImpl implements MeterService {
         if (meter == null) return;
         try {
             meterMapper.insert(meter);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -34,51 +34,53 @@ public class MeterServiceImpl implements MeterService {
         try {
             int count = meterMapper.count(meter);
             List<Meter> meters = meterMapper.list(meter);
-            return ResultUtil.newSuccessResult(meters , count);
-        }catch (Exception e){
+            return ResultUtil.newSuccessResult(meters, count);
+        } catch (Exception e) {
             return ResultUtil.newFailedResult(StateCode.ERROR);
         }
     }
 
-    public void update(Meter meter) {
-        if (meter == null) return;
+    public Result<Boolean> update(Meter meter) {
+        if (meter == null) return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "参数缺失");
         try {
-            meterMapper.updateByPrimaryKey(meter);
-        }catch (Exception e){
+            int result = meterMapper.updateByPrimaryKey(meter);
+            return ResultUtil.newSuccessResult(result > 0);
+        } catch (Exception e) {
             e.printStackTrace();
+            return ResultUtil.newFailedResult(StateCode.ERROR);
         }
     }
 
     public void delete(Integer id) {
-        if (id == null || id == 0 ) return;
+        if (id == null || id == 0) return;
         try {
             meterMapper.deleteByPrimaryKey(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public Result<Meter> getMeterById(Integer id) {
-        if (id == null || id==0){
+        if (id == null || id == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
         try {
-            Meter meter =meterMapper.selectByPrimaryKey(id);
+            Meter meter = meterMapper.selectByPrimaryKey(id);
             return ResultUtil.newSuccessResult(meter);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResultUtil.newFailedResult(StateCode.ERROR);
         }
     }
 
     public Result<List<Meter>> page(Meter meter) {
-        if (meter == null){
+        if (meter == null) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
         try {
-            int size=meterMapper.count(meter);
+            int size = meterMapper.count(meter);
             List<Meter> meters = meterMapper.list(meter);
-            return ResultUtil.newSuccessResult(meters,size);
-        }catch (Exception e){
+            return ResultUtil.newSuccessResult(meters, size);
+        } catch (Exception e) {
             return ResultUtil.newFailedResult(StateCode.ERROR);
         }
     }

@@ -1,7 +1,6 @@
 package com.hbh.sms.service.concentrator;
 
 import com.hbh.sms.model.entity.Concentrator;
-import com.hbh.sms.model.entity.Meter;
 import com.sms.common.Result;
 
 import java.util.List;
@@ -10,10 +9,11 @@ import java.util.List;
  * Created by hbh on 2016/7/19.
  */
 public interface ConcentratorService {
-    public void add(Concentrator concentrator);
-    public List<Concentrator> list(Concentrator concentrator);
-    public Result<Concentrator> getConcentratorById(Integer id);
-    public void update(Concentrator concentrator);
-    public void  delete(Integer id);
-    public Result<List<Concentrator>> page(Concentrator concentrator);
+      Result<Integer> add(Concentrator concentrator);
+      Result<List<Concentrator>> list(Concentrator concentrator);
+      Result<Concentrator> getConcentratorById(Integer id);
+      Result<Boolean> update(Concentrator concentrator);
+      Result<Boolean>  delete(Integer id);
+      Result<List<Concentrator>> page(Concentrator concentrator);
+      Result<Boolean>  updateByComPort(Concentrator concentrato);
 }
