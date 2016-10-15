@@ -1,10 +1,13 @@
 package com.hbh.sms.model.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
  * Created by hbh on 2016/7/6.
  */
+@Data
 public class SendMessageData implements Serializable{
 
     /**接收者*/
@@ -17,28 +20,5 @@ public class SendMessageData implements Serializable{
     public SendMessageData(String receiver , String message){
         this.receiver = receiver ;
         this.message = message ;
-    }
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public boolean isSendState() {
-        return sendState;
-    }
-
-    public void setSendState(boolean sendState) {
-        this.sendState = sendState;
-    }
-
-    public String getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
     }
 }
