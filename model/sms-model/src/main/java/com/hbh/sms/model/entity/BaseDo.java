@@ -1,6 +1,7 @@
 package com.hbh.sms.model.entity;
 
 import com.sms.common.Page;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
