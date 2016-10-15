@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hbh.sms.dal.dao.CompanyInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.CompanyInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="company_code" property="companyCode" jdbcType="VARCHAR" />
+    <result column="service_call" property="serviceCall" jdbcType="VARCHAR" />
+    <result column="service_fax" property="serviceFax" jdbcType="VARCHAR" />
+    <result column="service_email" property="serviceEmail" jdbcType="VARCHAR" />
+    <result column="complaint_call" property="complaintCall" jdbcType="VARCHAR" />
+    <result column="service_website" property="serviceWebsite" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
+    <result column="contact_person" property="contactPerson" jdbcType="VARCHAR" />
+    <result column="tax_no" property="taxNo" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="bank_account" property="bankAccount" jdbcType="VARCHAR" />
+    <result column="allocated_region" property="allocatedRegion" jdbcType="VARCHAR" />
+    <result column="createUser" property="createuser" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updateUser" property="updateuser" jdbcType="VARCHAR" />
+    <result column="updateDate" property="updatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, company_name, company_code, service_call, service_fax, service_email, complaint_call, 
+    service_website, address, zip_code, contact_person, tax_no, bank_name, bank_account, 
+    allocated_region, createUser, createTime, updateUser, updateDate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_company_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_company_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hbh.sms.model.entity.CompanyInfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_company_info (company_name, company_code, service_call, 
+      service_fax, service_email, complaint_call, 
+      service_website, address, zip_code, 
+      contact_person, tax_no, bank_name, 
+      bank_account, allocated_region, createUser, 
+      createTime, updateUser, updateDate
+      )
+    values (#{companyName,jdbcType=VARCHAR}, #{companyCode,jdbcType=VARCHAR}, #{serviceCall,jdbcType=VARCHAR}, 
+      #{serviceFax,jdbcType=VARCHAR}, #{serviceEmail,jdbcType=VARCHAR}, #{complaintCall,jdbcType=VARCHAR}, 
+      #{serviceWebsite,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{zipCode,jdbcType=VARCHAR}, 
+      #{contactPerson,jdbcType=VARCHAR}, #{taxNo,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, 
+      #{bankAccount,jdbcType=VARCHAR}, #{allocatedRegion,jdbcType=VARCHAR}, #{createuser,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updateuser,jdbcType=VARCHAR}, #{updatedate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hbh.sms.model.entity.CompanyInfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_company_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="companyCode != null" >
+        company_code,
+      </if>
+      <if test="serviceCall != null" >
+        service_call,
+      </if>
+      <if test="serviceFax != null" >
+        service_fax,
+      </if>
+      <if test="serviceEmail != null" >
+        service_email,
+      </if>
+      <if test="complaintCall != null" >
+        complaint_call,
+      </if>
+      <if test="serviceWebsite != null" >
+        service_website,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="zipCode != null" >
+        zip_code,
+      </if>
+      <if test="contactPerson != null" >
+        contact_person,
+      </if>
+      <if test="taxNo != null" >
+        tax_no,
+      </if>
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="bankAccount != null" >
+        bank_account,
+      </if>
+      <if test="allocatedRegion != null" >
+        allocated_region,
+      </if>
+      <if test="createuser != null" >
+        createUser,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updateuser != null" >
+        updateUser,
+      </if>
+      <if test="updatedate != null" >
+        updateDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCode != null" >
+        #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCall != null" >
+        #{serviceCall,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceFax != null" >
+        #{serviceFax,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceEmail != null" >
+        #{serviceEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="complaintCall != null" >
+        #{complaintCall,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceWebsite != null" >
+        #{serviceWebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPerson != null" >
+        #{contactPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="taxNo != null" >
+        #{taxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="allocatedRegion != null" >
+        #{allocatedRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="createuser != null" >
+        #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuser != null" >
+        #{updateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedate != null" >
+        #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hbh.sms.model.entity.CompanyInfo" >
+    update t_company_info
+    <set >
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCode != null" >
+        company_code = #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCall != null" >
+        service_call = #{serviceCall,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceFax != null" >
+        service_fax = #{serviceFax,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceEmail != null" >
+        service_email = #{serviceEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="complaintCall != null" >
+        complaint_call = #{complaintCall,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceWebsite != null" >
+        service_website = #{serviceWebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        zip_code = #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPerson != null" >
+        contact_person = #{contactPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="taxNo != null" >
+        tax_no = #{taxNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        bank_account = #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="allocatedRegion != null" >
+        allocated_region = #{allocatedRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="createuser != null" >
+        createUser = #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuser != null" >
+        updateUser = #{updateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedate != null" >
+        updateDate = #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.CompanyInfo" >
+    update t_company_info
+    set company_name = #{companyName,jdbcType=VARCHAR},
+      company_code = #{companyCode,jdbcType=VARCHAR},
+      service_call = #{serviceCall,jdbcType=VARCHAR},
+      service_fax = #{serviceFax,jdbcType=VARCHAR},
+      service_email = #{serviceEmail,jdbcType=VARCHAR},
+      complaint_call = #{complaintCall,jdbcType=VARCHAR},
+      service_website = #{serviceWebsite,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      zip_code = #{zipCode,jdbcType=VARCHAR},
+      contact_person = #{contactPerson,jdbcType=VARCHAR},
+      tax_no = #{taxNo,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      bank_account = #{bankAccount,jdbcType=VARCHAR},
+      allocated_region = #{allocatedRegion,jdbcType=VARCHAR},
+      createUser = #{createuser,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateUser = #{updateuser,jdbcType=VARCHAR},
+      updateDate = #{updatedate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
