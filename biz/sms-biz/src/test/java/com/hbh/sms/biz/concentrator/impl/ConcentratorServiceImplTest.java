@@ -2,7 +2,7 @@ package com.hbh.sms.biz.concentrator.impl;
 
 import com.hbh.sms.biz.BaseTest;
 import com.hbh.sms.model.entity.Concentrator;
-import com.hbh.sms.service.concentrator.ConcentratorService;
+import com.hbh.sms.biz.service.concentrator.ConcentratorService;
 import com.sms.common.Result;
 import org.junit.After;
 import org.junit.Before;
