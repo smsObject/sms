@@ -1,12 +1,13 @@
 package com.hbh.sms.model.entity;
 
+import com.sms.common.PagedQuery;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class CompanyInfo implements Serializable {
+public class CompanyInfo extends PagedQuery implements Serializable {
     private Integer id;
 
     private String companyName;

@@ -7,7 +7,7 @@
     <groupId>com.hbh</groupId>
     <artifactId>sms</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <properties>
         <spring.version>4.1.6.RELEASE</spring.version>
@@ -15,62 +15,62 @@
     </properties>
 
     <dependencies>
-    <!-- springframework -->
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-core</artifactId>
-        <version>4.1.6.RELEASE</version>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-orm</artifactId>
-        <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-beans</artifactId>
-        <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-aop</artifactId>
-        <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-context</artifactId>
-        <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-web</artifactId>
-        <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-tx</artifactId>
-        <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-webmvc</artifactId>
-        <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-context-support</artifactId>
-        <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-jms</artifactId>
-        <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-aspects</artifactId>
-        <version>${spring.version}</version>
-    </dependency>
+        <!-- springframework -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>4.1.6.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -78,12 +78,24 @@
             <version>${spring.version}</version>
         </dependency>
 
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-test</artifactId>
-        <version>${spring.version}</version>
-        <scope>test</scope>
-    </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>4.0.0</version>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
@@ -167,6 +179,46 @@
         </dependency>
     </dependencies>
 
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.hbh</groupId>
+                <artifactId>sms-common</artifactId>
+                <version>${sms.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hbh</groupId>
+                <artifactId>sms-model</artifactId>
+                <version>${sms.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hbh</groupId>
+                <artifactId>sms-dal</artifactId>
+                <version>${sms.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hbh</groupId>
+                <artifactId>sms-service</artifactId>
+                <version>${sms.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hbh</groupId>
+                <artifactId>sms-biz</artifactId>
+                <version>${sms.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hbh</groupId>
+                <artifactId>sms-web</artifactId>
+                <version>${sms.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hbh</groupId>
+                <artifactId>sms-deploy</artifactId>
+                <version>${sms.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <!-- BUILD PLUGS -->
     <build>

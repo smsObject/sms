@@ -3,6 +3,7 @@ package com.hbh.sms.biz.service.CompanyInfo.impl;
 import com.hbh.sms.dal.dao.CompanyInfoMapper;
 import com.hbh.sms.model.entity.CompanyInfo;
 import com.hbh.sms.biz.service.CompanyInfo.CompanyInfoService;
+import com.sms.common.PagedData;
 import com.sms.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,32 +18,26 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
     @Autowired
     private CompanyInfoMapper companyInfoMapper;
 
-    @Override
     public Result<Long> add(CompanyInfo companyInfo) {
         return null;
     }
 
-    @Override
     public Result<Boolean> deleteById(Long id) {
         return null;
     }
 
-    @Override
     public Result<Boolean> update(CompanyInfo companyInfo) {
         return null;
     }
 
-    @Override
     public Result<List<CompanyInfo>> list(CompanyInfo companyInfo) {
         return null;
     }
 
-    @Override
-    public Result<List<CompanyInfo>> page(CompanyInfo companyInfo) {
+    public Result<PagedData<CompanyInfo>> page(CompanyInfo companyInfo) {
         return null;
     }
 
-    @Override
     public Result<CompanyInfo> getCompanyInfoById(Long id) {
         return null;
     }
