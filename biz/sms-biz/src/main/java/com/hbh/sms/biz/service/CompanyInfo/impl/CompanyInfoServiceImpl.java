@@ -1,10 +1,14 @@
 package com.hbh.sms.biz.service.CompanyInfo.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.hbh.sms.dal.dao.CompanyInfoMapper;
 import com.hbh.sms.model.entity.CompanyInfo;
 import com.hbh.sms.biz.service.CompanyInfo.CompanyInfoService;
 import com.sms.common.PagedData;
 import com.sms.common.Result;
+import com.sms.common.ResultUtil;
+import com.sms.common.StateCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +39,19 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
     }
 
     public Result<PagedData<CompanyInfo>> page(CompanyInfo companyInfo) {
-        return null;
+        if (companyInfo == null) {
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "参数缺失");
+        }
+        Result<PagedData<CompanyInfo>> result = null;
+        Page page = PageHelper.startPage(companyInfo.getPageNo(), companyInfo.getPageSize());
+        List<CompanyInfo> companyInfos = companyInfoMapper.query(companyInfo);
+        PagedData<CompanyInfo> pagedData = new PagedData<>();
+        pagedData.setPageNo(companyInfo.getPageNo());
+        pagedData.setPageSize(companyInfo.getPageSize());
+        pagedData.setTotalSize(page.getTotal());
+        pagedData.setResultList(companyInfos);
+        result = ResultUtil.newSuccessResult(pagedData);
+        return result;
     }
 
     public Result<CompanyInfo> getCompanyInfoById(Long id) {

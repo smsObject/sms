@@ -1,28 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:context="http://www.springframework.org/schema/context"
-	   xmlns:tx="http://www.springframework.org/schema/tx" xmlns:cache="http://www.springframework.org/schema/cache"
-	   xmlns:task="http://www.springframework.org/schema/task" xmlns:aop="http://www.springframework.org/schema/aop"
-	   xmlns:lang="http://www.springframework.org/schema/lang" xmlns:util="http://www.springframework.org/schema/util"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
-	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-	http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.0.xsd
-	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
-	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
-	http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.0.xsd
-	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd"
-	   default-lazy-init="true">
-	<!-- 采用注释的方式配置bean -->
-	<context:annotation-config />
-	<aop:aspectj-autoproxy proxy-target-class="true" />
-	<!-- 配置文件位置 -->
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd" >
+
 	<context:property-placeholder location="classpath:env/config.properties" />
 
-	<context:component-scan base-package="com.hbh.sms" />
-
-	<bean id="readMessageJobDetail" class="com.hbh.sms.service.job.readMessageJobDetail" />
+	<bean id="readMessageJobDetail" class="com.hbh.sms.biz.service.job.readMessageJobDetail" />
 
 	<bean id="myTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject">
@@ -44,7 +29,7 @@
 
 	<bean id="readMessageTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="myTask"/>
-		<property name="cronExpression" value="*/10 * * * * ?"/><!-- 每隔10秒钟触发一次 -->
+		<property name="cronExpression" value="*/10 * * * * ?"/>
 	</bean>
 
 </beans>

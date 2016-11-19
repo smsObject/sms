@@ -18,8 +18,8 @@
     <dependencies>
         <dependency>
             <groupId>com.hbh</groupId>
-            <artifactId>sms-web</artifactId>
-            <version>1.0.0</version>
+            <artifactId>sms-biz</artifactId>
         </dependency>
     </dependencies>
+
 </project>

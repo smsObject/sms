@@ -1,6 +1,7 @@
 package com.hbh.sms.biz.service.CompanyInfo;
 
 import com.hbh.sms.model.entity.CompanyInfo;
+import com.sms.common.PagedData;
 import com.sms.common.Result;
 
 import java.util.List;
@@ -14,6 +15,6 @@ public interface CompanyInfoService {
     Result<Boolean> deleteById(Long id);
     Result<Boolean> update(CompanyInfo companyInfo);
     Result<List<CompanyInfo>> list(CompanyInfo companyInfo);
-    Result<List<CompanyInfo>> page(CompanyInfo companyInfo);
+    Result<PagedData<CompanyInfo>> page(CompanyInfo companyInfo);
     Result<CompanyInfo> getCompanyInfoById(Long id);
 }

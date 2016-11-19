@@ -33,6 +33,67 @@
     from t_company_info
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  <select id="" resultMap="BaseResultMap" parameterType="com.hbh.sms.model.entity.CompanyInfo">
+    SELECT <include refid="Base_Column_List"/>
+      FROM t_company_info
+    <where>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="companyCode != null" >
+        company_code,
+      </if>
+      <if test="serviceCall != null" >
+        service_call,
+      </if>
+      <if test="serviceFax != null" >
+        service_fax,
+      </if>
+      <if test="serviceEmail != null" >
+        service_email,
+      </if>
+      <if test="complaintCall != null" >
+        complaint_call,
+      </if>
+      <if test="serviceWebsite != null" >
+        service_website,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="zipCode != null" >
+        zip_code,
+      </if>
+      <if test="contactPerson != null" >
+        contact_person,
+      </if>
+      <if test="taxNo != null" >
+        tax_no,
+      </if>
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="bankAccount != null" >
+        bank_account,
+      </if>
+      <if test="allocatedRegion != null" >
+        allocated_region,
+      </if>
+      <if test="createuser != null" >
+        createUser,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updateuser != null" >
+        updateUser,
+      </if>
+      <if test="updatedate != null" >
+        updateDate,
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_company_info
     where id = #{id,jdbcType=INTEGER}
