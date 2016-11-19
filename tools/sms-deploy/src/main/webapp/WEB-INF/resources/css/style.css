@@ -342,7 +342,7 @@ body
 	top:50%
 }
 .show_btn span {
-	background: url(../images/indexhead_sprite.png) -46px -30px no-repeat;
+	background: url(resources/images/indexhead_sprite.png) -46px -30px no-repeat;
 	width: 25px;
 	height: 100px;
 	overflow: hidden;
@@ -352,7 +352,7 @@ body
 	left: 0px;
 }
 .side_title span {
-	background: url(../images/indexhead_sprite.png) -14px -30px no-repeat;
+	background: url(resources/images/indexhead_sprite.png) -14px -30px no-repeat;
 	width: 25px;
 	height: 40px;
 	overflow: hidden;
@@ -671,8 +671,8 @@ body
     transition: all .2s linear 0s;
 }
 .form-horizontal .Validform_checktip {margin-top: 5px;}
-.Validform_wrong { background: url(../images/icon_error_s.png) no-repeat 0 center;color: #ef392b;}
-.Validform_right {background: url(../images/icon_right_s.png) no-repeat 0 center;}
+.Validform_wrong { background: url(resources/images/icon_error_s.png) no-repeat 0 center;color: #ef392b;}
+.Validform_right {background: url(resources/images/icon_right_s.png) no-repeat 0 center;}
 .Validform_wrong, .Validform_right, .Validform_warning {
     display: inline-block;
     height: 32px;
