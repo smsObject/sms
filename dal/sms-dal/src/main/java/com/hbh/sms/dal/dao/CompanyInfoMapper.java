@@ -5,15 +5,15 @@ import com.hbh.sms.model.entity.CompanyInfo;
 import java.util.List;
 
 public interface CompanyInfoMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(CompanyInfo record);
 
     int insertSelective(CompanyInfo record);
 
-    CompanyInfo selectByPrimaryKey(Integer id);
+    CompanyInfo selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(CompanyInfo record);
+//    int updateByPrimaryKeySelective(CompanyInfo record);
 
     int updateByPrimaryKey(CompanyInfo record);
 

@@ -2,13 +2,14 @@ package com.hbh.sms.model.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by hbh on 2016/7/19.
  */
 @Data
-public class Meter extends BaseDo {
+public class Meter extends BaseDo implements Serializable {
     /**编号*/
     private String meterNo;
     /**编码*/

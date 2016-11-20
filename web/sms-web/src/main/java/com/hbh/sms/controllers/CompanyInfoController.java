@@ -14,11 +14,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * Created by user on 2016/11/13.
  */
-@Controller()
-@RequestMapping("companyInfo")
+@Controller
+@RequestMapping("/companyInfo")
 public class CompanyInfoController {
     @Autowired
     private CompanyInfoService companyInfoService;
+
+    @RequestMapping("list")
+    public String list(){
+        return  "companyInfo/list";
+    }
 
     @RequestMapping("/add")
     public Result<Long> addCompanyInfo(CompanyInfo companyInfo){

@@ -5,20 +5,18 @@ import com.hbh.sms.model.entity.Meter;
 import java.util.List;
 
 public interface MeterMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(Meter record);
 
-    int insertSelective(Meter record);
+//    int insertSelective(Meter record);
 
-    Meter selectByPrimaryKey(Integer id);
+    Meter selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(Meter record);
+//    int updateByPrimaryKeySelective(Meter record);
 
     int updateByPrimaryKey(Meter record);
 
-    int count(Meter record);
-
-    List<Meter> list(Meter record);
+    List<Meter> query(Meter record);
 
 }

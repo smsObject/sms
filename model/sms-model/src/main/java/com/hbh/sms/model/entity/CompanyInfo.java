@@ -1,14 +1,10 @@
 package com.hbh.sms.model.entity;
 
-import com.sms.common.PagedQuery;
 import lombok.Data;
-
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
-public class CompanyInfo extends PagedQuery implements Serializable {
-    private Integer id;
+public class CompanyInfo extends BaseDo implements Serializable {
 
     private String companyName;
 
@@ -37,14 +33,6 @@ public class CompanyInfo extends PagedQuery implements Serializable {
     private String bankAccount;
 
     private String allocatedRegion;
-
-    private String createuser;
-
-    private Date createtime;
-
-    private String updateuser;
-
-    private Date updatedate;
 
     private static final long serialVersionUID = 1L;
 }

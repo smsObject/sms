@@ -2,19 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hbh.sms.dal.dao.ConcentratorMapper" >
   <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.Concentrator" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="comPort" property="comPort" jdbcType="VARCHAR" />
-    <result column="baudRate" property="baudRate" jdbcType="INTEGER" />
-    <result column="manufacturer" property="manufacturer" jdbcType="VARCHAR" />
-    <result column="model" property="model" jdbcType="VARCHAR" />
-    <result column="is_online" property="isOnline" jdbcType="SMALLINT" />
-    <result column="code" property="code" jdbcType="VARCHAR" />
-    <result column="smsc" property="smsc" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
-    <result column="createUser" property="createUser" jdbcType="VARCHAR" />
-    <result column="updateDate" property="updateDate" jdbcType="TIMESTAMP" />
-    <result column="updateUser" property="updateUser" jdbcType="VARCHAR" />
+    <id column="id" property="id"  />
+    <result column="comPort" property="comPort"  />
+    <result column="baudRate" property="baudRate"  />
+    <result column="manufacturer" property="manufacturer"  />
+    <result column="model" property="model"  />
+    <result column="is_online" property="isOnline"  />
+    <result column="code" property="code"  />
+    <result column="smsc" property="smsc"  />
+    <result column="name" property="name"  />
+    <result column="createDate" property="createDate"  />
+    <result column="createUser" property="createUser"  />
+    <result column="updateDate" property="updateDate"  />
+    <result column="updateUser" property="updateUser"  />
   </resultMap>
   <sql id="Base_Column_List" >
     id, comPort, baudRate, manufacturer, model, is_online, code, smsc, name, createDate,
@@ -27,33 +27,25 @@
       </if>
     </where>
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select <include refid="Base_Column_List" />
     from t_concentrator
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id}
   </select>
-  <select id="count" parameterType="com.hbh.sms.model.entity.Concentrator" resultType="java.lang.Integer">
-    SELECT count(1)
-    FROM t_concentrator
-    <include refid="queryWhere"/>
-  </select>
-  <select id="page" parameterType="com.hbh.sms.model.entity.Concentrator" resultMap="BaseResultMap">
+
+  <select id="query" parameterType="com.hbh.sms.model.entity.Concentrator" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List" />
     FROM  t_concentrator
     <include refid="queryWhere"/>
-    limit #{offset} , #{limit}
   </select>
-  <select id="list" parameterType="com.hbh.sms.model.entity.Concentrator" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List" />
-    FROM  t_concentrator
-    <include refid="queryWhere" />
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from t_concentrator
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id}
   </delete>
+
   <insert id="insert" parameterType="com.hbh.sms.model.entity.Concentrator" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_concentrator (comPort, baudRate, manufacturer, 
@@ -61,157 +53,77 @@
       smsc, name, createDate, 
       createUser, updateDate, updateUser
       )
-    values (#{comPort,jdbcType=VARCHAR}, #{baudRate,jdbcType=INTEGER}, #{manufacturer,jdbcType=VARCHAR},
-      #{model,jdbcType=VARCHAR}, #{isOnline,jdbcType=SMALLINT}, #{code,jdbcType=VARCHAR}, 
-      #{smsc,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, now(),
-      #{createUser,jdbcType=VARCHAR}, now(), #{createUser,jdbcType=VARCHAR}
+    values (#{comPort}, #{baudRate}, #{manufacturer},
+      #{model}, #{isOnline}, #{code},
+      #{smsc}, #{name}, now(),
+      #{createUser}, now(), #{createUser}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.hbh.sms.model.entity.Concentrator" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_concentrator
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="comport != null" >
-        comPort,
-      </if>
-      <if test="baudrate != null" >
-        baudRate,
-      </if>
-      <if test="manufacturer != null" >
-        manufacturer,
-      </if>
-      <if test="model != null" >
-        model,
-      </if>
-      <if test="isOnline != null" >
-        is_online,
-      </if>
-      <if test="code != null" >
-        code,
-      </if>
-      <if test="smsc != null" >
-        smsc,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="createdate != null" >
-        createDate,
-      </if>
-      <if test="createuser != null" >
-        createUser,
-      </if>
-      <if test="updatedate != null" >
-        updateDate,
-      </if>
-      <if test="updateuser != null" >
-        updateUser,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="comport != null" >
-        #{comport,jdbcType=VARCHAR},
-      </if>
-      <if test="baudrate != null" >
-        #{baudrate,jdbcType=INTEGER},
-      </if>
-      <if test="manufacturer != null" >
-        #{manufacturer,jdbcType=VARCHAR},
-      </if>
-      <if test="model != null" >
-        #{model,jdbcType=VARCHAR},
-      </if>
-      <if test="isOnline != null" >
-        #{isOnline,jdbcType=SMALLINT},
-      </if>
-      <if test="code != null" >
-        #{code,jdbcType=VARCHAR},
-      </if>
-      <if test="smsc != null" >
-        #{smsc,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="createdate != null" >
-        #{createdate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createuser != null" >
-        #{createuser,jdbcType=VARCHAR},
-      </if>
-      <if test="updatedate != null" >
-        #{updatedate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateuser != null" >
-        #{updateuser,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hbh.sms.model.entity.Concentrator" >
-    update t_concentrator
-    <set >
-      <if test="comPort != null" >
-        comPort = #{comPort,jdbcType=VARCHAR},
-      </if>
-      <if test="baudRate != null" >
-        baudRate = #{baudRate,jdbcType=INTEGER},
-      </if>
-      <if test="manufacturer != null" >
-        manufacturer = #{manufacturer,jdbcType=VARCHAR},
-      </if>
-      <if test="model != null" >
-        model = #{model,jdbcType=VARCHAR},
-      </if>
-      <if test="isOnline != null" >
-        is_online = #{isOnline,jdbcType=SMALLINT},
-      </if>
-      <if test="code != null" >
-        code = #{code,jdbcType=VARCHAR},
-      </if>
-      <if test="smsc != null" >
-        smsc = #{smsc,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="createdate != null" >
-        createDate = #{createdate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createuser != null" >
-        createUser = #{createuser,jdbcType=VARCHAR},
-      </if>
-      <if test="updatedate != null" >
-        updateDate = #{updatedate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateuser != null" >
-        updateUser = #{updateuser,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
+  <!--<update id="updateByPrimaryKeySelective" parameterType="com.hbh.sms.model.entity.Concentrator" >-->
+    <!--update t_concentrator-->
+    <!--<set >-->
+      <!--<if test="comPort != null" >-->
+        <!--comPort = #{comPort},-->
+      <!--</if>-->
+      <!--<if test="baudRate != null" >-->
+        <!--baudRate = #{baudRate},-->
+      <!--</if>-->
+      <!--<if test="manufacturer != null" >-->
+        <!--manufacturer = #{manufacturer},-->
+      <!--</if>-->
+      <!--<if test="model != null" >-->
+        <!--model = #{model},-->
+      <!--</if>-->
+      <!--<if test="isOnline != null" >-->
+        <!--is_online = #{isOnline},-->
+      <!--</if>-->
+      <!--<if test="code != null" >-->
+        <!--code = #{code},-->
+      <!--</if>-->
+      <!--<if test="smsc != null" >-->
+        <!--smsc = #{smsc},-->
+      <!--</if>-->
+      <!--<if test="name != null" >-->
+        <!--name = #{name},-->
+      <!--</if>-->
+      <!--<if test="createdate != null" >-->
+        <!--createDate = #{createdate},-->
+      <!--</if>-->
+      <!--<if test="createuser != null" >-->
+        <!--createUser = #{createuser},-->
+      <!--</if>-->
+      <!--<if test="updatedate != null" >-->
+        <!--updateDate = now(),-->
+      <!--</if>-->
+      <!--<if test="updateuser != null" >-->
+        <!--updateUser = #{updateuser},-->
+      <!--</if>-->
+    <!--</set>-->
+    <!--where id = #{id}-->
+  <!--</update>-->
+
   <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.Concentrator" >
     update t_concentrator
-    set comPort = #{comPort,jdbcType=VARCHAR},
-      baudRate = #{baudRate,jdbcType=INTEGER},
-      manufacturer = #{manufacturer,jdbcType=VARCHAR},
-      model = #{model,jdbcType=VARCHAR},
-      code = #{code,jdbcType=VARCHAR},
-      smsc = #{smsc,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      updateDate = #{updatedate,jdbcType=TIMESTAMP},
-      updateUser = #{updateuser,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    set comPort = #{comPort},
+      baudRate = #{baudRate},
+      manufacturer = #{manufacturer},
+      model = #{model},
+      code = #{code},
+      smsc = #{smsc},
+      name = #{name},
+      updateDate = now(),
+      updateUser = #{updateuser}
+    where id = #{id}
   </update>
 
   <update id="updateByComPort" parameterType="com.hbh.sms.model.entity.Concentrator">
     update t_concentrator
-    set baudRate = #{baudRate,jdbcType=INTEGER},
-      manufacturer = #{manufacturer,jdbcType=VARCHAR},
-      model = #{model,jdbcType=VARCHAR},
-      updateDate = new date(),
-      updateUser = #{updateuser,jdbcType=VARCHAR}
-    where comPort = #{comPort,jdbcType=VARCHAR}
+    set baudRate = #{baudRate},
+      manufacturer = #{manufacturer},
+      model = #{model},
+      updateDate = now(),
+      updateUser = #{updateuser}
+    where comPort = #{comPort}
   </update>
 </mapper>

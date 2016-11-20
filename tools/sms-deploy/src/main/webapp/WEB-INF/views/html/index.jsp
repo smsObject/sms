@@ -6,41 +6,41 @@
     <title>远程抄表管理系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="">
-    <link href="resources/plugin/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="resources/css/font-awesome.min.css" />
+    <link href="../../resources/plugin/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../resources/css/font-awesome.min.css" />
     <!--[if IE 7]>
-    <link rel="stylesheet" href="resources/css/font-awesome-ie7.min.css" />
+    <link rel="stylesheet" href="../../resources/css/font-awesome-ie7.min.css" />
     <![endif]-->
-    <link rel="stylesheet" href="resources/css/ace.min.css" />
-    <link rel="stylesheet" href="resources/css/ace-rtl.min.css" />
-    <link rel="stylesheet" href="resources/css/ace-skins.min.css" />
-    <link rel="stylesheet" href="resources/css/style.css"/>
+    <link rel="stylesheet" href="../../resources/css/ace.min.css" />
+    <link rel="stylesheet" href="../../resources/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="../../resources/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="../../resources/css/style.css"/>
     <!--[if lte IE 8]>
-    <link rel="stylesheet" href="resources/css/ace-ie.min.css" />
+    <link rel="stylesheet" href="../../resources/css/ace-ie.min.css" />
     <![endif]-->
-    <script src="resources/js/ace-extra.min.js"></script>
+    <script src="../../resources/js/ace-extra.min.js"></script>
     <!--[if lt IE 9]>
-    <script src="resources/js/html5shiv.js"></script>
-    <script src="resources/js/respond.min.js"></script>
+    <script src="../../resources/js/html5shiv.js"></script>
+    <script src="../../resources/js/respond.min.js"></script>
     <![endif]-->
     <!--[if !IE]> -->
-    <script src="resources/js/jquery-1.9.1.min.js"></script>
+    <script src="../../resources/js/jquery-1.9.1.min.js"></script>
     <!-- <![endif]-->
     <!--[if IE]>
-    <script type="text/javascript">window.jQuery || document.write("<script src='resources/js/jquery-1.10.2.min.js'>"+"<"+"script>");</script>
+    <script type="text/javascript">window.jQuery || document.write("<script src='../../resources/js/jquery-1.10.2.min.js'>"+"<"+"script>");</script>
     <![endif]-->
     <script type="text/javascript">
-        if("ontouchend" in document) document.write("<script src='resources/js/jquery.mobile.custom.min.js'>"+"<"+"script>");
+        if("ontouchend" in document) document.write("<script src='../../resources/js/jquery.mobile.custom.min.js'>"+"<"+"script>");
     </script>
-    <script src="resources/plugin/bootstrap/js/bootstrap.min.js"></script>
-    <script src="resources/js/typeahead-bs2.min.js"></script>
+    <script src="../../resources/plugin/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../resources/js/typeahead-bs2.min.js"></script>
     <!--[if lte IE 8]>
-    <script src="resources/js/excanvas.min.js"></script>
+    <script src="../../resources/js/excanvas.min.js"></script>
     <![endif]-->
-    <script src="resources/js/ace-elements.min.js"></script>
-    <script src="resources/js/ace.min.js"></script>
-    <script src="resources/plugin/layer/layer.js" type="text/javascript"></script>
-    <script src="resources/plugin/laydate/laydate.js" type="text/javascript"></script>
+    <script src="../../resources/js/ace-elements.min.js"></script>
+    <script src="../../resources/js/ace.min.js"></script>
+    <script src="../../resources/plugin/layer/layer.js" type="text/javascript"></script>
+    <script src="../../resources/plugin/laydate/laydate.js" type="text/javascript"></script>
 
 
     <script type="text/javascript">
@@ -319,7 +319,7 @@
             </div><!-- #sidebar-shortcuts -->
             <ul class="nav nav-list" id="nav_list">
                 <li class="home"><a href="javascript:void(0)" name="home.html" class="iframeurl" title=""><i class="icon-dashboard"></i><span class="menu-text"> 系统首页 </span></a></li>
-                <li class="home"><a href="javascript:void(0)" name="companyInfo/list.jhtml" class="iframeurl" title=""><i class="icon-dashboard"></i><span class="menu-text"> 公司信息 </span></a></li>
+                <li class="home"><a href="javascript:void(0)" name="companyInfo/list.action" class="iframeurl" title=""><i class="icon-dashboard"></i><span class="menu-text"> 公司信息 </span></a></li>
 
                 <li><a href="#" class="dropdown-toggle"><i class="icon-desktop"></i><span class="menu-text">用户信息</span><b class="arrow icon-angle-down"></b></a>
                     <ul class="submenu">

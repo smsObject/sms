@@ -23,15 +23,27 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
     private CompanyInfoMapper companyInfoMapper;
 
     public Result<Long> add(CompanyInfo companyInfo) {
-        return null;
+        if (companyInfo == null){
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED,"参数缺失");
+        }
+        int i = companyInfoMapper.insert(companyInfo);
+        return ResultUtil.newSuccessResult(companyInfo.getId());
     }
 
     public Result<Boolean> deleteById(Long id) {
-        return null;
+        if (id == null || id.longValue() == 0){
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "参数缺失");
+        }
+        int i = companyInfoMapper.deleteByPrimaryKey(id);
+        return ResultUtil.newSuccessResult(i > 0);
     }
 
     public Result<Boolean> update(CompanyInfo companyInfo) {
-        return null;
+        if (companyInfo == null){
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED,"参数缺失");
+        }
+        int i = companyInfoMapper.updateByPrimaryKey(companyInfo);
+        return ResultUtil.newSuccessResult(i > 0);
     }
 
     public Result<List<CompanyInfo>> list(CompanyInfo companyInfo) {
@@ -55,6 +67,11 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
     }
 
     public Result<CompanyInfo> getCompanyInfoById(Long id) {
-        return null;
+        if (id == null || id.longValue() == 0){
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "参数缺失");
+        }
+        CompanyInfo companyInfo = companyInfoMapper.selectByPrimaryKey(id);
+        return ResultUtil.newSuccessResult(companyInfo);
     }
+
 }

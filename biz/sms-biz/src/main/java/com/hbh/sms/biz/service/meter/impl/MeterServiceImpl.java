@@ -1,8 +1,11 @@
 package com.hbh.sms.biz.service.meter.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.hbh.sms.dal.dao.MeterMapper;
 import com.hbh.sms.biz.service.meter.MeterService;
 import com.hbh.sms.model.entity.Meter;
+import com.sms.common.PagedData;
 import com.sms.common.Result;
 import com.sms.common.ResultUtil;
 import com.sms.common.StateCode;
@@ -20,68 +23,50 @@ public class MeterServiceImpl implements MeterService {
     @Autowired
     private MeterMapper meterMapper;
 
-    public void add(Meter meter) {
-        if (meter == null) return;
-        try {
-            meterMapper.insert(meter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public Result<Long> add(Meter meter) {
+        if (meter == null) return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        meterMapper.insert(meter);
+        return ResultUtil.newSuccessResult(meter.getId());
     }
 
     public Result<List<Meter>> list(Meter meter) {
         if (meter == null) return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
-        try {
-            int count = meterMapper.count(meter);
-            List<Meter> meters = meterMapper.list(meter);
-            return ResultUtil.newSuccessResult(meters, count);
-        } catch (Exception e) {
-            return ResultUtil.newFailedResult(StateCode.ERROR);
-        }
+        return null;
     }
 
     public Result<Boolean> update(Meter meter) {
         if (meter == null) return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "参数缺失");
-        try {
-            int result = meterMapper.updateByPrimaryKey(meter);
-            return ResultUtil.newSuccessResult(result > 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResultUtil.newFailedResult(StateCode.ERROR);
-        }
+        int result = meterMapper.updateByPrimaryKey(meter);
+        return ResultUtil.newSuccessResult(result > 0);
     }
 
-    public void delete(Integer id) {
-        if (id == null || id == 0) return;
-        try {
-            meterMapper.deleteByPrimaryKey(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public Result<Boolean> delete(Long id) {
+        if (id == null || id.longValue() == 0) return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        int i = meterMapper.deleteByPrimaryKey(id);
+        return ResultUtil.newSuccessResult(i > 0);
     }
 
-    public Result<Meter> getMeterById(Integer id) {
-        if (id == null || id == 0) {
+    public Result<Meter> getMeterById(Long id) {
+        if (id == null || id.longValue() == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
-        try {
-            Meter meter = meterMapper.selectByPrimaryKey(id);
-            return ResultUtil.newSuccessResult(meter);
-        } catch (Exception e) {
-            return ResultUtil.newFailedResult(StateCode.ERROR);
-        }
+        Meter meter = meterMapper.selectByPrimaryKey(id);
+        return ResultUtil.newSuccessResult(meter);
     }
 
-    public Result<List<Meter>> page(Meter meter) {
+    public Result<PagedData<Meter>> page(Meter meter) {
         if (meter == null) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
-        try {
-            int size = meterMapper.count(meter);
-            List<Meter> meters = meterMapper.list(meter);
-            return ResultUtil.newSuccessResult(meters, size);
-        } catch (Exception e) {
-            return ResultUtil.newFailedResult(StateCode.ERROR);
-        }
+        Result<PagedData<Meter>> result = null;
+        Page page = PageHelper.startPage(meter.getPageNo() , meter.getPageSize());
+        List<Meter> list = meterMapper.query(meter);
+        PagedData<Meter> pagedData = new PagedData<>();
+        pagedData.setPageNo(meter.getPageNo());
+        pagedData.setPageSize(meter.getPageSize());
+        pagedData.setTotalSize(page.getTotal());
+        pagedData.setResultList(list);
+        result = ResultUtil.newSuccessResult(pagedData);
+        return result;
     }
 }
