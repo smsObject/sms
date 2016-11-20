@@ -3,6 +3,7 @@ package com.hbh.sms.biz.concentrator.impl;
 import com.hbh.sms.biz.BaseTest;
 import com.hbh.sms.model.entity.Concentrator;
 import com.hbh.sms.biz.service.concentrator.ConcentratorService;
+import com.sms.common.PagedData;
 import com.sms.common.Result;
 import org.junit.After;
 import org.junit.Before;
@@ -45,7 +46,7 @@ public class ConcentratorServiceImplTest extends BaseTest {
         concentrator.setIsOnline(1);//在线
         concentrator.setCreateUser("me");
         concentrator.setCode("ABAC");
-        Result<Integer> result = concentratorService.add(concentrator);
+        Result<Long> result = concentratorService.add(concentrator);
     }
 
     /**
@@ -79,7 +80,7 @@ public class ConcentratorServiceImplTest extends BaseTest {
     @Test
     public void testPage() throws Exception {
         Concentrator concentrator = new Concentrator();
-        Result<List<Concentrator>> result  = concentratorService.page(concentrator);
+        Result<PagedData<Concentrator>> result  = concentratorService.page(concentrator);
     }
 
     /**

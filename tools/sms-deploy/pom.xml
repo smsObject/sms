@@ -20,6 +20,10 @@
             <groupId>com.hbh</groupId>
             <artifactId>sms-biz</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.hbh</groupId>
+            <artifactId>sms-web</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

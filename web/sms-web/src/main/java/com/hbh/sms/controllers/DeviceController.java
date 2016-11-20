@@ -6,10 +6,7 @@ import com.hbh.sms.model.entity.SendMessageData;
 import com.hbh.sms.biz.service.concentrator.ConcentratorService;
 import com.hbh.sms.biz.service.message.BizDeviceService;
 import com.hbh.sms.biz.service.meter.MeterService;
-import com.sms.common.PageUtil;
-import com.sms.common.Result;
-import com.sms.common.ResultUtil;
-import com.sms.common.StateCode;
+import com.sms.common.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,7 +65,7 @@ public class DeviceController {
     public Result readMeterData(Meter meter) {
         //获取GSM信息  查询仪表id查询仪表数据
         //获取发送对象
-        Integer id = meter.getId();
+        Long id = meter.getId();
         if (id == null || id == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
@@ -89,9 +86,9 @@ public class DeviceController {
     @RequestMapping("/concentratorPage")
     @ResponseBody
     public PageUtil gsmPage(Concentrator concentrator) {
-        Result<List<Concentrator>> result = concentratorService.page(concentrator);
+        Result<PagedData<Concentrator>> result = concentratorService.page(concentrator);
         PageUtil pageUtil = new PageUtil();
-        pageUtil.setRows(result.getData());
+        //pageUtil.setRows(result.getData());
         pageUtil.setTotal(result.getTotalCount());
         return pageUtil;
     }
@@ -109,9 +106,9 @@ public class DeviceController {
     @RequestMapping("/meterPage")
     @ResponseBody
     public PageUtil meterPage(Meter meter) {
-        Result<List<Meter>> result = meterService.page(meter);
+        Result<PagedData<Meter>> result = meterService.page(meter);
         PageUtil pageUtil = new PageUtil();
-        pageUtil.setRows(result.getData());
+       // pageUtil.setRows(result.getData());
         pageUtil.setTotal(result.getTotalCount());
         return pageUtil;
     }
@@ -130,8 +127,8 @@ public class DeviceController {
     }
 
     @RequestMapping("/deleteMeter")
-    public Result deleteMeter(Integer id) {
-        if (id == null || id == 0) {
+    public Result deleteMeter(Long id) {
+        if (id == null || id.longValue() == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
         try {
