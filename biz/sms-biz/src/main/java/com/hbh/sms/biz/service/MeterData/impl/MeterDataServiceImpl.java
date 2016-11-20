@@ -1,14 +1,16 @@
 package com.hbh.sms.biz.service.MeterData.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.hbh.sms.dal.dao.MeterDataMapper;
 import com.hbh.sms.biz.service.MeterData.MeterDataService;
 import com.hbh.sms.model.entity.MeterData;
+import com.sms.common.PagedData;
 import com.sms.common.Result;
 import com.sms.common.ResultUtil;
 import com.sms.common.StateCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 /**
@@ -20,24 +22,23 @@ public class MeterDataServiceImpl implements MeterDataService {
     @Autowired
     private MeterDataMapper meterDataMapper;
 
-    public int insert(MeterData record) {
-        if (record == null )return  -1;
-        try {
-            meterDataMapper.insert(record);
-        }catch (Exception e){
-            return -1;
-        }
-        return 1;
+    public Result<Long> insert(MeterData record) {
+        if (record == null) return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        meterDataMapper.insert(record);
+        return ResultUtil.newSuccessResult(record.getId());
     }
 
-    public Result<List<MeterData>> list(MeterData record) {
-        if (record == null) return  ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
-        try {
-            int count=meterDataMapper.count(record);
-            List<MeterData> result=meterDataMapper.list(record);
-            return ResultUtil.newSuccessResult(result , count);
-        }catch (Exception e){
-            return ResultUtil.newFailedResult(StateCode.ERROR);
-        }
+    public Result<PagedData<MeterData>> list(MeterData record) {
+        if (record == null) return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        Result<PagedData<MeterData>> result = null;
+        Page page = PageHelper.startPage(record.getPageNo(),record.getPageSize());
+        List<MeterData> list = meterDataMapper.list(record);
+        PagedData<MeterData> pagedData = new PagedData<>();
+        pagedData.setPageNo(record.getPageNo());
+        pagedData.setPageSize(record.getPageSize());
+        pagedData.setTotalSize(page.getTotal());
+        pagedData.setResultList(list);
+        result = ResultUtil.newSuccessResult(pagedData);
+        return result;
     }
 }
