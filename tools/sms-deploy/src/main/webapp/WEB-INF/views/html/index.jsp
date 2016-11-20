@@ -205,9 +205,10 @@
     <div class="navbar-container" id="navbar-container">
         <div class="navbar-header pull-left">
             <a href="#" class="navbar-brand">
-                <small>
-                    <img src="resources/images/logo.png">
-                </small>
+                <%--<small>--%>
+                    <%--<img src="resources/images/logo.png">--%>
+                <%--</small>--%>
+                    远程抄表管理系统
             </a><!-- /.brand -->
         </div><!-- /.navbar-header -->
         <div class="navbar-header pull-right" role="navigation">
@@ -318,72 +319,59 @@
                 </div>
             </div><!-- #sidebar-shortcuts -->
             <ul class="nav nav-list" id="nav_list">
-                <li class="home"><a href="javascript:void(0)" name="home.html" class="iframeurl" title=""><i class="icon-dashboard"></i><span class="menu-text"> 系统首页 </span></a></li>
-                <li class="home"><a href="javascript:void(0)" name="companyInfo/list.action" class="iframeurl" title=""><i class="icon-dashboard"></i><span class="menu-text"> 公司信息 </span></a></li>
-
-                <li><a href="#" class="dropdown-toggle"><i class="icon-desktop"></i><span class="menu-text">用户信息</span><b class="arrow icon-angle-down"></b></a>
-                    <ul class="submenu">
-                        <li class="home"><a  href="javascript:void(0)" name="Products_List.html"  title="产品类表" class="iframeurl"><i class="icon-double-angle-right"></i>产品类表</a></li>
-                        <li class="home"><a  href="javascript:void(0)" name="Brand_Manage.html" title="品牌管理"  class="iframeurl"><i class="icon-double-angle-right"></i>品牌管理</a></li>
-                        <li class="home"><a href="javascript:void(0)" name="Category_Manage.html" title="分类管理"  class="iframeurl"><i class="icon-double-angle-right"></i>分类管理</a></li>
-
-                    </ul>
-                </li>
+                <li class="home"><a href="javascript:void(0)" name="main" class="iframeurl" title=""><i class="icon-dashboard"></i><span class="menu-text"> 系统首页 </span></a></li>
+                <li class="home"><a href="javascript:void(0)" name="companyInfo/list" class="iframeurl" title=""><i class="icon-dashboard"></i><span class="menu-text"> 公司信息 </span></a></li>
+                <li class="home"><a href="javascript:void(0)" name="companyInfo/list" class="iframeurl" title=""><i class="icon-dashboard"></i><span class="menu-text"> 用户信息 </span></a></li>
                 <li>
                     <a href="#" class="dropdown-toggle"><i class="icon-picture "></i><span class="menu-text"> 设备信息 </span><b class="arrow icon-angle-down"></b></a>
                     <ul class="submenu">
-                        <li class="home"><a href="javascript:void(0)" name="advertising.html" title="集中器管理" class="iframeurl"><i class="icon-double-angle-right"></i>集中器管理</a></li>
-                        <li class="home"><a href="javascript:void(0)" name="Sort_ads.html" title="仪表管理"  class="iframeurl"><i class="icon-double-angle-right"></i>仪表管理</a></li>
+                        <li class="home"><a href="javascript:void(0)" name="device/gsmManager" title="集中器管理" class="iframeurl"><i class="icon-double-angle-right"></i>集中器管理</a></li>
+                        <li class="home"><a href="javascript:void(0)" name="device/meterManager" title="仪表管理"  class="iframeurl"><i class="icon-double-angle-right"></i>仪表管理</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="#" class="dropdown-toggle"><i class="icon-list"></i><span class="menu-text"> 数据分析 </span><b class="arrow icon-angle-down"></b></a>
                     <ul class="submenu">
-                        <li class="home"><a href="javascript:void(0)" name="transaction.html" title="交易信息"  class="iframeurl"><i class="icon-double-angle-right"></i>交易信息</a></li>
-                        <li class="home"><a href="javascript:void(0)" name="Orderform.html" title="订单管理"  class="iframeurl"><i class="icon-double-angle-right"></i>订单管理</a></li>
-                        <li class="home"><a href="javascript:void(0)" name="Amounts.html" title="交易金额"  class="iframeurl"><i class="icon-double-angle-right"></i>交易金额</a></li>
-                        <li class="home"><a href="javascript:void(0)" name="Order_handling.html" title="订单处理"  class="iframeurl"><i class="icon-double-angle-right"></i>订单处理</a></li>
-                        <li class="home"><a href="javascript:void(0)" name="Cover_management.html" title="支付管理"  class="iframeurl"><i class="icon-double-angle-right"></i>支付管理</a></li>
+                        <li class="home"><a href="javascript:void(0)" name="meterData/meterDataManager" title="仪表数据"  class="iframeurl"><i class="icon-double-angle-right"></i>仪表数据</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="#" class="dropdown-toggle"><i class="icon-user"></i><span class="menu-text"> 系统管理 </span><b class="arrow icon-angle-down"></b></a>
                     <ul class="submenu">
-                        <li class="home"><a href="javascript:void(0)" name="user_list.html" title="会员列表"  class="iframeurl"><i class="icon-double-angle-right"></i>角色管理</a></li>
-                        <li class="home"><a href="javascript:void(0)" name="member-Grading.html" title="等级管理"  class="iframeurl"><i class="icon-double-angle-right"></i>人员管理</a></li>
-                        <li class="home"><a href="javascript:void(0)" name="integration.html" title="会员记录管理"  class="iframeurl"><i class="icon-double-angle-right"></i>会员记录管理</a></li>
+                        <li class="home"><a href="javascript:void(0)" name="user_list.html" title="角色管理"  class="iframeurl"><i class="icon-double-angle-right"></i>角色管理</a></li>
+                        <li class="home"><a href="javascript:void(0)" name="member-Grading.html" title="人员管理"  class="iframeurl"><i class="icon-double-angle-right"></i>人员管理</a></li>
 
                     </ul>
                 </li>
-                <li><a href="#" class="dropdown-toggle"><i class="icon-edit"></i><span class="menu-text"> 消息管理 </span><b class="arrow icon-angle-down"></b></a>
-                    <ul class="submenu">
-                        <li class="home"><a href="javascript:void(0)" name="Guestbook.html" title="留言列表" class="iframeurl"><i class="icon-double-angle-right"></i>留言列表</a></li>
-                        <li class="home"><a href="javascript:void(0)" name="Feedback.html" title="意见反馈" class="iframeurl"><i class="icon-double-angle-right"></i>意见反馈</a></li>
-                    </ul>
-                </li>
-                <li><a href="#" class="dropdown-toggle"><i class="icon-edit"></i><span class="menu-text"> 文章管理 </span><b class="arrow icon-angle-down"></b></a>
-                    <ul class="submenu">
-                        <li class="home"><a href="javascript:void(0)" name="Guestbook.html" title="文章列表" class="iframeurl"><i class="icon-double-angle-right"></i>文章列表</a></li>
-                        <li class="home"><a href="javascript:void(0)" name="Feedback.html" title="分类分类" class="iframeurl"><i class="icon-double-angle-right"></i>分类分类</a></li>
-                    </ul>
-                </li>
-                <li><a href="#" class="dropdown-toggle"><i class="icon-cogs"></i><span class="menu-text"> 系统管理 </span><b class="arrow icon-angle-down"></b></a>
-                    <ul class="submenu">
-                        <li class="home"><a href="javascript:void(0)" name="Systems.html" title="系统设置" class="iframeurl"><i class="icon-double-angle-right"></i>系统设置</a></li>
-                        <li class="home"><a href="javascript:void(0)" name="菜单管理.html" title="栏目管理" class="iframeurl"><i class="icon-double-angle-right"></i>栏目管理</a></li>
+                <%--<li><a href="#" class="dropdown-toggle"><i class="icon-edit"></i><span class="menu-text"> 消息管理 </span><b class="arrow icon-angle-down"></b></a>--%>
+                    <%--<ul class="submenu">--%>
+                        <%--<li class="home"><a href="javascript:void(0)" name="Guestbook.html" title="留言列表" class="iframeurl"><i class="icon-double-angle-right"></i>留言列表</a></li>--%>
+                        <%--<li class="home"><a href="javascript:void(0)" name="Feedback.html" title="意见反馈" class="iframeurl"><i class="icon-double-angle-right"></i>意见反馈</a></li>--%>
+                    <%--</ul>--%>
+                <%--</li>--%>
+                <%--<li><a href="#" class="dropdown-toggle"><i class="icon-edit"></i><span class="menu-text"> 文章管理 </span><b class="arrow icon-angle-down"></b></a>--%>
+                    <%--<ul class="submenu">--%>
+                        <%--<li class="home"><a href="javascript:void(0)" name="Guestbook.html" title="文章列表" class="iframeurl"><i class="icon-double-angle-right"></i>文章列表</a></li>--%>
+                        <%--<li class="home"><a href="javascript:void(0)" name="Feedback.html" title="分类分类" class="iframeurl"><i class="icon-double-angle-right"></i>分类分类</a></li>--%>
+                    <%--</ul>--%>
+                <%--</li>--%>
+                <%--<li><a href="#" class="dropdown-toggle"><i class="icon-cogs"></i><span class="menu-text"> 系统管理 </span><b class="arrow icon-angle-down"></b></a>--%>
+                    <%--<ul class="submenu">--%>
+                        <%--<li class="home"><a href="javascript:void(0)" name="Systems.html" title="系统设置" class="iframeurl"><i class="icon-double-angle-right"></i>系统设置</a></li>--%>
+                        <%--<li class="home"><a href="javascript:void(0)" name="菜单管理.html" title="栏目管理" class="iframeurl"><i class="icon-double-angle-right"></i>栏目管理</a></li>--%>
 
-                        <li class="home"><a href="javascript:void(0)" name="用户管理.html" title="系统日志" class="iframeurl"><i class="icon-double-angle-right"></i>系统日志</a></li>
-                    </ul>
-                </li>
-                <li><a href="#" class="dropdown-toggle"><i class="icon-group"></i><span class="menu-text"> 管理员管理 </span><b class="arrow icon-angle-down"></b></a>
-                    <ul class="submenu">
+                        <%--<li class="home"><a href="javascript:void(0)" name="用户管理.html" title="系统日志" class="iframeurl"><i class="icon-double-angle-right"></i>系统日志</a></li>--%>
+                    <%--</ul>--%>
+                <%--</li>--%>
+                <%--<li><a href="#" class="dropdown-toggle"><i class="icon-group"></i><span class="menu-text"> 管理员管理 </span><b class="arrow icon-angle-down"></b></a>--%>
+                    <%--<ul class="submenu">--%>
 
-                        <li class="home"><a href="javascript:void(0)" name="admin_Competence.html" title="权限管理"  class="iframeurl"><i class="icon-double-angle-right"></i>权限管理</a></li>
-                        <li class="home"><a href="javascript:void(0)" name="administrator.html" title="管理员列表" class="iframeurl"><i class="icon-double-angle-right"></i>管理员列表</a></li>
-                        <li class="home"><a href="javascript:void(0)" name="admin_info.html" title="个人信息" class="iframeurl"><i class="icon-double-angle-right"></i>个人信息</a></li>
-                        <li class="home"><a href="javascript:void(0)" name="hubihua.html" title="胡弼华" class="iframeurl"><i class="icon-double-angle-right"></i>胡弼华</a></li>
-                    </ul>
-                </li>
+                        <%--<li class="home"><a href="javascript:void(0)" name="admin_Competence.html" title="权限管理"  class="iframeurl"><i class="icon-double-angle-right"></i>权限管理</a></li>--%>
+                        <%--<li class="home"><a href="javascript:void(0)" name="administrator.html" title="管理员列表" class="iframeurl"><i class="icon-double-angle-right"></i>管理员列表</a></li>--%>
+                        <%--<li class="home"><a href="javascript:void(0)" name="admin_info.html" title="个人信息" class="iframeurl"><i class="icon-double-angle-right"></i>个人信息</a></li>--%>
+                        <%--<li class="home"><a href="javascript:void(0)" name="hubihua.html" title="胡弼华" class="iframeurl"><i class="icon-double-angle-right"></i>胡弼华</a></li>--%>
+                    <%--</ul>--%>
+                <%--</li>--%>
             </ul>
             <div class="sidebar-collapse" id="sidebar-collapse">
                 <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
@@ -408,7 +396,7 @@
                 </ul>
             </div>
 
-            <iframe id="iframe" style="border:0; width:100%; background-color:#FFF;"name="iframe" frameborder="0" src="home.html">  </iframe>
+            <iframe id="iframe" style="border:0; width:100%; background-color:#FFF;"name="iframe" frameborder="0" src="main">  </iframe>
 
 
             <!-- /.page-content -->

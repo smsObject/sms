@@ -9,21 +9,31 @@ To change this template use File | Settings | File Templates.
 <html>
 <head>
     <title>仪表数据管理</title>
-    <!-- 新 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link href="../../../resources/plugin/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../../../resources/css/style.css"/>
+    <link rel="stylesheet" href="../../../resources/css/ace.min.css"/>
+    <link rel="stylesheet" href="../../../resources/css/font-awesome.min.css"/>
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="../../../resources/css/font-awesome-ie7.min.css"/>
+    <![endif]-->
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="../../../resources/css/ace-ie.min.css"/>
+    <![endif]-->
+    <script src="../../../resources/js/jquery-1.9.1.min.js"></script>
+    <script src="../../../resources/plugin/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../resources/js/typeahead-bs2.min.js"></script>
 
-    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
-    <link rel="stylesheet" href="../resources/css/bootstrap-theme.min.css">
-
-    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-    <script src="../resources/js/libs/jquery-2.0.2.min.js"></script>
-
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="../resources/js/bootstrap/bootstrap.min.js"></script>
-
-    <!-- 最新的 Bootstrap table 文件 -->
-    <script src="../resources/js/bootstrap/bootstrap-table.js"></script>
-    <link rel="stylesheet" href="../resources/css/bootstrap-table.css">
+    <!-- page specific plugin scripts -->
+    <script src="../../../resources/plugin/bootstrap/js/jquery.dataTables.min.js"></script>
+    <script src="../../../resources/plugin/bootstrap/js/jquery.dataTables.bootstrap.js"></script>
+    <script src="../../../resources/plugin/layer/layer.js" type="text/javascript"></script>
+    <script src="../../../resources/plugin/laydate/laydate.js" type="text/javascript"></script>
     <script type="text/javascript">
         var columns = [
             {
@@ -85,7 +95,27 @@ To change this template use File | Settings | File Templates.
     </script>
 </head>
 <body>
-<a class="btn btn-primary btn-sm" id="scanner" href="javascript:void(0);">查询</a>
-<table id="table"  > </table>
+<div class="page-content clearfix">
+    <div id="brand_style">
+        <div class="search_style">
+            <div class="title_names">搜索查询</div>
+            <ul class="search_content clearfix">
+                <li><label class="l_f">设备编号</label><input name="" type="text" class="text_add" placeholder="输入设备编号"
+                                                          style=" width:250px"/></li>
+                <li style="width:90px;">
+                    <button type="button" class="btn_search"><i class="icon-search"></i>查询</button>
+                </li>
+            </ul>
+        </div>
+        <div class="border clearfix">
+       <span class="l_f">
+        <a href="javascript:void(0)" title="今天" id="scanner" class="btn btn-warning Order_form"><i class="icon-plus"></i>今天</a>
+            <a href="javascript:void(0)" title="本周" id="scanner1" class="btn btn-warning Order_form"><i class="icon-plus"></i>本周</a>
+            <a href="javascript:void(0)" title="本月" id="scanner2" class="btn btn-warning Order_form"><i class="icon-plus"></i>本月</a>
+       </span>
+        </div>
+    </div>
+    <table id = "meterDataTable" ></table>
+</div>
 </body>
 </html>

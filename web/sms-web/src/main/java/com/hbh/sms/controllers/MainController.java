@@ -19,9 +19,9 @@ public class MainController {
         return "index";
     }
 
-    @RequestMapping(value="go")
+    @RequestMapping(value="main")
     public String test(){
-        return "test/index" ;
+        return "main" ;
     }
 
     @RequestMapping(value="body")
