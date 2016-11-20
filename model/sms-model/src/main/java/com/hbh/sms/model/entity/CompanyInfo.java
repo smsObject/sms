@@ -4,7 +4,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class CompanyInfo extends BaseDo implements Serializable {
+public class CompanyInfo extends BaseDO implements Serializable {
 
     private String companyName;
 

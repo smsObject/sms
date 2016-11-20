@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by hbh on 2016/7/19.
  */
 @Data
-public class Meter extends BaseDo implements Serializable {
+public class Meter extends BaseDO implements Serializable {
     /**编号*/
     private String meterNo;
     /**编码*/

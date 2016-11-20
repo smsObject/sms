@@ -2,13 +2,11 @@ package com.hbh.sms.model.entity;
 
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
  * Created by hbh on 2016/7/6.
  */
 @Data
-public class Concentrator  extends  BaseDo{
+public class Concentrator  extends BaseDO {
     /**com组件名称*/
     private String  comPort;
     /**波特率*/

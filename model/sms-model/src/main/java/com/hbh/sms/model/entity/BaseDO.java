@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by hbh on 2016/7/20.
  */
 @Data
-public class BaseDo extends PagedQuery implements Serializable{
+public class BaseDO extends PagedQuery implements Serializable{
     private Long id;
     private Date    createDate;
     private Date    updateDate;
