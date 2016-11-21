@@ -33,19 +33,15 @@
         <property name="maxPoolPreparedStatementPerConnectionSize" value="-1" />
         <property name="filters" value="filter:wall" />
     </bean>
-    
-	<!-- 开启事务注解驱动 -->  
+	<!-- 开启事务注解驱动 -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
- 	
  	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     	<property name="dataSource" ref="dataSource" />
 	</bean>
-	
 	<bean id="transactionTemplate"
 		class="org.springframework.transaction.support.TransactionTemplate">
 		<property name="transactionManager" ref="transactionManager" />
 	</bean>
-	
 	<bean id="fortSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="configLocation" value="classpath:conf/configuration.xml"></property>
         <property name="dataSource" ref="dataSource" />
@@ -65,9 +61,8 @@
             </array>
         </property>
 	</bean>
-	
-	<!-- 自动扫描映射器 -->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.hbh.sms.dal.dao" />
         <property name="sqlSessionFactoryBeanName" value="fortSqlSessionFactory" />
     </bean>

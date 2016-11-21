@@ -4,11 +4,8 @@
 	   xmlns:context="http://www.springframework.org/schema/context"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd" >
-
 	<context:property-placeholder location="classpath:env/config.properties" />
-
 	<bean id="readMessageJobDetail" class="com.hbh.sms.biz.service.job.readMessageJobDetail" />
-
 	<bean id="myTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject">
 			<ref bean="readMessageJobDetail"/>
@@ -17,7 +14,6 @@
 			<value>readMessage</value>
 		</property>
 	</bean>
-
 	<!--<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">-->
 		<!--<property name="triggers">-->
 			<!--<list>-->
@@ -26,10 +22,8 @@
 		<!--</property>-->
 		<!--<property name="autoStartup" value="true"/>-->
 	<!--</bean>-->
-
 	<bean id="readMessageTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="myTask"/>
 		<property name="cronExpression" value="*/10 * * * * ?"/>
 	</bean>
-
 </beans>
