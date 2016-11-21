@@ -37,6 +37,30 @@ public class CompanyInfoController {
         }
     }
 
+    @RequestMapping("/delete")
+    public Result<Boolean> deleteCompanyInfo(Long id){
+        if (id == null || id.longValue() == 0){
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        }
+        try{
+            return  companyInfoService.deleteById(id);
+        }catch (Exception ex){
+            return ResultUtil.newFailedResult(StateCode.ERROR);
+        }
+    }
+
+    @RequestMapping("/update")
+    public Result<Boolean> updateCompanyInfo(CompanyInfo companyInfo){
+        if ( companyInfo == null){
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        }
+        try {
+            return companyInfoService.update(companyInfo);
+        }catch (Exception ex){
+            return ResultUtil.newFailedResult(StateCode.ERROR);
+        }
+    }
+
     @RequestMapping("/page")
     @ResponseBody
     public Result<PagedData<CompanyInfo>> page(CompanyInfo companyInfo){

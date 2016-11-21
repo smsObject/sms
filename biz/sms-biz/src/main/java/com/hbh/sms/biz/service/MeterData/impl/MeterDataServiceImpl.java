@@ -28,7 +28,7 @@ public class MeterDataServiceImpl implements MeterDataService {
         return ResultUtil.newSuccessResult(record.getId());
     }
 
-    public Result<PagedData<MeterData>> list(MeterData record) {
+    public Result<PagedData<MeterData>> page(MeterData record) {
         if (record == null) return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         Result<PagedData<MeterData>> result = null;
         Page page = PageHelper.startPage(record.getPageNo(),record.getPageSize());

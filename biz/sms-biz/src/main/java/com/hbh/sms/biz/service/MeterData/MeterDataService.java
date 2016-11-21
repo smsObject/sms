@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface MeterDataService {
     public Result<Long> insert(MeterData record);
-    public Result<PagedData<MeterData>> list(MeterData record);
+    public Result<PagedData<MeterData>> page(MeterData record);
 }

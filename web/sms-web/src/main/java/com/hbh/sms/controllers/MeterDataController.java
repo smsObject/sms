@@ -28,7 +28,7 @@ public class MeterDataController {
     @RequestMapping("page")
     @ResponseBody
     public PageUtil page(MeterData meterData) {
-        Result<PagedData<MeterData>> result = meterDataService.list(meterData);
+        Result<PagedData<MeterData>> result = meterDataService.page(meterData);
         PageUtil pageUtil = new PageUtil();
        // pageUtil.setRows(result.getData());
         pageUtil.setTotal(result.getTotalCount());
