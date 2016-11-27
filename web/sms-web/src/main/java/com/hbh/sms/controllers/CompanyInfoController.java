@@ -51,4 +51,18 @@ public class CompanyInfoController {
         }
         return result;
     }
+
+    @RequestMapping("/update")
+    public Result<Boolean> update(CompanyInfo companyInfo){
+        if (companyInfo == null){
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        }
+        Result<Boolean> result =  null;
+        try {
+            result = companyInfoService.update(companyInfo);
+        }catch (Exception ex){
+            result = ResultUtil.newFailedResult(StateCode.ERROR);
+        }
+        return result;
+    }
 }

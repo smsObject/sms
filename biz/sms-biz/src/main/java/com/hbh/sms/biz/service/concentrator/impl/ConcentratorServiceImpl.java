@@ -3,7 +3,6 @@ package com.hbh.sms.biz.service.concentrator.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hbh.sms.dal.dao.ConcentratorMapper;
-import com.hbh.sms.model.entity.CompanyInfo;
 import com.hbh.sms.model.entity.Concentrator;
 import com.hbh.sms.biz.service.concentrator.ConcentratorService;
 import com.sms.common.PagedData;
