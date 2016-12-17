@@ -4,6 +4,7 @@ import com.hbh.sms.model.entity.Concentrator;
 import com.hbh.sms.biz.service.common.CyptoUtils;
 import com.hbh.sms.biz.service.impl.ReadMessageServiceImpl;
 import com.hbh.sms.biz.service.impl.SendMessageServiceImpl;
+import com.hbh.sms.model.entity.SendMessageData;
 import org.smslib.InboundMessage;
 
 import java.util.List;
@@ -24,10 +25,14 @@ public class Test {
     @org.junit.Test
     public void testSend() {
         SendMessageServiceImpl sendMessageService = new SendMessageServiceImpl();
-//        Concentrator concentrator = new Concentrator("COM3" , 19200 , "SIEMENS" ,"TC35i");
-//        SendMessageData messageData = new SendMessageData("18205815108" , "smsCenter message!");
-//        boolean b= sendMessageService.sendMessage(concentrator , messageData);
-//        System.out.print(b);
+        Concentrator concentrator = new Concentrator();
+        concentrator.setComPort("COM4");
+        concentrator.setBaudRate(19200);
+        concentrator.setManufacturer("SIEMENS");
+        concentrator.setModel("TC35i");
+        SendMessageData messageData = new SendMessageData("15371508177" , "smsCenter message!");
+        boolean b= sendMessageService.sendMessage(concentrator , messageData);
+        System.out.print(b);
     }
 
     @org.junit.Test
@@ -64,4 +69,42 @@ public class Test {
         System.out.println("解密后: " + CyptoUtils.decode(key, encodeStr));
     }
 
+    public static void main(String[] args){
+        short [] sends = new short[5];
+        sends[0] = 0x00;
+        sends[1] = 0x01;
+        sends[2] = 0x06;
+        Test.crc16(sends,3);
+        System.out.println(Test.shotToHexString(sends));
+    }
+
+    public static void crc16(short[] sends,int size) {
+        char temp = 0xffff;
+        int i, j;
+        for (j = 0; j < size; j++) {
+            temp ^= sends[j];
+            for (i = 0; i < 8; i++) {
+                if ((temp & 0x01) > 0) {
+                    temp >>= 1;
+                    temp ^= 0xA001;
+                } else {
+                    temp >>= 1;
+                }
+            }
+        }
+        sends[size] = (short) ((temp & 0xFF00) >> 8);
+        sends[size+1] = (short) (temp & 0x00FF);
+    }
+
+    public static String shotToHexString(short [] sends){
+        StringBuffer stringBuffer = new StringBuffer();
+        for (short i :sends){
+            if (i< 10){
+                stringBuffer.append("0"+Integer.toHexString(i));
+            }else{
+                stringBuffer.append(Integer.toHexString(i));
+            }
+        }
+        return stringBuffer.toString();
+    }
 }
