@@ -30,6 +30,7 @@ public class Test {
         concentrator.setBaudRate(19200);
         concentrator.setManufacturer("SIEMENS");
         concentrator.setModel("TC35i");
+
         SendMessageData messageData = new SendMessageData("15371508177" , "smsCenter message!");
         boolean b= sendMessageService.sendMessage(concentrator , messageData);
         System.out.print(b);
@@ -71,11 +72,24 @@ public class Test {
 
     public static void main(String[] args){
         short [] sends = new short[5];
-        sends[0] = 0x00;
+        sends[0] = 0x86;
         sends[1] = 0x01;
-        sends[2] = 0x06;
+        sends[2] = 0x00;
+
         Test.crc16(sends,3);
         System.out.println(Test.shotToHexString(sends));
+
+//        short[] send2 = new short[10];
+//        send2[0] = 0x00;
+//        send2[1] = 0x06;
+//        send2[2] = 0x00;
+//        send2[3] = 0x01;
+//        send2[4] = 0x00;
+//        send2[5] = 0x00;
+//        send2[6] = 0x2C;
+//        send2[7] = 0x00;
+//        Test.crc16(send2 , 8);
+//        System.out.println(Test.shotToHexString(send2));
     }
 
     public static void crc16(short[] sends,int size) {
