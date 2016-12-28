@@ -36,10 +36,14 @@ public class Data {
         if (hexStr == null || hexStr.trim().length() == 0 || hexStr.length() % 2 != 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "入参错误");
         }
+
         short[] meterDatas = hexStringToShort(hexStr);
+
         if (! check(meterDatas)){
             return ResultUtil.newFailedResult(StateCode.ERROR, "校验失败");
         }
+
+        //取数据
 
 
         return null;
@@ -71,17 +75,26 @@ public class Data {
     }
 
     public static void main(String[] args) {
-        Data.parseReadMeterData("0006000100002C000B07");
-        int a = 5;
-        short b = 0x2C;
-        System.out.println(a % 2);
-        String hexStr = "0006000100002C000B07";
+        String hexStr = "0007000100002c0001ce4a";
         int length = hexStr.length() / 2;
         short[] meterDatas = new short[length];
         for (int i = 0; i < length; i++) {
             meterDatas[i] = Short.parseShort(hexStr.substring(i * 2, i * 2 + 2), 16);
         }
         check(meterDatas);
+
+        short[] c = new short[11];
+        c[0] = 0x00;
+        c[1] = 0x07;
+        c[2] = 0x00;
+        c[3] = 0x01;
+        c[4] = 0x00;
+        c[5] = 0x00;
+        c[6] = 0x2C;
+        c[7] = 0x00;
+        c[8] = 0x01;
+        crc16(c,9);
+       System.out.println(shortToHexString(c));
     }
 
     private static void crc16(short[] sends, int size) {
