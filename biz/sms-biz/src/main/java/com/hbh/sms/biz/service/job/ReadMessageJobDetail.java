@@ -13,7 +13,7 @@ import java.util.List;
  * Created by hbh on 2016/8/28.
  */
 
-public class readMessageJobDetail {
+public class ReadMessageJobDetail {
 
     @Autowired
     private ReadMessageService readMessageService;

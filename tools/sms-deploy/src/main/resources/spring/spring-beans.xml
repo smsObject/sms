@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
     <context:property-placeholder location="classpath:env/config.properties"/>
-    <bean id="readMessageJobDetail" class="com.hbh.sms.biz.service.job.readMessageJobDetail"/>
+    <bean id="readMessageJobDetail" class="com.hbh.sms.biz.service.job.ReadMessageJobDetail"/>
     <bean id="myTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject">
             <ref bean="readMessageJobDetail"/>

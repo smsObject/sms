@@ -193,11 +193,11 @@
             <version>1.0.6</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.smslib</groupId>
-            <artifactId>smslib</artifactId>
-            <version>3.5.3</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.smslib</groupId>-->
+            <!--<artifactId>smslib</artifactId>-->
+            <!--<version>3.5.3</version>-->
+        <!--</dependency>-->
     </dependencies>
 
     <dependencyManagement>
