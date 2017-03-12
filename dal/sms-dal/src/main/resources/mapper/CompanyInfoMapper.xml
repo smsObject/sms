@@ -235,7 +235,7 @@
       </if>
     </trim>
   </insert>
-  <!--<update id="updateByPrimaryKeySelective" parameterType="com.hbh.sms.model.entity.CompanyInfo" >-->
+  <!--<update id="updateByPrimaryKeySelective" parameterType="com.hbh.sms.model.entity.companyInfo" >-->
     <!--update t_company_info-->
     <!--<set >-->
       <!--<if test="companyName != null" >-->

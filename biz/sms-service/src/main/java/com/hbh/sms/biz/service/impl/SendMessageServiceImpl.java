@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 public class SendMessageServiceImpl implements SendMessageService {
 
     public boolean sendMessage(Concentrator concentrator , SendMessageData messageData) {
-        messageData.getReceiver();
-        messageData.getMessage();
         //网关
         SerialModemGateway gateway= GatewayCenter.getGateway(concentrator);
         //gateway.setInbound(true);   //设置true，表示该网关可以接收短信,根据需求修改

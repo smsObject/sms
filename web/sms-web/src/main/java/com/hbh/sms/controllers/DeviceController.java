@@ -1,7 +1,9 @@
 package com.hbh.sms.controllers;
 
+import com.hbh.sms.biz.service.MeterData.MeterDataService;
 import com.hbh.sms.model.entity.Concentrator;
 import com.hbh.sms.model.entity.Meter;
+import com.hbh.sms.model.entity.MeterData;
 import com.hbh.sms.model.entity.SendMessageData;
 import com.hbh.sms.biz.service.concentrator.ConcentratorService;
 import com.hbh.sms.biz.service.message.BizDeviceService;
@@ -30,6 +32,9 @@ public class DeviceController {
 
     @Autowired
     private ConcentratorService concentratorService;
+
+    @Autowired
+    private MeterDataService meterDataService;
 
     @RequestMapping("/meterManager")
     public String meterManager() {
@@ -81,6 +86,14 @@ public class DeviceController {
             }
         }
         return ResultUtil.newFailedResult(StateCode.ERROR);
+    }
+
+    @RequestMapping("/getMeterData")
+    @ResponseBody
+    public Result<List<MeterData>> getMeterData(Long meterId){
+        MeterData meterData = new MeterData();
+        meterData.setMeterId(meterId);
+        return meterDataService.list(meterData);
     }
 
     @RequestMapping("/concentratorPage")

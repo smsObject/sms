@@ -1,6 +1,6 @@
 package com.hbh.sms.controllers;
 
-import com.hbh.sms.biz.service.CompanyInfo.CompanyInfoService;
+import com.hbh.sms.biz.service.companyInfo.CompanyInfoService;
 import com.hbh.sms.model.entity.CompanyInfo;
 import com.sms.common.PagedData;
 import com.sms.common.Result;

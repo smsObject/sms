@@ -1,10 +1,10 @@
-package com.hbh.sms.biz.service.CompanyInfo.impl;
+package com.hbh.sms.biz.service.companyInfo.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hbh.sms.dal.dao.CompanyInfoMapper;
 import com.hbh.sms.model.entity.CompanyInfo;
-import com.hbh.sms.biz.service.CompanyInfo.CompanyInfoService;
+import com.hbh.sms.biz.service.companyInfo.CompanyInfoService;
 import com.sms.common.PagedData;
 import com.sms.common.Result;
 import com.sms.common.ResultUtil;

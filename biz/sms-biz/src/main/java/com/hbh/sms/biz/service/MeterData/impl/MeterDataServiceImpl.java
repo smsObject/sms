@@ -32,7 +32,7 @@ public class MeterDataServiceImpl implements MeterDataService {
         if (record == null) return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         Result<PagedData<MeterData>> result = null;
         Page page = PageHelper.startPage(record.getPageNo(),record.getPageSize());
-        List<MeterData> list = meterDataMapper.list(record);
+        List<MeterData> list = meterDataMapper.query(record);
         PagedData<MeterData> pagedData = new PagedData<>();
         pagedData.setPageNo(record.getPageNo());
         pagedData.setPageSize(record.getPageSize());
@@ -40,5 +40,10 @@ public class MeterDataServiceImpl implements MeterDataService {
         pagedData.setResultList(list);
         result = ResultUtil.newSuccessResult(pagedData);
         return result;
+    }
+
+    @Override
+    public Result<List<MeterData>> list(MeterData meterData) {
+        return null;
     }
 }

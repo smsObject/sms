@@ -9,7 +9,7 @@ public class ReadMessageNotification implements IInboundMessageNotification {
 
     @Override
     public void process(AGateway aGateway, Message.MessageTypes messageTypes, InboundMessage inboundMessage) {
-
+        inboundMessage.getText();
     }
 
     public static  void  main(String[] args){

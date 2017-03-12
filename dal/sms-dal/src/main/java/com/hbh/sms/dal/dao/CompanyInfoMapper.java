@@ -13,7 +13,7 @@ public interface CompanyInfoMapper {
 
     CompanyInfo selectByPrimaryKey(Long id);
 
-//    int updateByPrimaryKeySelective(CompanyInfo record);
+//    int updateByPrimaryKeySelective(companyInfo record);
 
     int updateByPrimaryKey(CompanyInfo record);
 

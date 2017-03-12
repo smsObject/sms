@@ -1,7 +1,7 @@
 package com.hbh.sms.biz.companyinfo.impl;
 
 import com.hbh.sms.biz.BaseTest;
-import com.hbh.sms.biz.service.CompanyInfo.CompanyInfoService;
+import com.hbh.sms.biz.service.companyInfo.CompanyInfoService;
 import com.hbh.sms.model.entity.CompanyInfo;
 import com.sms.common.PagedData;
 import com.sms.common.Result;
@@ -31,7 +31,7 @@ public class CompanyInfoServiceImplTest extends BaseTest {
     }
 
     /**
-     * Method: add(CompanyInfo companyInfo)
+     * Method: add(companyInfo companyInfo)
      */
     @Test
     public void testAdd() throws Exception {
@@ -51,7 +51,7 @@ public class CompanyInfoServiceImplTest extends BaseTest {
     }
 
     /**
-     * Method: update(CompanyInfo companyInfo)
+     * Method: update(companyInfo companyInfo)
      */
     @Test
     public void testUpdate() throws Exception {
@@ -63,7 +63,7 @@ public class CompanyInfoServiceImplTest extends BaseTest {
     }
 
     /**
-     * Method: list(CompanyInfo companyInfo)
+     * Method: list(companyInfo companyInfo)
      */
     @Test
     public void testList() throws Exception {
@@ -71,7 +71,7 @@ public class CompanyInfoServiceImplTest extends BaseTest {
     }
 
     /**
-     * Method: page(CompanyInfo companyInfo)
+     * Method: page(companyInfo companyInfo)
      */
     @Test
     public void testPage() throws Exception {

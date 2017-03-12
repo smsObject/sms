@@ -1,4 +1,4 @@
-package com.hbh.sms.biz.service.CompanyInfo;
+package com.hbh.sms.biz.service.companyInfo;
 
 import com.hbh.sms.model.entity.CompanyInfo;
 import com.sms.common.PagedData;
