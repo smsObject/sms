@@ -1,6 +1,7 @@
 package com.hbh.sms.controllers;
 
 import com.hbh.sms.biz.service.MeterData.MeterDataService;
+import com.hbh.sms.biz.service.common.DataCenter;
 import com.hbh.sms.model.entity.Concentrator;
 import com.hbh.sms.model.entity.Meter;
 import com.hbh.sms.model.entity.MeterData;
@@ -80,7 +81,33 @@ public class DeviceController {
             Result<Concentrator> result1 = concentratorService.getConcentratorById(meter1.getId());
             if (result1.getData() != null) {
                 Concentrator concentrator = result1.getData();
-                SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), "0013");
+                SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), DataCenter.READ_METER_CMD);
+                if (bizDeviceService.sendMessage(concentrator, messageData))
+                    return ResultUtil.newFailedResult(StateCode.SUCCESS);
+            }
+        }
+        return ResultUtil.newFailedResult(StateCode.ERROR);
+    }
+
+    @RequestMapping("/setValveStatus")
+    @ResponseBody
+    public Result setValveStatus(Meter meter,Integer status){
+        Long id = meter.getId();
+        if (id == null || id == 0 || status== null) {
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        }
+        Result<Meter> result = meterService.getMeterById(id);
+        if (result.getData() != null) {
+            Meter meter1 = result.getData();
+            Result<Concentrator> result1 = concentratorService.getConcentratorById(meter1.getId());
+            if (result1.getData() != null) {
+                Concentrator concentrator = result1.getData();
+                SendMessageData messageData = null;
+                if (status == 0){
+                    messageData = new SendMessageData(meter1.getMeterCode(), DataCenter.CLOSE_VALVE_CMD);
+                }else if (status == 1){
+                    messageData = new SendMessageData(meter1.getMeterCode(), DataCenter.OPEN_VALVE_CMD);
+                }
                 if (bizDeviceService.sendMessage(concentrator, messageData))
                     return ResultUtil.newFailedResult(StateCode.SUCCESS);
             }
