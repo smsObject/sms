@@ -19,6 +19,9 @@
             <groupId>com.hbh</groupId>
             <artifactId>sms-model</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.hbh</groupId>
+            <artifactId>sms-biz</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -42,10 +42,7 @@ public class DataCenter {
         if (! check(meterDatas)){
             return ResultUtil.newFailedResult(StateCode.ERROR, "校验失败");
         }
-
         //取数据
-
-
         return null;
     }
 
