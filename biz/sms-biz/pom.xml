@@ -18,7 +18,6 @@
         <dependency>
             <groupId>com.hbh</groupId>
             <artifactId>sms-service</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
         <dependency>

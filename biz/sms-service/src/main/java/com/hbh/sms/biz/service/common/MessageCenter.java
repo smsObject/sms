@@ -1,6 +1,6 @@
 package com.hbh.sms.biz.service.common;
 
-import com.hbh.sms.biz.service.job.ReadMessageNotification;
+//import com.hbh.sms.biz.service.job.ReadMessageNotification;
 import com.hbh.sms.model.entity.SendMessageData;
 import org.smslib.InboundMessage;
 import org.smslib.Message;
@@ -22,7 +22,6 @@ public class MessageCenter {
             OutboundMessage msg = new OutboundMessage(messageData.getReceiver(), messageData.getMessage());
             msg.setEncoding(Message.MessageEncodings.ENCUCS2);
             b = Service.getInstance().sendMessage(msg); //执行发送短信
-            // Service.getInstance().stopService();
         } catch (Exception ex) {
             ex.printStackTrace();
             b = false;

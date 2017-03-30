@@ -1,4 +1,4 @@
-package com.hbh.sms.biz.service.job;
+package com.hbh.sms.biz.service.common;
 
 import org.smslib.*;
 
@@ -8,9 +8,15 @@ import org.smslib.*;
 public class ReadMessageNotification implements IInboundMessageNotification {
 //@Autowired
 //private MeterDataService meterDataService;
+
     @Override
     public void process(AGateway aGateway, Message.MessageTypes messageTypes, InboundMessage inboundMessage) {
-        inboundMessage.getText();
+        System.out.println(messageTypes);
+        System.out.println("时间2:"+System.currentTimeMillis());
+      if (inboundMessage.getDCSMessageClass().equals(InboundMessage.MessageClasses.UNREAD)){
+          System.out.println("时间:"+System.currentTimeMillis());
+          System.out.println("内容:"+inboundMessage.getText());
+          }
         //拿到数据,解析数据
         //存入数据库
         //Result<MeterData> meterDataResult = DataCenter.parseReadMeterData(inboundMessage.getText());

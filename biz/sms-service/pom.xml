@@ -18,10 +18,7 @@
         <dependency>
             <groupId>com.hbh</groupId>
             <artifactId>sms-model</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.hbh</groupId>
-            <artifactId>sms-biz</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 </project>
