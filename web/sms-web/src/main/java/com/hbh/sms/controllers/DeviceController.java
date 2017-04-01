@@ -47,6 +47,7 @@ public class DeviceController {
         return "device/gsmManager";
     }
 
+    //扫描设备
     @RequestMapping("/scanner")
     @ResponseBody
     public Result<List<Concentrator>> scanner() {
@@ -66,6 +67,7 @@ public class DeviceController {
         return result;
     }
 
+    //发送短信 读数据命令
     @RequestMapping("/readMeterData")
     @ResponseBody
     public Result readMeterData(Meter meter) {
@@ -89,6 +91,7 @@ public class DeviceController {
         return ResultUtil.newFailedResult(StateCode.ERROR);
     }
 
+    //发送数据 设置阀的状态值
     @RequestMapping("/setValveStatus")
     @ResponseBody
     public Result setValveStatus(Meter meter,Integer status){
