@@ -1,7 +1,7 @@
 package com.hbh.sms.biz.service.job;
 
 import com.hbh.sms.model.entity.Concentrator;
-import com.hbh.sms.biz.service.ReadMessageService;
+//import com.hbh.sms.biz.service.ReadMessageService;
 import com.hbh.sms.biz.service.concentrator.ConcentratorService;
 import com.sms.common.Result;
 import org.smslib.InboundMessage;
@@ -15,8 +15,8 @@ import java.util.List;
 
 public class ReadMessageJobDetail {
 
-    @Autowired
-    private ReadMessageService readMessageService;
+//    @Autowired
+//    private ReadMessageService readMessageService;
     @Autowired
     private ConcentratorService concentratorService;
 
@@ -28,7 +28,7 @@ public class ReadMessageJobDetail {
                 System.out.println("任务执行中。。。。。。");
                 List<InboundMessage> listMessage = null;
                 try{
-                  listMessage=readMessageService.readMessage(concentrator, InboundMessage.MessageClasses.ALL);
+//                  listMessage=readMessageService.readMessage(concentrator, InboundMessage.MessageClasses.ALL);
                     System.out.println("数据"+listMessage.size());
                 }catch (Exception e){
                     e.printStackTrace();

@@ -1,5 +1,6 @@
 package com.hbh.sms.biz.service.common;
 
+//import com.hbh.sms.biz.service.job.ReadMessageNotification;
 import com.hbh.sms.model.entity.SendMessageData;
 import org.smslib.InboundMessage;
 import org.smslib.Message;
@@ -17,14 +18,10 @@ public class MessageCenter {
     public static boolean sendMessage(SerialModemGateway gateway, SendMessageData messageData) {
         boolean b = false;
         try {
-            if (Service.getInstance().getServiceStatus() != Service.ServiceStatus.STARTED) {
-                Service.getInstance().addGateway(gateway);  //将网关添加到短信猫服务中
-                Service.getInstance().startService();   //启动服务，进入短信发送就绪状态
-            }
+            initServer(gateway);
             OutboundMessage msg = new OutboundMessage(messageData.getReceiver(), messageData.getMessage());
             msg.setEncoding(Message.MessageEncodings.ENCUCS2);
             b = Service.getInstance().sendMessage(msg); //执行发送短信
-            // Service.getInstance().stopService();
         } catch (Exception ex) {
             ex.printStackTrace();
             b = false;
@@ -48,5 +45,16 @@ public class MessageCenter {
         return true;
     }
 
-
+    private static void initServer(SerialModemGateway gateway){
+        try {
+            if (Service.getInstance().getServiceStatus() != Service.ServiceStatus.STARTED) {
+                Service.getInstance().addGateway(gateway);  //将网关添加到短信猫服务中
+                Service.getInstance().startService();   //启动服务，进入短信发送就绪状态
+                ReadMessageNotification readMessageNotification = new ReadMessageNotification();
+                Service.getInstance().setInboundMessageNotification(readMessageNotification);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
