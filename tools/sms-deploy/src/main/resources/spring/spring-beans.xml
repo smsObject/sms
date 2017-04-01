@@ -1,29 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
+
     <context:property-placeholder location="classpath:env/config.properties"/>
-    <bean id="readMessageJobDetail" class="com.hbh.sms.biz.service.job.ReadMessageJobDetail"/>
-    <bean id="myTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject">
-            <ref bean="readMessageJobDetail"/>
-        </property>
-        <property name="targetMethod">
-            <value>readMessage</value>
-        </property>
-    </bean>
-    <!--<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">-->
-    <!--<property name="triggers">-->
-    <!--<list>-->
-    <!--<ref bean="readMessageTrigger"/>-->
-    <!--</list>-->
-    <!--</property>-->
-    <!--<property name="autoStartup" value="true"/>-->
-    <!--</bean>-->
-    <bean id="readMessageTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-        <property name="jobDetail" ref="myTask"/>
-        <property name="cronExpression" value="*/10 * * * * ?"/>
-    </bean>
+    <context:annotation-config/>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <context:component-scan base-package="com.hbh.sms"/>
 </beans>

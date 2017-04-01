@@ -20,7 +20,7 @@ public class CompanyInfoController {
     @Autowired
     private CompanyInfoService companyInfoService;
 
-    @RequestMapping("list")
+    @RequestMapping("/list")
     public String list(){
         return  "companyInfo/list";
     }
@@ -49,7 +49,7 @@ public class CompanyInfoController {
         }
     }
 
-    @RequestMapping("/update")
+    @RequestMapping("/updateCompanyInfo")
     public Result<Boolean> updateCompanyInfo(CompanyInfo companyInfo){
         if ( companyInfo == null){
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
