@@ -15,7 +15,7 @@ public class Meter extends BaseDO implements Serializable {
     /**编码*/
     private String meterCode;
     /**所属集中器*/
-    private Integer concentratorId;
+    private Long concentratorId;
     /**仪表名称*/
     private String meterName;
     /**安装时间*/

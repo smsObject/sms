@@ -45,16 +45,16 @@ public class MessageCenter {
         return true;
     }
 
-    private static void initServer(SerialModemGateway gateway){
-        try {
+    private static void initServer(SerialModemGateway gateway) throws Exception{
             if (Service.getInstance().getServiceStatus() != Service.ServiceStatus.STARTED) {
-                Service.getInstance().addGateway(gateway);  //将网关添加到短信猫服务中
+                if (Service.getInstance().getGateways().size() == 0) {
+                    Service.getInstance().addGateway(gateway);  //将网关添加到短信猫服务中
+                }
                 Service.getInstance().startService();   //启动服务，进入短信发送就绪状态
-                ReadMessageNotification readMessageNotification = new ReadMessageNotification();
-                Service.getInstance().setInboundMessageNotification(readMessageNotification);
+                if(Service.getInstance().getInboundMessageNotification()  == null){
+                    ReadMessageNotification readMessageNotification = new ReadMessageNotification();
+                    Service.getInstance().setInboundMessageNotification(readMessageNotification);
+                }
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 }

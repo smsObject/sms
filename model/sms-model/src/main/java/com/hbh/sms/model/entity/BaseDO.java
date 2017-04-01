@@ -11,8 +11,8 @@ import java.util.Date;
 @Data
 public class BaseDO extends PagedQuery implements Serializable{
     private Long id;
-    private Date    createDate;
-    private Date    updateDate;
-    private String  createUser;
-    private String  updateUser;
+    private Date    createTime;
+    private Date    updateTime;
+    private String  createPerson;
+    private String  updatePerson;
 }

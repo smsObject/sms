@@ -3,29 +3,29 @@
 <mapper namespace="com.hbh.sms.dal.dao.MeterMapper" >
   <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.Meter" >
     <id column="id" property="id"  />
-    <result column="meterNo" property="meterNo"  />
-    <result column="meterCode" property="meterCode"  />
-    <result column="controllerId" property="concentratorId"  />
-    <result column="meterName" property="meterName"  />
-    <result column="fixDate" property="fixDate"  />
-    <result column="useType" property="useType"  />
-    <result column="userType" property="userType"  />
-    <result column="baseValue" property="baseValue"  />
-    <result column="buyWay" property="buyWay"  />
-    <result column="meterModel" property="meterModel"  />
-    <result column="createDate" property="createDate"  />
-    <result column="createUser" property="createUser"  />
-    <result column="updateDate" property="updateDate"  />
-    <result column="updateUser" property="updateUser"  />
+    <result column="meter_no" property="meterNo"  />
+    <result column="meter_code" property="meterCode"  />
+    <result column="controller_id" property="concentratorId"  />
+    <result column="meter_name" property="meterName"  />
+    <result column="fix_date" property="fixDate"  />
+    <result column="use_type" property="useType"  />
+    <result column="user_type" property="userType"  />
+    <result column="base_value" property="baseValue"  />
+    <result column="buy_way" property="buyWay"  />
+    <result column="meter_model" property="meterModel"  />
+    <result column="create_time" property="createTime"  />
+    <result column="create_person" property="createPerson"  />
+    <result column="update_time" property="updateTime"  />
+    <result column="update_person" property="updatePerson"  />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, meterNo, meterCode, controllerId, meterName, fixDate, useType, userType, baseValue,
-    buyWay, meterModel, createDate, createUser, updateDate, updateUser
+    id, meter_no, meter_code, controller_id, meter_name, fix_date, use_type, user_type, base_value,
+    buy_way, meter_model, create_time, create_person, update_time, update_person
   </sql>
   <sql id="meterWhere" >
     <where>
       <if test="meterNo != null and meterNo !='' ">
-        AND meterNo = #{meterNo}
+        AND meter_no = #{meterNo}
       </if>
     </where>
   </sql>
@@ -52,16 +52,16 @@
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_meter (meterNo, meterCode, controllerId, 
-      meterName, fixDate, useType, 
-      userType, baseValue, buyWay, 
-      meterModel, createDate, createUser, 
-      updateDate, updateUser)
-    values (#{meterno}, #{metercode}, #{controllerid},
-      #{metername}, #{fixdate}, #{usetype},
-      #{usertype}, #{basevalue}, #{buyway},
-      #{metermodel}, now(), #{createuser},
-      now() #{createuser})
+    insert into t_meter (meter_no, meter_code, controller_id,
+      meter_name, fix_date, use_type,
+      user_type, base_value, buy_way,
+      meter_model, create_time, create_person,
+      update_time, update_person)
+    values (#{meterNo}, #{meterCode}, #{controllerId},
+      #{meterName}, #{fixDate}, #{useType},
+      #{userType}, #{baseValue}, #{buyWay},
+      #{meterModel}, now(), #{createPerson},
+      now() #{createPerson})
   </insert>
 
   <!--<insert id="insertSelective" parameterType="com.hbh.sms.model.entity.Meter" >-->
@@ -210,18 +210,18 @@
 
   <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.Meter" >
     update t_meter
-    set meterNo = #{meterno},
-      meterCode = #{metercode},
-      controllerId = #{controllerid},
-      meterName = #{metername},
-      fixDate = #{fixdate},
-      useType = #{usetype},
-      userType = #{usertype},
-      baseValue = #{basevalue},
-      buyWay = #{buyway},
-      meterModel = #{metermodel},
-      updateDate = now(),
-      updateUser = #{updateuser}
+    set meter_no = #{meterNo},
+      meter_code = #{meterCode},
+      controller_id = #{controllerId},
+      meter_name = #{meterName},
+      fix_date = #{fixDate},
+      use_type = #{useType},
+      user_type = #{userType},
+      base_value = #{baseValue},
+      buy_way = #{buyWay},
+      meter_model = #{meterModel},
+      update_time = now(),
+      update_person = #{updatePerson}
     where id = #{id}
   </update>
 </mapper>

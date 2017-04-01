@@ -3,27 +3,27 @@
 <mapper namespace="com.hbh.sms.dal.dao.ConcentratorMapper" >
   <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.Concentrator" >
     <id column="id" property="id"  />
-    <result column="comPort" property="comPort"  />
-    <result column="baudRate" property="baudRate"  />
+    <result column="com_port" property="comPort"  />
+    <result column="baud_rate" property="baudRate"  />
     <result column="manufacturer" property="manufacturer"  />
     <result column="model" property="model"  />
     <result column="is_online" property="isOnline"  />
     <result column="code" property="code"  />
     <result column="smsc" property="smsc"  />
     <result column="name" property="name"  />
-    <result column="createDate" property="createDate"  />
-    <result column="createUser" property="createUser"  />
-    <result column="updateDate" property="updateDate"  />
-    <result column="updateUser" property="updateUser"  />
+    <result column="create_time" property="createTime"  />
+    <result column="create_person" property="createPerson"  />
+    <result column="update_time" property="updateTime"  />
+    <result column="update_person" property="updatePerson"  />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, comPort, baudRate, manufacturer, model, is_online, code, smsc, name, createDate,
-    createUser, updateDate, updateUser
+    id, com_port, baud_rate, manufacturer, model, is_online, code, smsc, name, create_time,
+    create_person, update_time, update_person
   </sql>
   <sql id="queryWhere" >
     <where>
       <if test="comPort != null and comPort !='' " >
-        comPort = #{comPort}
+        com_port = #{comPort}
       </if>
     </where>
   </sql>
@@ -48,15 +48,15 @@
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_concentrator (comPort, baudRate, manufacturer, 
+    insert into t_concentrator (com_port, baud_rate, manufacturer,
       model, is_online, code, 
-      smsc, name, createDate, 
-      createUser, updateDate, updateUser
+      smsc, name, create_time,
+      create_person, update_time, update_person
       )
     values (#{comPort}, #{baudRate}, #{manufacturer},
       #{model}, #{isOnline}, #{code},
       #{smsc}, #{name}, now(),
-      #{createUser}, now(), #{createUser}
+      #{createTime}, now(), #{createPerson}
       )
   </insert>
 
@@ -119,11 +119,11 @@
 
   <update id="updateByComPort" parameterType="com.hbh.sms.model.entity.Concentrator">
     update t_concentrator
-    set baudRate = #{baudRate},
+    set baud_pate = #{baudRate},
       manufacturer = #{manufacturer},
       model = #{model},
-      updateDate = now(),
-      updateUser = #{updateuser}
-    where comPort = #{comPort}
+      update_time = now(),
+      update_person = #{updatePerson}
+    where com_port = #{comPort}
   </update>
 </mapper>
