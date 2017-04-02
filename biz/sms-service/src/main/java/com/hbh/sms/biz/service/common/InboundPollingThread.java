@@ -15,7 +15,6 @@ public class InboundPollingThread extends Thread{
         while(true) {
             try {
                 System.out.println("读取短信开始");
-                MessageCenter.readMessages();
                 Thread.sleep(2000);
             }catch (Exception var3) {
                 Logger.getInstance().logDebug("Error in InboundPollingThread()", var3, (String)null);

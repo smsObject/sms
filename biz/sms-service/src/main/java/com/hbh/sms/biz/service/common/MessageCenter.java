@@ -1,14 +1,8 @@
 package com.hbh.sms.biz.service.common;
 
-//import com.hbh.sms.biz.service.job.SmsIInboundMessageNotification;
-
 import com.hbh.sms.model.entity.SendMessageData;
-import org.smslib.InboundMessage;
-import org.smslib.Message;
-import org.smslib.OutboundMessage;
-import org.smslib.Service;
+import org.smslib.*;
 import org.smslib.modem.SerialModemGateway;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -42,45 +36,51 @@ public class MessageCenter {
         return msgList;
     }
 
-    public static void readMessages(){
-        try {
-            ArrayList msgList = new ArrayList();
-            int size = Service.getInstance().readMessages(msgList, InboundMessage.MessageClasses.ALL);
-            Iterator e =msgList.iterator();
-            while (e.hasNext()){
-                InboundMessage msg1 = (InboundMessage)e.next();
-                System.out.println(msg1);
-                Thread.sleep(1000);
-//                Service.getInstance().deleteMessage(msg1);
-            }
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-    }
-
     public static boolean readMeterData(SendMessageData sendMessageData) {
         return true;
     }
 
     private static void initServer(SerialModemGateway gateway) throws Exception {
-        if (Service.getInstance().getServiceStatus() != Service.ServiceStatus.STARTED) {
-            if(Service.getInstance().getInboundMessageNotification()  == null){
-                SmsIInboundMessageNotification smsIInboundMessageNotification = new SmsIInboundMessageNotification();
-                Service.getInstance().setInboundMessageNotification(smsIInboundMessageNotification);
+        if(Service.getInstance().getInboundMessageNotification()  == null){
+            SmsIInboundMessageNotification smsIInboundMessageNotification = new SmsIInboundMessageNotification();
+            Service.getInstance().setInboundMessageNotification(smsIInboundMessageNotification);
+        }
+
+        if (Service.getInstance().getOutboundMessageNotification() == null){
+            SmsIOutboundMessageNotification  smsIOutboundMessageNotification = new SmsIOutboundMessageNotification();
+            Service.getInstance().setOutboundMessageNotification(smsIOutboundMessageNotification);
+        }
+
+        if (Service.getInstance().getGateways().size() == 0) {
+            Service.getInstance().addGateway(gateway);  //将网关添加到短信猫服务中
+        }else {
+            Iterator e = Service.getInstance().getGateways().iterator();
+            boolean b = true;
+            while (e.hasNext()){
+                SerialModemGateway serialModemGateway = (SerialModemGateway)e.next();
+                if (gateway.getGatewayId().equals(serialModemGateway.getGatewayId())){
+                    b = false;
+                    return;
+                }
             }
-            if (Service.getInstance().getGateways().size() == 0) {
+            if (b){
                 Service.getInstance().addGateway(gateway);  //将网关添加到短信猫服务中
             }
-            Service.getInstance().startService();   //启动服务，进入短信发送就绪状态
-//            new InboundPollingThread().start();
+        }
+
+        if (Service.getInstance().getServiceStatus() != Service.ServiceStatus.STARTED) {
+            System.out.println("正在启动服务。。。。。");
+            //Service.getInstance().startService();   //启动服务，进入短信发送就绪状态
+            System.out.println("启动服务成功。。。。。");
         }
     }
 
     public static void main(String[] args){
-        String id = "hbh.applicatioin";
+        String id = "COM519200SIEMENSTC35i";
         SerialModemGateway gateway = new SerialModemGateway(id,"COM5",19200,"SIEMENS","TC35i");
         gateway.setInbound(true);
         try {
+            initServer(gateway);
             initServer(gateway);
             System.in.read();
         }catch (Exception ex){

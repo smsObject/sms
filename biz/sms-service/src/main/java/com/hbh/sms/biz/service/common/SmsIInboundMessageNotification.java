@@ -2,7 +2,6 @@ package com.hbh.sms.biz.service.common;
 
 import org.smslib.*;
 import org.smslib.helper.Logger;
-import org.smslib.smsserver.SMSServer;
 
 /**
  * Created by user on 2017/3/9.
