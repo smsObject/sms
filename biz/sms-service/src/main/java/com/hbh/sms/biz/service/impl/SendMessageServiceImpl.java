@@ -17,7 +17,7 @@ public class SendMessageServiceImpl implements SendMessageService {
     public boolean sendMessage(Concentrator concentrator , SendMessageData messageData) {
         //网关
         SerialModemGateway gateway= GatewayCenter.getGateway(concentrator);
-        //gateway.setInbound(true);   //设置true，表示该网关可以接收短信,根据需求修改
+        gateway.setInbound(true);   //设置true，表示该网关可以接收短信,根据需求修改
         gateway.setOutbound(true);//设置true，表示该网关可以发送短信,根据需求修改
         return MessageCenter.sendMessage(gateway , messageData );
     }
