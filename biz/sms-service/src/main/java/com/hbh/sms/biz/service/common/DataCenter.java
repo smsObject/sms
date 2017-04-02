@@ -36,14 +36,15 @@ public class DataCenter {
         if (hexStr == null || hexStr.trim().length() == 0 || hexStr.length() % 2 != 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "入参错误");
         }
-
         short[] meterDatas = hexStringToShort(hexStr);
-
         if (! check(meterDatas)){
             return ResultUtil.newFailedResult(StateCode.ERROR, "校验失败");
         }
-        //取数据
-        return null;
+        //解析
+        System.out.println(hexStr);
+        Result<MeterData> result = new Result<>();
+        result.setData(new MeterData());
+        return result;
     }
 
     /**

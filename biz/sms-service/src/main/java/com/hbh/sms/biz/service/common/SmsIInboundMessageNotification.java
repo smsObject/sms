@@ -1,5 +1,7 @@
 package com.hbh.sms.biz.service.common;
 
+import com.hbh.sms.model.entity.MeterData;
+import com.sms.common.Result;
 import org.smslib.*;
 import org.smslib.helper.Logger;
 
@@ -13,6 +15,9 @@ public class SmsIInboundMessageNotification implements IInboundMessageNotificati
         System.out.println("IInboundMessageNotification .................");
         try {
             System.out.println(msg);
+            Result<MeterData> result = DataCenter.parseReadMeterData(msg.getText());
+            result.getData();
+            msg.getOriginator();
             Service.getInstance().deleteMessage(msg);
         } catch (Exception e) {
             Logger.getInstance().logError("Error deleting received message!", e, null);
