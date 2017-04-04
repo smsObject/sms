@@ -1,5 +1,6 @@
 package com.hbh.sms.biz.service.common;
 
+import com.hbh.sms.model.entity.Meter;
 import com.hbh.sms.model.entity.MeterData;
 import com.sms.common.Result;
 import org.smslib.*;
@@ -16,9 +17,16 @@ public class SmsIInboundMessageNotification implements IInboundMessageNotificati
         try {
             System.out.println(msg);
             Result<MeterData> result = DataCenter.parseReadMeterData(msg.getText());
-            result.getData();
-            msg.getOriginator();
-            Service.getInstance().deleteMessage(msg);
+            if(result.isSuccess()){
+                MeterData meterData = result.getData();
+                System.out.println("水表读数:"+meterData.getValue());
+                meterData.setCode(msg.getOriginator());
+                //查询仪表数据
+                Meter meter = new Meter();
+            }else {
+                System.out.println(result.getStatusText());
+            }
+            //Service.getInstance().deleteMessage(msg);
         } catch (Exception e) {
             Logger.getInstance().logError("Error deleting received message!", e, null);
         }

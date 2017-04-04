@@ -70,7 +70,7 @@ public class MessageCenter {
 
         if (Service.getInstance().getServiceStatus() != Service.ServiceStatus.STARTED) {
             System.out.println("正在启动服务。。。。。");
-            //Service.getInstance().startService();   //启动服务，进入短信发送就绪状态
+            Service.getInstance().startService();   //启动服务，进入短信发送就绪状态
             System.out.println("启动服务成功。。。。。");
         }
     }
