@@ -1,0 +1,354 @@
+<html>
+<head>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="index.css">
+    <!-- 引入组件库 -->
+    <script src="jquery-3.2.0.min.js"></script>
+    <script src="vue.js"></script>
+    <script src="index.js"></script>
+    <script>
+        $(function () {
+            var vm = new Vue({
+                el: "#wap",
+                data: function () {
+                    return {
+                        loadSeachGsm:false,
+                        gsmDiv: false,
+                        gsmPage: 1,
+                        gsmData: [{
+                            id:'1',
+                            name: 'GSM1',
+                            comPort:'COM5',
+                            baudRate:'19200',
+                            manufacturer:'asdas',
+                            model:'asd',
+                            isOnline:'1',
+                            createDate:'2016-05-04',
+                            createUser:'hbh'
+                        }],
+                        gsmTotal:0,
+                        gsmRow: null,
+
+                        meterManager:{
+                            loadReadMeter:false,
+                            loadOpenMeter:false,
+                            loadCloseMeter:false,
+                            disabledReadMeter:false,
+                            disabledOpenMeter:false,
+                            disabledCloseMeter:false,
+                            meterPage: 1,
+                            meterDiv: true,
+                            meterData:[],
+                            meterTotal:0,
+                            meterRow:null
+                        }
+                    }
+                },
+                components: {},
+                mounted: function () {
+                },
+                computed: {},
+                watch: {},
+                methods: {
+                    seachGsmFun:function () {
+                        this.loadSeachGsm = true
+                        console.log("seachGsmFun")
+
+                        this.$message({
+                            showClose: true,
+                            message: '已成功扫描并返回了数据!',
+                            type: 'success'
+                        });
+
+                        this.$notify({
+                            title: '成功',
+                            message: '这是一条成功的提示消息',
+                            type: 'success'
+                        });
+
+                        this.loadSeachGsm = false;
+                    },
+                    readMeter:function () {
+                        this.meterManager.loadReadMeter = true
+                        this.meterManager.disabledOpenMeter = true
+                        this.meterManager.disabledCloseMeter = true
+                    },
+                    openMeter:function () {
+                        this.meterManager.loadOpenMeter = true
+                        this.meterManager.disabledReadMeter = true
+                        this.meterManager.disabledCloseMeter = true
+                    },
+                    closeMeter:function () {
+                        this.meterManager.loadCloseMeter = true;
+                        this.meterManager.disabledOpenMeter = true
+                        this.meterManager.disabledReadMeter = true
+                    },
+                    handleSelect: function (index) {
+                        if ("1" == index) {
+                            this.message = "公司信息表格"
+                            return
+                        }
+                        if ("2-1" == index) {
+                            this.message = "GSM信息"
+                            this.gsmDiv = true
+                            this.meterDiv = false
+                            return
+                        }
+                        if ("2-2" == index) {
+                            this.message = "仪表信息"
+                            this.meterDiv = true
+                            this.gsmDiv = false
+                            return
+                        }
+                        if ("2-3" == index) {
+                            this.message = "数据信息"
+                            return
+                        }
+                        if ("3" == index) {
+                            this.message = "用户信息"
+                            return
+                        }
+                        if ("4" == index) {
+                            this.message = "系统设置"
+                            return
+                        }
+                    },
+                    handleCurrentChange(val) {
+                        this.currentRow = val
+                        console.log(val)
+                    },
+                    handleEdit: function (index, row) {
+                        console.log(index)
+                    },
+                    handleDelete: function (index, row) {
+                        console.log(index)
+                    },
+                    handleSizeChange(val) {
+                        console.log('每页 ${val} 条')
+                    },
+                    handleCurrentChange(val) {
+                        this.currentPage = val
+                        console.log('当前页: ${val}')
+                    },
+                }
+            })
+        })
+    </script>
+</head>
+
+<body>
+<div id="wap">
+    <el-menu theme="dark" :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <el-menu-item index="1">公司信息</el-menu-item>
+        <el-submenu index="2">
+            <template slot="title">我的设备</template>
+            <el-menu-item index="2-1">GMS</el-menu-item>
+            <el-menu-item index="2-2">仪表</el-menu-item>
+            <el-menu-item index="2-3">数据</el-menu-item>
+        </el-submenu>
+        <el-menu-item index="3"> 用户信息</el-menu-item>
+        <el-menu-item index="4">系统设置</el-menu-item>
+    </el-menu>
+    <div class="line"></div>
+
+    <div id="gsmDiv" v-if="gsmDiv">
+        <!--button -->
+        <el-button type="primary" size="small" :loading="loadSeachGsm" icon="search" @click="seachGsmFun">
+            扫描
+        </el-button>
+       <!--table -->
+        <template>
+            <el-table stripe
+                      border
+                      :data="gsmData"
+                      highlight-current-row
+                      @current-change="handleCurrentChange"
+                      height="500"
+                      style="width: 100%">
+                <el-table-column
+                        type="index"
+                        width="50">
+                </el-table-column>
+                <el-table-column
+                        property="id"
+                        label="编号"
+                        width="120">
+                </el-table-column>
+                <el-table-column
+                        property="name"
+                        label="名称"
+                        width="120">
+                </el-table-column>
+                <el-table-column
+                        property="comPort"
+                        label="组件名"
+                        width="120"
+                    >
+                </el-table-column>
+                <el-table-column
+                        property="baudRate"
+                        label="波特率"
+                        width="90"
+                >
+                </el-table-column>
+                <el-table-column
+                        width="90"
+                        property="manufacturer"
+                        label="生产商">
+                </el-table-column>
+                <el-table-column
+                        property="model"
+                        label="型号">
+                </el-table-column>
+                <el-table-column
+                        property="isOnline"
+                        label="是否在线">
+                </el-table-column>
+                <el-table-column
+                        property="createDate"
+                        label="创建时间">
+                </el-table-column>
+                <el-table-column
+                        property="createUser"
+                        label="创建人">
+                </el-table-column>
+                <el-table-column label="操作">
+                    <template scope="scope">
+                        <el-button
+                                size="small"
+                                @click="handleEdit(scope.$index, scope.row)">编辑
+                        </el-button>
+                        <el-button
+                                size="small"
+                                type="danger"
+                                @click="handleDelete(scope.$index, scope.row)">删除
+                        </el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </template>
+        <!--page-->
+        <template>
+            <div class="block">
+                <el-pagination
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange"
+                        :current-page="gsmPage"
+                        :page-sizes="[20, 50, 100, 150]"
+                        :page-size="20"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="gsmTotal">
+                </el-pagination>
+            </div>
+        </template>
+    </div>
+
+    <div id="meterDiv" v-if="meterManager.meterDiv">
+        <!--button -->
+        <el-button type="primary" size="small"
+                   :loading="meterManager.loadReadMeter"  @click="readMeter"
+                   :disabled="meterManager.disabledReadMeter">
+         抄表
+        </el-button>
+
+        <el-button type="primary" size="small"
+                   :loading="meterManager.loadOpenMeter"  @click="openMeter"
+                   :disabled="meterManager.disabledOpenMeter">
+            开阀
+        </el-button>
+
+        <el-button type="primary" size="small"
+                   :loading="meterManager.loadCloseMeter"  @click="closeMeter"
+                   :disabled="meterManager.disabledCloseMeter">
+            关阀
+        </el-button>
+
+        <!--table-->
+        <template>
+            <el-table stripe
+                      border
+                      :data="meterManager.meterData"
+                      highlight-current-row
+                      @current-change="handleCurrentChange"
+                      height="500"
+                      style="width: 100%">
+                <el-table-column
+                        type="index"
+                        width="50">
+                </el-table-column>
+                <el-table-column
+                        property="id"
+                        label="编号"
+                        width="120">
+                </el-table-column>
+                <el-table-column
+                        property="name"
+                        label="名称"
+                        width="120">
+                </el-table-column>
+                <el-table-column
+                        property="comPort"
+                        label="组件名"
+                        width="120"
+                >
+                </el-table-column>
+                <el-table-column
+                        property="baudRate"
+                        label="波特率"
+                        width="90"
+                >
+                </el-table-column>
+                <el-table-column
+                        width="90"
+                        property="manufacturer"
+                        label="生产商">
+                </el-table-column>
+                <el-table-column
+                        property="model"
+                        label="型号">
+                </el-table-column>
+                <el-table-column
+                        property="isOnline"
+                        label="是否在线">
+                </el-table-column>
+                <el-table-column
+                        property="createDate"
+                        label="创建时间">
+                </el-table-column>
+                <el-table-column
+                        property="createUser"
+                        label="创建人">
+                </el-table-column>
+                <el-table-column label="操作">
+                    <template scope="scope">
+                        <el-button
+                                size="small"
+                                @click="handleEdit(scope.$index, scope.row)">编辑
+                        </el-button>
+                        <el-button
+                                size="small"
+                                type="danger"
+                                @click="handleDelete(scope.$index, scope.row)">删除
+                        </el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </template>
+        <!--page-->
+        <template>
+            <div class="block">
+                <el-pagination
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange"
+                        :current-page="meterManager.meterPage"
+                        :page-sizes="[20, 50, 100, 150]"
+                        :page-size="20"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="meterManager.meterTotal">
+                </el-pagination>
+            </div>
+        </template>
+    </div>
+</div>
+</body>
+</html>
