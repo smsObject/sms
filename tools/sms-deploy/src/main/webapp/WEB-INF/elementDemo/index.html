@@ -38,7 +38,39 @@
                             disabledCloseMeter:false,
                             meterPage: 1,
                             meterDiv: true,
-                            meterData:[],
+                            meterData:[{
+                                id:1,
+                                meterCode:'13738146553',
+                                controllerId:2,
+                                meterName:'仪表1号',
+                                createPerson:'hubihua',
+                                unit:'吨',
+                                createDate:'2017-09-11'
+                            },{
+                                id:2,
+                                meterCode:'13738146553',
+                                controllerId:2,
+                                meterName:'仪表1号',
+                                createPerson:'hubihua',
+                                unit:'吨',
+                                createDate:'2017-09-11'
+                            },{
+                                id:3,
+                                meterCode:'13738146553',
+                                controllerId:2,
+                                meterName:'仪表1号',
+                                createPerson:'hubihua',
+                                unit:'吨',
+                                createDate:'2017-09-11'
+                            },{
+                                id:4,
+                                meterCode:'13738146553',
+                                controllerId:2,
+                                meterName:'仪表1号',
+                                createPerson:'hubihua',
+                                unit:'吨',
+                                createDate:'2017-09-11'
+                            }],
                             meterTotal:0,
                             meterRow:null
                         }
@@ -69,17 +101,41 @@
                         this.loadSeachGsm = false;
                     },
                     readMeter:function () {
+                        if (this.meterRow == null){
+                            this.$message({
+                                showClose: true,
+                                message: '请先选择一个仪表再操作',
+                                type: 'error'
+                            });
+                            return;
+                        }
                         this.meterManager.loadReadMeter = true
                         this.meterManager.disabledOpenMeter = true
                         this.meterManager.disabledCloseMeter = true
                     },
                     openMeter:function () {
+                        if (this.meterRow == null){
+                            this.$message({
+                                showClose: true,
+                                message: '请先选择一个仪表再操作',
+                                type: 'error'
+                            });
+                            return;
+                        }
                         this.meterManager.loadOpenMeter = true
                         this.meterManager.disabledReadMeter = true
                         this.meterManager.disabledCloseMeter = true
                     },
                     closeMeter:function () {
-                        this.meterManager.loadCloseMeter = true;
+                        if (this.meterRow == null){
+                            this.$message({
+                                showClose: true,
+                                message: '请先选择一个仪表再操作',
+                                type: 'error'
+                            });
+                            return;
+                        }
+                        this.meterManager.loadCloseMeter = true
                         this.meterManager.disabledOpenMeter = true
                         this.meterManager.disabledReadMeter = true
                     },
@@ -113,8 +169,11 @@
                             return
                         }
                     },
+                    handleMeterChange(val){
+                        this.meterRow = val
+                    },
                     handleCurrentChange(val) {
-                        this.currentRow = val
+                        this.gsmData = val
                         console.log(val)
                     },
                     handleEdit: function (index, row) {
@@ -268,8 +327,8 @@
             <el-table stripe
                       border
                       :data="meterManager.meterData"
-                      highlight-current-row
-                      @current-change="handleCurrentChange"
+                          highlight-current-row
+                      @current-change="handleMeterChange"
                       height="500"
                       style="width: 100%">
                 <el-table-column
@@ -279,44 +338,34 @@
                 <el-table-column
                         property="id"
                         label="编号"
-                        width="120">
+                        width="80">
                 </el-table-column>
                 <el-table-column
-                        property="name"
-                        label="名称"
-                        width="120">
+                        property="meterCode"
+                        label="手机号"
+                        width="150">
                 </el-table-column>
                 <el-table-column
-                        property="comPort"
-                        label="组件名"
-                        width="120"
-                >
+                        property="controllerId"
+                        label="集中器"
+                        width="120" >
                 </el-table-column>
                 <el-table-column
-                        property="baudRate"
-                        label="波特率"
-                        width="90"
-                >
+                        property="meterName"
+                        label="仪表名称"
+                        width="120" >
                 </el-table-column>
                 <el-table-column
                         width="90"
-                        property="manufacturer"
-                        label="生产商">
-                </el-table-column>
-                <el-table-column
-                        property="model"
-                        label="型号">
-                </el-table-column>
-                <el-table-column
-                        property="isOnline"
-                        label="是否在线">
+                        property="unit"
+                        label="单位">
                 </el-table-column>
                 <el-table-column
                         property="createDate"
                         label="创建时间">
                 </el-table-column>
                 <el-table-column
-                        property="createUser"
+                        property="createPerson"
                         label="创建人">
                 </el-table-column>
                 <el-table-column label="操作">
