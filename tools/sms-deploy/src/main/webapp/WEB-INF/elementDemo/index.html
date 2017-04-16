@@ -239,9 +239,18 @@
             <el-menu-item index="2-2">仪表</el-menu-item>
             <el-menu-item index="2-3">数据</el-menu-item>
         </el-submenu>
-        <el-menu-item index="3"> 用户信息</el-menu-item>
-        <el-menu-item index="4">系统设置</el-menu-item>
+        <el-submenu index="3">
+            <template slot="title">用户管理</template>
+            <el-menu-item index="3-1">用户信息</el-menu-item>
+            <el-menu-item index="3-2">价格设置</el-menu-item>
+        </el-submenu>
+        <el-submenu index="4">
+            <template slot="title">系统设置</template>
+            <el-menu-item index="4-1">账号管理</el-menu-item>
+            <el-menu-item index="4-2">角色管理</el-menu-item>
+        </el-submenu>
     </el-menu>
+
     <div class="line"></div>
 
     <!-- gsm 模块-->
@@ -489,4 +498,5 @@
     </div>
 </div>
 </body>
+
 </html>

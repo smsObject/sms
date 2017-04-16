@@ -17,10 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-/**
- * Created by hbh on 2016/7/17.
- */
-
 @Controller
 @RequestMapping("/device")
 public class DeviceController {
