@@ -12,6 +12,8 @@
                 el: "#wap",
                 data: function () {
                     return {
+                        item1:"我的设备",
+                        item2:"GSM",
                         gsmManager:{
                             loadSearchGsm:false,
                             isShow: true,
@@ -173,22 +175,27 @@
                     },
                     handleSelect: function (index) {
                         if ("1" == index) {
-                            this.message = "公司信息表格"
                             return
                         }
                         if ("2-1" == index) {
+                            this.item1="我的设备"
+                            this.item2="GSM";
                             this.gsmManager.isShow = true
                             this.meterManager.isShow = false
                             this.meterDataManager.isShow =false
                             return
                         }
                         if ("2-2" == index) {
+                            this.item1="我的设备"
+                            this.item2="仪表";
                             this.gsmManager.isShow = false
                             this.meterManager.isShow = true
                             this.meterDataManager.isShow =false
                             return
                         }
                         if ("2-3" == index) {
+                            this.item1="我的设备"
+                            this.item2="数据";
                             this.gsmManager.isShow = false
                             this.meterManager.isShow = false
                             this.meterDataManager.isShow =true
@@ -235,7 +242,7 @@
         <el-menu-item index="1">公司信息</el-menu-item>
         <el-submenu index="2">
             <template slot="title">我的设备</template>
-            <el-menu-item index="2-1">GMS</el-menu-item>
+            <el-menu-item index="2-1">GSM</el-menu-item>
             <el-menu-item index="2-2">仪表</el-menu-item>
             <el-menu-item index="2-3">数据</el-menu-item>
         </el-submenu>
@@ -250,8 +257,11 @@
             <el-menu-item index="4-2">角色管理</el-menu-item>
         </el-submenu>
     </el-menu>
-
     <div class="line"></div>
+    <el-breadcrumb separator="/">
+        <el-breadcrumb-item >{{item1}}</el-breadcrumb-item>
+        <el-breadcrumb-item>{{item2}}</el-breadcrumb-item>
+    </el-breadcrumb>
 
     <!-- gsm 模块-->
     <div id="gsmDiv" v-if="gsmManager.isShow">
@@ -496,6 +506,11 @@
             </div>
         </template>
     </div>
+
+
+
+
+
 </div>
 </body>
 
