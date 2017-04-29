@@ -82,61 +82,172 @@ $(function () {
                 });
             },
             searchGsmFun: function () {
-                this.loadSeachGsm = true
-                console.log("seachGsmFun")
+                var self = this;
+                self.gsmManager.loadSearchGsm = true;
 
-                this.$message({
-                    showClose: true,
-                    message: '已成功扫描并返回了数据!',
-                    type: 'success'
+                $.ajax({
+                    url:"/device/scanner",
+                    success:function (e) {
+                        if (e.success){
+                            console.log(e)
+                            self.$message({
+                                showClose: true,
+                                message: '已成功扫描并返回了数据!',
+                                type: 'success'
+                            });
+                            // this.$notify({
+                            //     title: '成功',
+                            //     message: '这是一条成功的提示消息',
+                            //     type: 'success'
+                            // });
+                        }else{
+
+                        }
+                        self.gsmManager.loadSearchGsm = false;
+                        self.gsmData();
+                    },
+                    error:function (e) {
+                        self.gsmManager.loadSearchGsm = false;
+                    }
                 });
-
-                this.$notify({
-                    title: '成功',
-                    message: '这是一条成功的提示消息',
-                    type: 'success'
-                });
-
-                this.loadSeachGsm = false;
             },
             readMeter: function () {
-                if (this.meterRow == null) {
-                    this.$message({
+                var self = this;
+                if (self.meterRow == null) {
+                    self.$message({
                         showClose: true,
                         message: '请先选择一个仪表再操作',
                         type: 'error'
                     });
                     return;
                 }
-                this.meterManager.loadReadMeter = true
-                this.meterManager.disabledOpenMeter = true
-                this.meterManager.disabledCloseMeter = true
+                self.meterManager.loadReadMeter = true
+                self.meterManager.disabledOpenMeter = true
+                self.meterManager.disabledCloseMeter = true
+                $.ajax({
+                    url:"/device/readMeterData",
+                    data:{id:self.meterRow.id},
+                    success:function (e) {
+                        console.log(e);
+                        if (e.success){
+                            self.$message({
+                                showClose: true,
+                                message: '命令发送成功!',
+                                type: 'success'
+                            });
+                        }else{
+                            alert(e.statusText);
+                        }
+                        self.meterManager.loadReadMeter = false
+                        self.meterManager.disabledOpenMeter = false
+                        self.meterManager.disabledCloseMeter = false
+                    },
+                    error:function (e) {
+                        self.meterManager.loadReadMeter = false
+                        self.meterManager.disabledOpenMeter = false
+                        self.meterManager.disabledCloseMeter = false
+                        alert(e.statusText);
+                    }
+                })
             },
             openMeter: function () {
-                if (this.meterRow == null) {
-                    this.$message({
+                var self = this;
+                if (self.meterRow == null) {
+                    self.$message({
                         showClose: true,
                         message: '请先选择一个仪表再操作',
                         type: 'error'
                     });
                     return;
                 }
-                this.meterManager.loadOpenMeter = true
-                this.meterManager.disabledReadMeter = true
-                this.meterManager.disabledCloseMeter = true
+                self.meterManager.loadOpenMeter = true
+                self.meterManager.disabledReadMeter = true
+                self.meterManager.disabledCloseMeter = true
+
+                $.ajax({
+                    url:"/device/setValveStatus",
+                    data:{id:this.meterRow.id,status:1},
+                    success:function (e) {
+                        if(e.success){
+                            self.$message({
+                                showClose: true,
+                                message: "命令发送成功",
+                                type: 'success'
+                            });
+                        }else{
+                            self.$message({
+                                showClose: true,
+                                message: e.statusText,
+                                type: 'error'
+                            });
+                        }
+                        self.meterManager.loadOpenMeter = false
+                        self.meterManager.disabledReadMeter = false
+                        self.meterManager.disabledCloseMeter = false
+                    },
+                    error:function (e) {
+                        self.meterManager.loadOpenMeter = false
+                        self.meterManager.disabledReadMeter = false
+                        self.meterManager.disabledCloseMeter = false
+                        self.$message({
+                            showClose: true,
+                            message: e.statusText,
+                            type: 'error'
+                        });
+                    }
+                });
             },
             closeMeter: function () {
-                if (this.meterRow == null) {
-                    this.$message({
+                var self = this;
+                if (self.meterRow == null) {
+                    self.$message({
                         showClose: true,
                         message: '请先选择一个仪表再操作',
                         type: 'error'
                     });
                     return;
                 }
-                this.meterManager.loadCloseMeter = true
-                this.meterManager.disabledOpenMeter = true
-                this.meterManager.disabledReadMeter = true
+                self.meterManager.loadCloseMeter = true
+                self.meterManager.disabledOpenMeter = true
+                self.meterManager.disabledReadMeter = true
+
+                $.ajax({
+                    url:"/device/setValveStatus",
+                    data:{id:this.meterRow.id,status:0},
+                    success:function (e) {
+                        console.log(e);
+                        if (e.success){
+                            self.$message({
+                                showClose: true,
+                                message: '命令发送成功!',
+                                type: 'success'
+                            });
+                        }else{
+                            self.$message({
+                                showClose: true,
+                                message: e.statusText,
+                                type: 'error'
+                            });
+                        }
+                        self.meterManager.loadCloseMeter = false
+                        self.meterManager.disabledOpenMeter = false
+                        self.meterManager.disabledReadMeter = false
+                    },
+                    error:function (e) {
+                        self.$message({
+                            showClose: true,
+                            message: e.statusText,
+                            type: 'error'
+                        });
+                        self.meterManager.loadCloseMeter = false
+                        self.meterManager.disabledOpenMeter = false
+                        self.meterManager.disabledReadMeter = false
+                    }
+                })
+
+            },
+            addMeter:function () {
+                
             },
             handleSelect: function (index) {
                 if ("1" == index) {

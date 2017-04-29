@@ -6,7 +6,7 @@
 <!-- gsm 模块-->
 <div id="gsmDiv" v-if="gsmManager.isShow">
     <!--button -->
-    <el-button type="primary" size="small" :loading="loadSearchGsm" icon="search" @click="searchGsmFun">
+    <el-button type="primary" size="small" :loading="gsmManager.loadSearchGsm" icon="search" @click="searchGsmFun">
         扫描
     </el-button>
     <!--table -->
@@ -16,7 +16,6 @@
                   :data="gsmManager.data"
                   highlight-current-row
                   @current-change="handleCurrentChange"
-                  <%--height="500"--%>
                   style="width: 100%;height:100%">
             <el-table-column
                     type="index"

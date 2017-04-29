@@ -54,6 +54,7 @@ public class DeviceController {
                 concentrator.setCode("hbh"+concentrator.getComPort());
                 concentrator.setCreatePerson("system");
                 concentrator.setUpdatePerson("system");
+                concentrator.setName(concentrator.getComPort());
                 Result<List<Concentrator>> list=concentratorService.list(concentrator1);
                 if (list.isSuccess() && list.getData().size() == 0){
                     concentratorService.add(concentrator);
@@ -100,7 +101,7 @@ public class DeviceController {
         Result<Meter> result = meterService.getMeterById(id);
         if (result.getData() != null) {
             Meter meter1 = result.getData();
-            Result<Concentrator> result1 = concentratorService.getConcentratorById(meter1.getId());
+            Result<Concentrator> result1 = concentratorService.getConcentratorById(meter1.getConcentratorId());
             if (result1.getData() != null) {
                 Concentrator concentrator = result1.getData();
                 SendMessageData messageData = null;

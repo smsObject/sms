@@ -23,7 +23,7 @@ import java.util.List;
 public class DeviceServiceImpl implements DeviceService {
     private static CommPortIdentifier portId;
     static Enumeration portList;
-    static int bauds[] = {9600, 19200, 57600, 115200};    //检测端口所支持的波特率
+    static int bauds[] = {19200,9600, 57600, 115200};    //检测端口所支持的波特率
 
     //AT+CGMM  TC35i AT+CGMI SIEMENS
     public Result<List<Concentrator>> scanner() {

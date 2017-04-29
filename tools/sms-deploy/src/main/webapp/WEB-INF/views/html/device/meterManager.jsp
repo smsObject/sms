@@ -6,6 +6,8 @@
 <!-- 仪表模块-->
 <div id="meterDiv" v-if="meterManager.isShow">
     <!--button -->
+    <el-button type="primary" size="small" @click="addMeter" >添加</el-button>
+
     <el-button type="primary" size="small"
                :loading="meterManager.loadReadMeter" @click="readMeter"
                :disabled="meterManager.disabledReadMeter">抄表
@@ -28,7 +30,6 @@
                   :data="meterManager.data"
                   highlight-current-row
                   @current-change="handleMeterChange"
-                  <%--height="500"--%>
                   style="width: 100%;height:100%">
             <el-table-column
                     type="index"

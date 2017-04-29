@@ -17,7 +17,7 @@ public class MessageCenter {
             initServer(gateway);
             OutboundMessage msg = new OutboundMessage(messageData.getReceiver(), messageData.getMessage());
             msg.setEncoding(Message.MessageEncodings.ENCUCS2);
-            //b = Service.getInstance().sendMessage(msg); //执行发送短信
+            b = Service.getInstance().sendMessage(msg); //执行发送短信
         } catch (Exception ex) {
             ex.printStackTrace();
             b = false;

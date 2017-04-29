@@ -26,13 +26,13 @@ public class Test {
     public void testSend() {
         SendMessageServiceImpl sendMessageService = new SendMessageServiceImpl();
         Concentrator concentrator = new Concentrator();
-        concentrator.setComPort("COM3");
+        concentrator.setComPort("COM5");
         concentrator.setBaudRate(19200);
         concentrator.setManufacturer("SIEMENS");
         concentrator.setModel("TC35i");
         //15371508177
         //17681860857  8613010360500
-        SendMessageData messageData = new SendMessageData("17681860857" , "smsCenter message!");
+        SendMessageData messageData = new SendMessageData("18205815108" , "smsCenter message!");
         boolean b= sendMessageService.sendMessage(concentrator , messageData);
         int i  =1 ;
         while (i==1){
@@ -46,7 +46,7 @@ public class Test {
         ReadMessageServiceImpl readMessageService = new ReadMessageServiceImpl();
         Concentrator concentrator = new Concentrator();
         concentrator.setBaudRate(19200);
-        concentrator.setComPort("COM3");
+        concentrator.setComPort("COM5");
         concentrator.setManufacturer("SIEMENS");
         concentrator.setModel("TC35i");
         long t = System.currentTimeMillis();
