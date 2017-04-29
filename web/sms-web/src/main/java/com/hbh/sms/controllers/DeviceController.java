@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.util.List;
 
 @Controller
@@ -127,12 +126,9 @@ public class DeviceController {
 
     @RequestMapping("/concentratorPage")
     @ResponseBody
-    public PageUtil gsmPage(Concentrator concentrator) {
+    public Result<PagedData<Concentrator>> gsmPage(Concentrator concentrator) {
         Result<PagedData<Concentrator>> result = concentratorService.page(concentrator);
-        PageUtil pageUtil = new PageUtil();
-        //pageUtil.setRows(result.getData());
-        pageUtil.setTotal(result.getTotalCount());
-        return pageUtil;
+        return result;
     }
 
     @RequestMapping("/addConcentrator")
@@ -147,12 +143,9 @@ public class DeviceController {
 
     @RequestMapping("/meterPage")
     @ResponseBody
-    public PageUtil meterPage(Meter meter) {
+    public Result<PagedData<Meter>> meterPage(Meter meter) {
         Result<PagedData<Meter>> result = meterService.page(meter);
-        PageUtil pageUtil = new PageUtil();
-       // pageUtil.setRows(result.getData());
-        pageUtil.setTotal(result.getTotalCount());
-        return pageUtil;
+        return result;
     }
 
     @RequestMapping("/addMeter")

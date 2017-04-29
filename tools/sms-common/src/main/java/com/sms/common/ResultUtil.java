@@ -11,11 +11,11 @@ public class ResultUtil {
 
     /**成功结果*/
     public static <T> Result<T> newSuccessResult(T data,Integer totalCount){
-        return newResult(data,StateCode.SUCCESS , StateCode.SUCCESS.getMessage() ,totalCount);
+        return newResult(data,StateCode.SUCCESS , StateCode.SUCCESS.getMessage());
     }
 
     public static <T>  Result<T> newSuccessResult(T data,String statusText){
-        return newResult(data,StateCode.SUCCESS,statusText,null);
+        return newResult(data,StateCode.SUCCESS,statusText);
     }
 
     public static <T> Result<T> newFailedResult(StateCode stateCode){
@@ -31,16 +31,14 @@ public class ResultUtil {
     }
 
     public static <T> Result<T> newFailedResult(T data,StateCode stateCode,String statusText){
-        return newResult(data,stateCode,statusText,null);
+        return newResult(data,stateCode,statusText);
     }
 
-    public static <T> Result<T> newResult(T data,StateCode stateCode,String statusText,Integer totalCount){
+    public static <T> Result<T> newResult(T data,StateCode stateCode,String statusText){
         Result<T> result = new Result<T>();
         result.setData(data);
         result.setStatusText(statusText);
         result.setStateCode(stateCode);
-        result.setTotalCount(totalCount);
         return  result;
     }
-
 }

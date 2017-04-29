@@ -17,5 +17,4 @@ public class PageUtil<T> {
 	public void setRows(List<T> rows) {
 		this.rows = rows;
 	}
-	
 }

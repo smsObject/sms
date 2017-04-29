@@ -1,8 +1,8 @@
 package com.sms.common;
 
-//import org.apache.commons.lang3.builder.ToStringBuilder;
-//import org.apache.commons.lang3.builder.ToStringStyle;
-
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.Data;
 import java.io.Serializable;
 import java.util.List;
 
@@ -10,6 +10,7 @@ import java.util.List;
  * @author hubihua
  * @date 2016-08-31
  */
+@Data
 public class PagedData<T extends Serializable> implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -28,43 +29,13 @@ public class PagedData<T extends Serializable> implements Serializable {
      */
     public long totalSize;
 
+    /**
+     * 返回结果集
+     */
     public List<T> resultList;
 
-    public long getTotalSize() {
-        return totalSize;
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
-
-    public void setTotalSize(long totalSize) {
-        this.totalSize = totalSize;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getPageNo() {
-        return pageNo;
-    }
-
-    public void setPageNo(int pageNo) {
-        this.pageNo = pageNo;
-    }
-
-    public List<T> getResultList() {
-        return resultList;
-    }
-
-    public void setResultList(List<T> resultList) {
-        this.resultList = resultList;
-    }
-
-//    @Override
-//    public String toString() {
-//        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-//    }
-
 }

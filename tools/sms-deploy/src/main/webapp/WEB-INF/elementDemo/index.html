@@ -12,101 +12,101 @@
                 el: "#wap",
                 data: function () {
                     return {
-                        item1:"我的设备",
-                        item2:"GSM",
-                        gsmManager:{
-                            loadSearchGsm:false,
+                        item1: "我的设备",
+                        item2: "GSM",
+                        gsmManager: {
+                            loadSearchGsm: false,
                             isShow: true,
                             page: 1,
                             data: [{
-                                id:'1',
+                                id: '1',
                                 name: 'GSM1',
-                                comPort:'COM5',
-                                baudRate:'19200',
-                                manufacturer:'asdas',
-                                model:'asd',
-                                isOnline:'1',
-                                createDate:'2016-05-04',
-                                createUser:'hbh'
+                                comPort: 'COM5',
+                                baudRate: '19200',
+                                manufacturer: 'asdas',
+                                model: 'asd',
+                                isOnline: '1',
+                                createDate: '2016-05-04',
+                                createUser: 'hbh'
                             }],
-                            total:0,
+                            total: 0,
                             row: null,
                         },
-                        meterManager:{
-                            loadReadMeter:false,
-                            loadOpenMeter:false,
-                            loadCloseMeter:false,
-                            disabledReadMeter:false,
-                            disabledOpenMeter:false,
-                            disabledCloseMeter:false,
+                        meterManager: {
+                            loadReadMeter: false,
+                            loadOpenMeter: false,
+                            loadCloseMeter: false,
+                            disabledReadMeter: false,
+                            disabledOpenMeter: false,
+                            disabledCloseMeter: false,
                             page: 1,
                             isShow: false,
-                            data:[{
-                                id:1,
-                                meterCode:'13738146553',
-                                controllerId:2,
-                                meterName:'仪表1号',
-                                createPerson:'hubihua',
-                                unit:'吨',
-                                createDate:'2017-09-11'
-                            },{
-                                id:2,
-                                meterCode:'13738146553',
-                                controllerId:2,
-                                meterName:'仪表1号',
-                                createPerson:'hubihua',
-                                unit:'吨',
-                                createDate:'2017-09-11'
-                            },{
-                                id:3,
-                                meterCode:'13738146553',
-                                controllerId:2,
-                                meterName:'仪表1号',
-                                createPerson:'hubihua',
-                                unit:'吨',
-                                createDate:'2017-09-11'
-                            },{
-                                id:4,
-                                meterCode:'13738146553',
-                                controllerId:2,
-                                meterName:'仪表1号',
-                                createPerson:'hubihua',
-                                unit:'吨',
-                                createDate:'2017-09-11'
+                            data: [{
+                                id: 1,
+                                meterCode: '13738146553',
+                                controllerId: 2,
+                                meterName: '仪表1号',
+                                createPerson: 'hubihua',
+                                unit: '吨',
+                                createDate: '2017-09-11'
+                            }, {
+                                id: 2,
+                                meterCode: '13738146553',
+                                controllerId: 2,
+                                meterName: '仪表1号',
+                                createPerson: 'hubihua',
+                                unit: '吨',
+                                createDate: '2017-09-11'
+                            }, {
+                                id: 3,
+                                meterCode: '13738146553',
+                                controllerId: 2,
+                                meterName: '仪表1号',
+                                createPerson: 'hubihua',
+                                unit: '吨',
+                                createDate: '2017-09-11'
+                            }, {
+                                id: 4,
+                                meterCode: '13738146553',
+                                controllerId: 2,
+                                meterName: '仪表1号',
+                                createPerson: 'hubihua',
+                                unit: '吨',
+                                createDate: '2017-09-11'
                             }],
-                            total:0,
-                            row:null
+                            total: 0,
+                            row: null
                         },
-                        meterDataManager:{
-                            isShow:false,
+                        meterDataManager: {
+                            isShow: false,
                             page: 1,
-                            data:[{
-                                code:1,
-                                value:2,
-                                unit:'吨',
-                                createPerson:'hubihua',
-                                createDate:'2017-09-11'
-                            },{
-                                code:1,
-                                value:2,
-                                unit:'吨',
-                                createPerson:'hubihua',
-                                createDate:'2017-09-11'
-                            },{
-                                code:1,
-                                value:2,
-                                unit:'吨',
-                                createPerson:'hubihua',
-                                createDate:'2017-09-11'
-                            },{
-                                code:1,
-                                value:2,
-                                unit:'吨',
-                                createPerson:'hubihua',
-                                createDate:'2017-09-11'
+                            data: [{
+                                code: 1,
+                                value: 2,
+                                unit: '吨',
+                                createPerson: 'hubihua',
+                                createDate: '2017-09-11'
+                            }, {
+                                code: 1,
+                                value: 2,
+                                unit: '吨',
+                                createPerson: 'hubihua',
+                                createDate: '2017-09-11'
+                            }, {
+                                code: 1,
+                                value: 2,
+                                unit: '吨',
+                                createPerson: 'hubihua',
+                                createDate: '2017-09-11'
+                            }, {
+                                code: 1,
+                                value: 2,
+                                unit: '吨',
+                                createPerson: 'hubihua',
+                                createDate: '2017-09-11'
                             }],
-                            total:20,
-                            row:null
+                            total: 20,
+                            row: null
                         }
                     }
                 },
@@ -116,7 +116,15 @@
                 computed: {},
                 watch: {},
                 methods: {
-                    searchGsmFun:function () {
+                    gsmData: function () {
+                        $.ajax({
+                            url: "/device/concentratorPage",
+                            success: function (e) {
+                                console.log(e);
+                            }
+                        })
+                    },
+                    searchGsmFun: function () {
                         this.loadSeachGsm = true
                         console.log("seachGsmFun")
 
@@ -134,8 +142,8 @@
 
                         this.loadSeachGsm = false;
                     },
-                    readMeter:function () {
-                        if (this.meterRow == null){
+                    readMeter: function () {
+                        if (this.meterRow == null) {
                             this.$message({
                                 showClose: true,
                                 message: '请先选择一个仪表再操作',
@@ -147,8 +155,8 @@
                         this.meterManager.disabledOpenMeter = true
                         this.meterManager.disabledCloseMeter = true
                     },
-                    openMeter:function () {
-                        if (this.meterRow == null){
+                    openMeter: function () {
+                        if (this.meterRow == null) {
                             this.$message({
                                 showClose: true,
                                 message: '请先选择一个仪表再操作',
@@ -160,8 +168,8 @@
                         this.meterManager.disabledReadMeter = true
                         this.meterManager.disabledCloseMeter = true
                     },
-                    closeMeter:function () {
-                        if (this.meterRow == null){
+                    closeMeter: function () {
+                        if (this.meterRow == null) {
                             this.$message({
                                 showClose: true,
                                 message: '请先选择一个仪表再操作',
@@ -178,27 +186,27 @@
                             return
                         }
                         if ("2-1" == index) {
-                            this.item1="我的设备"
-                            this.item2="GSM";
+                            this.item1 = "我的设备"
+                            this.item2 = "GSM";
                             this.gsmManager.isShow = true
                             this.meterManager.isShow = false
-                            this.meterDataManager.isShow =false
+                            this.meterDataManager.isShow = false
                             return
                         }
                         if ("2-2" == index) {
-                            this.item1="我的设备"
-                            this.item2="仪表";
+                            this.item1 = "我的设备"
+                            this.item2 = "仪表";
                             this.gsmManager.isShow = false
                             this.meterManager.isShow = true
-                            this.meterDataManager.isShow =false
+                            this.meterDataManager.isShow = false
                             return
                         }
                         if ("2-3" == index) {
-                            this.item1="我的设备"
-                            this.item2="数据";
+                            this.item1 = "我的设备"
+                            this.item2 = "数据";
                             this.gsmManager.isShow = false
                             this.meterManager.isShow = false
-                            this.meterDataManager.isShow =true
+                            this.meterDataManager.isShow = true
                             return
                         }
                         if ("3" == index) {
@@ -259,7 +267,7 @@
     </el-menu>
     <div class="line"></div>
     <el-breadcrumb separator="/">
-        <el-breadcrumb-item >{{item1}}</el-breadcrumb-item>
+        <el-breadcrumb-item>{{item1}}</el-breadcrumb-item>
         <el-breadcrumb-item>{{item2}}</el-breadcrumb-item>
     </el-breadcrumb>
 
@@ -269,7 +277,7 @@
         <el-button type="primary" size="small" :loading="loadSearchGsm" icon="search" @click="searchGsmFun">
             扫描
         </el-button>
-       <!--table -->
+        <!--table -->
         <template>
             <el-table stripe
                       border
@@ -296,7 +304,7 @@
                         property="comPort"
                         label="组件名"
                         width="120"
-                    >
+                >
                 </el-table-column>
                 <el-table-column
                         property="baudRate"
@@ -360,17 +368,17 @@
     <div id="meterDiv" v-if="meterManager.isShow">
         <!--button -->
         <el-button type="primary" size="small"
-                   :loading="meterManager.loadReadMeter"  @click="readMeter"
+                   :loading="meterManager.loadReadMeter" @click="readMeter"
                    :disabled="meterManager.disabledReadMeter">抄表
         </el-button>
 
         <el-button type="primary" size="small"
-                   :loading="meterManager.loadOpenMeter"  @click="openMeter"
+                   :loading="meterManager.loadOpenMeter" @click="openMeter"
                    :disabled="meterManager.disabledOpenMeter">开阀
         </el-button>
 
         <el-button type="primary" size="small"
-                   :loading="meterManager.loadCloseMeter"  @click="closeMeter"
+                   :loading="meterManager.loadCloseMeter" @click="closeMeter"
                    :disabled="meterManager.disabledCloseMeter">关阀
         </el-button>
 
@@ -379,7 +387,7 @@
             <el-table stripe
                       border
                       :data="meterManager.data"
-                          highlight-current-row
+                      highlight-current-row
                       @current-change="handleMeterChange"
                       height="500"
                       style="width: 100%">
@@ -400,12 +408,12 @@
                 <el-table-column
                         property="controllerId"
                         label="集中器"
-                        width="120" >
+                        width="120">
                 </el-table-column>
                 <el-table-column
                         property="meterName"
                         label="仪表名称"
-                        width="120" >
+                        width="120">
                 </el-table-column>
                 <el-table-column
                         width="90"
@@ -474,7 +482,7 @@
                 <el-table-column
                         property="value"
                         label="值"
-                        width="120" >
+                        width="120">
                 </el-table-column>
                 <el-table-column
                         width="90"
@@ -506,9 +514,6 @@
             </div>
         </template>
     </div>
-
-
-
 
 
 </div>

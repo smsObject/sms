@@ -1,214 +1,76 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hbh.sms.dal.dao.MeterMapper" >
-  <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.Meter" >
-    <id column="id" property="id"  />
-    <result column="meter_no" property="meterNo"  />
-    <result column="meter_code" property="meterCode"  />
-    <result column="controller_id" property="concentratorId"  />
-    <result column="meter_name" property="meterName"  />
-    <result column="fix_date" property="fixDate"  />
-    <result column="use_type" property="useType"  />
-    <result column="user_type" property="userType"  />
-    <result column="base_value" property="baseValue"  />
-    <result column="buy_way" property="buyWay"  />
-    <result column="meter_model" property="meterModel"  />
-    <result column="create_time" property="createTime"  />
-    <result column="create_person" property="createPerson"  />
-    <result column="update_time" property="updateTime"  />
-    <result column="update_person" property="updatePerson"  />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, meter_no, meter_code, controller_id, meter_name, fix_date, use_type, user_type, base_value,
-    buy_way, meter_model, create_time, create_person, update_time, update_person
-  </sql>
-  <sql id="meterWhere" >
-    <where>
-      <if test="meterNo != null and meterNo !='' ">
-        AND meter_no = #{meterNo}
-      </if>
-    </where>
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select
-    <include refid="Base_Column_List" />
-    from t_meter
-    where id = #{id}
-  </select>
+<mapper namespace="com.hbh.sms.dal.dao.MeterMapper">
+    <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.Meter">
+        <id column="id" property="id"/>
+        <result column="meter_no" property="meterNo"/>
+        <result column="meter_code" property="meterCode"/>
+        <result column="controller_id" property="concentratorId"/>
+        <result column="meter_name" property="meterName"/>
+        <result column="fix_date" property="fixDate"/>
+        <result column="use_type" property="useType"/>
+        <result column="user_type" property="userType"/>
+        <result column="base_value" property="baseValue"/>
+        <result column="buy_way" property="buyWay"/>
+        <result column="meter_model" property="meterModel"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_person" property="createPerson"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_person" property="updatePerson"/>
+        <result column="unit" property="unit"/>
+        <result column="controller_name" property="controllerName"/>
+    </resultMap>
 
-  <select id="query" resultMap="BaseResultMap" parameterType="com.hbh.sms.model.entity.Meter" >
-    SELECT
-    <include refid="Base_Column_List" />
-    FROM t_meter
-    <include refid="meterWhere" />
-  </select>
+    <sql id="Base_Column_List">
+      tm.id, tm.meter_no, tm.meter_code, tm.controller_id,tc.name as controller_name, tm.meter_name, tm.fix_date,
+      tm.use_type, tm.user_type, tm.base_value, tm.buy_way, tm.meter_model, tm.create_time, tm.create_person,
+      tm.update_time, tm.update_person,tm.unit
+  </sql>
+    <sql id="meterWhere">
+        <where>
+            <if test="meterNo != null and meterNo !='' ">
+                AND meter_no = #{meterNo}
+            </if>
+        </where>
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from t_meter tm
+        LEFT JOIN t_concentrator tc on tm.controller_id = tc.id
+        where tm.id = #{id}
+    </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    <select id="query" resultMap="BaseResultMap" parameterType="com.hbh.sms.model.entity.Meter">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_meter tm
+        LEFT JOIN t_concentrator tc on tm.controller_id = tc.id
+        <include refid="meterWhere"/>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_meter
     where id = #{id}
   </delete>
 
-  <insert id="insert" parameterType="com.hbh.sms.model.entity.Meter" >
-    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_meter (meter_no, meter_code, controller_id,
-      meter_name, fix_date, use_type,
-      user_type, base_value, buy_way,
-      meter_model, create_time, create_person,
-      update_time, update_person)
-    values (#{meterNo}, #{meterCode}, #{controllerId},
-      #{meterName}, #{fixDate}, #{useType},
-      #{userType}, #{baseValue}, #{buyWay},
-      #{meterModel}, now(), #{createPerson},
-      now() #{createPerson})
-  </insert>
+    <insert id="insert" parameterType="com.hbh.sms.model.entity.Meter">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_meter (meter_no, meter_code, controller_id,
+        meter_name, fix_date, use_type,
+        user_type, base_value, buy_way,
+        meter_model, create_time, create_person,
+        update_time, update_person)
+        values (#{meterNo}, #{meterCode}, #{controllerId},
+        #{meterName}, #{fixDate}, #{useType},
+        #{userType}, #{baseValue}, #{buyWay},
+        #{meterModel}, now(), #{createPerson},
+        now() #{createPerson})
+    </insert>
 
-  <!--<insert id="insertSelective" parameterType="com.hbh.sms.model.entity.Meter" >-->
-    <!--<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >-->
-      <!--SELECT LAST_INSERT_ID()-->
-    <!--</selectKey>-->
-    <!--insert into t_meter-->
-    <!--<trim prefix="(" suffix=")" suffixOverrides="," >-->
-      <!--<if test="meterno != null" >-->
-        <!--meterNo,-->
-      <!--</if>-->
-      <!--<if test="metercode != null" >-->
-        <!--meterCode,-->
-      <!--</if>-->
-      <!--<if test="controllerid != null" >-->
-        <!--controllerId,-->
-      <!--</if>-->
-      <!--<if test="metername != null" >-->
-        <!--meterName,-->
-      <!--</if>-->
-      <!--<if test="fixdate != null" >-->
-        <!--fixDate,-->
-      <!--</if>-->
-      <!--<if test="usetype != null" >-->
-        <!--useType,-->
-      <!--</if>-->
-      <!--<if test="usertype != null" >-->
-        <!--userType,-->
-      <!--</if>-->
-      <!--<if test="basevalue != null" >-->
-        <!--baseValue,-->
-      <!--</if>-->
-      <!--<if test="buyway != null" >-->
-        <!--buyWay,-->
-      <!--</if>-->
-      <!--<if test="metermodel != null" >-->
-        <!--meterModel,-->
-      <!--</if>-->
-      <!--<if test="createdate != null" >-->
-        <!--createDate,-->
-      <!--</if>-->
-      <!--<if test="createuser != null" >-->
-        <!--createUser,-->
-      <!--</if>-->
-      <!--<if test="updatedate != null" >-->
-        <!--updateDate,-->
-      <!--</if>-->
-      <!--<if test="updateuser != null" >-->
-        <!--updateUser,-->
-      <!--</if>-->
-    <!--</trim>-->
-    <!--<trim prefix="values (" suffix=")" suffixOverrides="," >-->
-      <!--<if test="meterno != null" >-->
-        <!--#{meterno},-->
-      <!--</if>-->
-      <!--<if test="metercode != null" >-->
-        <!--#{metercode},-->
-      <!--</if>-->
-      <!--<if test="controllerid != null" >-->
-        <!--#{controllerid},-->
-      <!--</if>-->
-      <!--<if test="metername != null" >-->
-        <!--#{metername},-->
-      <!--</if>-->
-      <!--<if test="fixdate != null" >-->
-        <!--#{fixdate},-->
-      <!--</if>-->
-      <!--<if test="usetype != null" >-->
-        <!--#{usetype},-->
-      <!--</if>-->
-      <!--<if test="usertype != null" >-->
-        <!--#{usertype},-->
-      <!--</if>-->
-      <!--<if test="basevalue != null" >-->
-        <!--#{basevalue},-->
-      <!--</if>-->
-      <!--<if test="buyway != null" >-->
-        <!--#{buyway},-->
-      <!--</if>-->
-      <!--<if test="metermodel != null" >-->
-        <!--#{metermodel},-->
-      <!--</if>-->
-      <!--<if test="createdate != null" >-->
-        <!--#{createdate},-->
-      <!--</if>-->
-      <!--<if test="createuser != null" >-->
-        <!--#{createuser},-->
-      <!--</if>-->
-      <!--<if test="updatedate != null" >-->
-        <!--#{updatedate},-->
-      <!--</if>-->
-      <!--<if test="updateuser != null" >-->
-        <!--#{updateuser},-->
-      <!--</if>-->
-    <!--</trim>-->
-  <!--</insert>-->
-
-  <!--<update id="updateByPrimaryKeySelective" parameterType="com.hbh.sms.model.entity.Meter" >-->
-    <!--update t_meter-->
-    <!--<set >-->
-      <!--<if test="meterno != null" >-->
-        <!--meterNo = #{meterno},-->
-      <!--</if>-->
-      <!--<if test="metercode != null" >-->
-        <!--meterCode = #{metercode},-->
-      <!--</if>-->
-      <!--<if test="controllerid != null" >-->
-        <!--controllerId = #{controllerid},-->
-      <!--</if>-->
-      <!--<if test="metername != null" >-->
-        <!--meterName = #{metername},-->
-      <!--</if>-->
-      <!--<if test="fixdate != null" >-->
-        <!--fixDate = #{fixdate},-->
-      <!--</if>-->
-      <!--<if test="usetype != null" >-->
-        <!--useType = #{usetype},-->
-      <!--</if>-->
-      <!--<if test="usertype != null" >-->
-        <!--userType = #{usertype},-->
-      <!--</if>-->
-      <!--<if test="basevalue != null" >-->
-        <!--baseValue = #{basevalue},-->
-      <!--</if>-->
-      <!--<if test="buyway != null" >-->
-        <!--buyWay = #{buyway},-->
-      <!--</if>-->
-      <!--<if test="metermodel != null" >-->
-        <!--meterModel = #{metermodel},-->
-      <!--</if>-->
-      <!--<if test="createdate != null" >-->
-        <!--createDate = #{createdate},-->
-      <!--</if>-->
-      <!--<if test="createuser != null" >-->
-        <!--createUser = #{createuser},-->
-      <!--</if>-->
-      <!--<if test="updatedate != null" >-->
-        <!--updateDate = #{updatedate},-->
-      <!--</if>-->
-      <!--<if test="updateuser != null" >-->
-        <!--updateUser = #{updateuser},-->
-      <!--</if>-->
-    <!--</set>-->
-    <!--where id = #{id}-->
-  <!--</update>-->
-
-  <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.Meter" >
+    <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.Meter">
     update t_meter
     set meter_no = #{meterNo},
       meter_code = #{meterCode},

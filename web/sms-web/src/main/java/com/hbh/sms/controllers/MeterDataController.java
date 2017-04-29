@@ -2,7 +2,6 @@ package com.hbh.sms.controllers;
 
 import com.hbh.sms.biz.service.MeterData.MeterDataService;
 import com.hbh.sms.model.entity.MeterData;
-import com.sms.common.PageUtil;
 import com.sms.common.PagedData;
 import com.sms.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +26,8 @@ public class MeterDataController {
 
     @RequestMapping("page")
     @ResponseBody
-    public PageUtil page(MeterData meterData) {
+    public Result<PagedData<MeterData>> page(MeterData meterData) {
         Result<PagedData<MeterData>> result = meterDataService.page(meterData);
-        PageUtil pageUtil = new PageUtil();
-       // pageUtil.setRows(result.getData());
-        pageUtil.setTotal(result.getTotalCount());
-        return pageUtil;
+        return result;
     }
 }
