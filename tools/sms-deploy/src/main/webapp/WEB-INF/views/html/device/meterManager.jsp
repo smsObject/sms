@@ -6,7 +6,7 @@
 <!-- 仪表模块-->
 <div id="meterDiv" v-if="meterManager.isShow">
     <!--button -->
-    <el-button type="primary" size="small" @click="addMeter" >添加</el-button>
+    <el-button type="primary" size="small" @click="meterManager.addMeterVisible = true">添加</el-button>
 
     <el-button type="primary" size="small"
                :loading="meterManager.loadReadMeter" @click="readMeter"
@@ -27,13 +27,12 @@
     </el-button>
 
     <el-button type="primary" size="small"
-                 @click="timeUpload" >定时上传设置
+               @click="timeUpload">定时上传设置
     </el-button>
 
     <el-button type="primary" size="small"
-               @click="timeUpload" >激活延时时间
+               @click="timeUpload">激活延时时间
     </el-button>
-
 
     <!--table-->
     <template>
@@ -81,11 +80,11 @@
                             size="small"
                             @click="handleEdit(scope.$index, scope.row)">编辑
                     </el-button>
-                    <el-button
-                            size="small"
-                            type="danger"
-                            @click="handleDelete(scope.$index, scope.row)">删除
-                    </el-button>
+                    <%--<el-button--%>
+                            <%--size="small"--%>
+                            <%--type="danger"--%>
+                            <%--@click="handleDelete(scope.$index, scope.row)">删除--%>
+                    <%--</el-button>--%>
                 </template>
             </el-table-column>
         </el-table>
@@ -106,15 +105,15 @@
     </template>
 </div>
 
-<el-dialog title="设置管理中心号码" size = "tiny" v-model="meterManager.managerCenterVisible">
+<el-dialog title="设置管理中心号码" size="tiny" v-model="meterManager.managerCenterVisible">
     <el-form :model="meterManager.form">
-        <el-form-item label="管理中心号码1"  >
+        <el-form-item label="管理中心号码1">
             <el-input v-model="meterManager.mc1" placeholder="请输入管理中心号码"></el-input>
         </el-form-item>
-        <el-form-item label="管理中心号码2"  >
+        <el-form-item label="管理中心号码2">
             <el-input v-model="meterManager.mc2" placeholder="请输入管理中心号码"></el-input>
         </el-form-item>
-        <el-form-item label="管理中心号码3"  >
+        <el-form-item label="管理中心号码3">
             <el-input v-model="meterManager.mc3" placeholder="请输入管理中心号码"></el-input>
         </el-form-item>
     </el-form>
@@ -125,32 +124,34 @@
 </el-dialog>
 
 <!--添加设备 -->
-<%--<el-dialog title="添加仪表设备" size = "tiny" v-model="meterManager.addMeterVisible">--%>
-    <%--<el-form :model="meterManager.form1">--%>
-        <%--<el-form-item label="手机号"  >--%>
-            <%--<el-input v-model="meterManager.add.meterCode" placeholder="请输入手机号"></el-input>--%>
-        <%--</el-form-item>--%>
-        <%--<el-form-item label="仪表名称"  >--%>
-            <%--<el-input v-model="meterManager.mc2" placeholder="请输入内容"></el-input>--%>
-        <%--</el-form-item>--%>
-        <%--<el-form-item label="gsm设备"  >--%>
-            <%--<el-input v-model="meterManager.mc3" placeholder="请输入内容"></el-input>--%>
-        <%--</el-form-item>--%>
+<el-dialog title="添加仪表设备" size="tiny" v-model="meterManager.addMeterVisible">
+    <el-form :model="meterManager.form1">
 
-        <%--<el-select v-model="form.region" placeholder="请选择单位">--%>
-            <%--<el-option label="单位" value="吨"></el-option>--%>
-        <%--</el-select>--%>
+        <el-input v-model="meterManager.addMeterData.meterCode" placeholder="请输入手机号"></el-input>
 
-        <%--<el-form-item label="单位"  >--%>
-            <%--<el-input v-model="meterManager.mc3" placeholder="请输入内容"></el-input>--%>
-        <%--</el-form-item>--%>
-    <%--</el-form>--%>
-    <%--<div slot="footer" class="dialog-footer">--%>
-        <%--<el-button @click="meterManager.addMeterVisible = false">取 消</el-button>--%>
-        <%--<el-button type="primary" @click="meterManager.addMeterVisible = false">确 定</el-button>--%>
-    <%--</div>--%>
-<%--</el-dialog>--%>
+        <el-input v-model="meterManager.addMeterData.meterName" placeholder="请输入仪表名称"></el-input>
 
+        <el-select v-model="meterManager.addMeterData.controllerId">
+            <el-option label="请选择gsm" value="0"></el-option>
+            <el-option v-for="gsm in this.meterManager.gsmData" :label="gsm.name" :value="gsm.id"></el-option>
+        </el-select>
 
+        <el-date-picker
+                v-model="meterManager.addMeterData.fixDate"
+                type="date"
+                placeholder="选择安装日期">
+        </el-date-picker>
+
+        <el-select v-model="meterManager.addMeterData.unit">
+            <el-option label="吨" value="吨"></el-option>
+        </el-select>
+
+    </el-form>
+
+    <div slot="footer" class="dialog-footer">
+        <el-button @click="meterManager.addMeterVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addMeter">确 定</el-button>
+    </div>
+</el-dialog>
 </body>
 </html>

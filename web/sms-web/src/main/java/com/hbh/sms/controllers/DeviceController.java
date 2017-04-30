@@ -79,7 +79,7 @@ public class DeviceController {
         Result<Meter> result = meterService.getMeterById(id);
         if (result.getData() != null) {
             Meter meter1 = result.getData();
-            Result<Concentrator> result1 = concentratorService.getConcentratorById(meter1.getConcentratorId());
+            Result<Concentrator> result1 = concentratorService.getConcentratorById(meter1.getControllerId());
             if (result1.getData() != null) {
                 Concentrator concentrator = result1.getData();
                 SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), DataCenter.READ_METER_CMD);
@@ -101,7 +101,7 @@ public class DeviceController {
         Result<Meter> result = meterService.getMeterById(id);
         if (result.getData() != null) {
             Meter meter1 = result.getData();
-            Result<Concentrator> result1 = concentratorService.getConcentratorById(meter1.getConcentratorId());
+            Result<Concentrator> result1 = concentratorService.getConcentratorById(meter1.getControllerId());
             if (result1.getData() != null) {
                 Concentrator concentrator = result1.getData();
                 SendMessageData messageData = null;
@@ -150,14 +150,17 @@ public class DeviceController {
     }
 
     @RequestMapping("/addMeter")
+    @ResponseBody
     public Result addMeter(Meter meter) {
-        if (meter.getMeterNo() != null) {
+        if (meter.getMeterCode() == null || meter.getMeterCode().trim().length() == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
         try {
+            meter.setCreatePerson("system");
             meterService.add(meter);
             return ResultUtil.newSuccessResult(StateCode.SUCCESS);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResultUtil.newFailedResult(StateCode.ERROR);
         }
     }
@@ -189,6 +192,7 @@ public class DeviceController {
         if ((meterId == null || meterId.longValue() == 0) && (concentratorId == null || concentratorId.longValue() == 0)){
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED,"参数缺失");
         }
+
         String cmd1 = null;
         String cmd2 = null;
         String cmd3 = null;
@@ -198,18 +202,18 @@ public class DeviceController {
         Meter meter1 = null ;
         if (result.getData() != null) {
             meter1 = result.getData();
-            Result<Concentrator> result1 = concentratorService.getConcentratorById(meter1.getConcentratorId());
+            Result<Concentrator> result1 = concentratorService.getConcentratorById(meter1.getControllerId());
             if (result1.getData() != null) {
               concentrator = result1.getData();
             }else {
-                return ResultUtil.newFailedResult(StateCode.ERROR);
+                return ResultUtil.newFailedResult(StateCode.ERROR,"没有关联的GSM设备");
             }
         }else {
-            return ResultUtil.newFailedResult(StateCode.ERROR);
+            return ResultUtil.newFailedResult(StateCode.ERROR,"没有该仪表设备");
         }
 
         if (mc1 != null && mc1.trim().length() >0){
-             cmd1 = DataCenter.getSetManagerCenterCmd(1,mc1);
+            cmd1 = DataCenter.getSetManagerCenterCmd(1,mc1);
             System.out.println(cmd1);
             SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), cmd1);
             if (bizDeviceService.sendMessage(concentrator, messageData))

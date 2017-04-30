@@ -1,5 +1,6 @@
 package com.hbh.sms.biz.service.common;
 
+import com.hbh.sms.biz.service.DataService;
 import com.hbh.sms.model.entity.SendMessageData;
 import org.smslib.*;
 import org.smslib.modem.SerialModemGateway;
@@ -11,10 +12,10 @@ import java.util.List;
  * Created by hbh on 2016/7/6.
  */
 public class MessageCenter {
-    public static boolean sendMessage(SerialModemGateway gateway, SendMessageData messageData) {
+    public static boolean sendMessage(SerialModemGateway gateway, SendMessageData messageData , DataService dataService) {
         boolean b = false;
         try {
-            initServer(gateway);
+            initServer(gateway ,dataService);
             OutboundMessage msg = new OutboundMessage(messageData.getReceiver(), messageData.getMessage());
             msg.setEncoding(Message.MessageEncodings.ENCUCS2);
             b = Service.getInstance().sendMessage(msg); //执行发送短信
@@ -40,9 +41,9 @@ public class MessageCenter {
         return true;
     }
 
-    private static void initServer(SerialModemGateway gateway) throws Exception {
+    private static void initServer(SerialModemGateway gateway , DataService dataService) throws Exception {
         if(Service.getInstance().getInboundMessageNotification()  == null){
-            SmsIInboundMessageNotification smsIInboundMessageNotification = new SmsIInboundMessageNotification();
+            SmsIInboundMessageNotification smsIInboundMessageNotification = new SmsIInboundMessageNotification(dataService);
             Service.getInstance().setInboundMessageNotification(smsIInboundMessageNotification);
         }
 
@@ -80,8 +81,8 @@ public class MessageCenter {
         SerialModemGateway gateway = new SerialModemGateway(id,"COM5",19200,"SIEMENS","TC35i");
         gateway.setInbound(true);
         try {
-            initServer(gateway);
-            initServer(gateway);
+//            initServer(gateway ,dataService);
+//            initServer(gateway);
             System.in.read();
         }catch (Exception ex){
             ex.printStackTrace();

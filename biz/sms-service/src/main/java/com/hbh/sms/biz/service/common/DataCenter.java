@@ -28,8 +28,6 @@ public class DataCenter {
      */
     public static String CLOSE_VALVE_CMD = getCrc16("8a0101"); //8601017950
 
-    public static String READ_MANAGER_CENTER_NO = getCrc16("");
-
     /**
      * 解析 读取仪表数据的返回结果
      *
@@ -37,6 +35,10 @@ public class DataCenter {
      * @return
      */
     public static Result<MeterData> parseReadMeterData(String hexStr) {
+        //长度判断 17 或 64的长度
+        if (hexStr.length() == 132){
+            return ResultUtil.newFailedResult(StateCode.ERROR);
+        }
         if (hexStr == null || hexStr.trim().length() == 0 || hexStr.length() % 2 != 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "入参错误");
         }
@@ -78,11 +80,11 @@ public class DataCenter {
         System.out.println(year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second);
         MeterData meterData = new MeterData();
         meterData.setValue(Float.valueOf(stringBuffer.toString()));
-        meterData.setStatus(Integer.parseInt(status));
+        meterData.setValveStatus(Integer.parseInt(status));
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         try {
-            meterData.setUploadTime(dateFormat.parse(upLoadTime));
+            meterData.setUpLoadTime(dateFormat.parse(upLoadTime));
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -122,6 +124,7 @@ public class DataCenter {
     }
 
     public static void main(String[] args) {
+        System.out.println("00110000012700000000002C0011041D16171EA60F".length());
         getSetManagerCenterCmd(1,"18205815108");
 //        System.out.println(getCrc16("122356782C"));
     }

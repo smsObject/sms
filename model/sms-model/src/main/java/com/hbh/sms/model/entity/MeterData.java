@@ -35,14 +35,14 @@ public class MeterData extends BaseDO implements Serializable {
     /**
      * 更新时间
      */
-    private Date uploadTime;
+    private Date upLoadTime;
     /**
      * 单位
      */
     private String unit;
 
     /**
-     *阀状态
+     *阀状态 0 阀开 1是阀关
      */
-    private Integer status;
+    private Integer valveStatus;
 }

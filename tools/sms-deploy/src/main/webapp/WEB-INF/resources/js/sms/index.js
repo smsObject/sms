@@ -25,14 +25,18 @@ $(function () {
                     disabledOpenMeter: false,
                     disabledCloseMeter: false,
                     managerCenterVisible: false,
+                    addMeterVisible:false,
                     mc1:"",
                     mc2:"",
                     mc3:"",
                     form:{},
+                    form1:{},
                     formLabelWidth:100,
                     page: 1,
                     isShow: false,
                     data: [],
+                    gsmData:[],
+                    addMeterData:{meterCode:"",controllerId:"0",meterName:"",fixDate:"",unit:"吨"},
                     total: 0,
                     row: null
                 },
@@ -49,8 +53,20 @@ $(function () {
         mounted: function () {
             this.gsmData();
         },
-        computed: {},
-        watch: {},
+        computed: {
+
+        },
+        watch: {
+            'meterManager.addMeterVisible':{
+                immediate: false,
+                handler: function (newVal) {
+                    if(newVal){
+                        this.gsmData();
+                        this.meterManager.gsmData = this.gsmManager.data;
+                    }
+                }
+            },
+        },
         methods: {
             gsmData: function () {
                 var self = this;
@@ -283,6 +299,29 @@ $(function () {
             },
             addMeter: function () {
                 var self = this;
+                $.ajax({
+                    url:"/device/addMeter",
+                    data:{
+                        meterCode:self.meterManager.addMeterData.meterCode,
+                        controllerId:self.meterManager.addMeterData.controllerId,
+                        meterName:self.meterManager.addMeterData.meterName,
+                        fixDate:self.meterManager.addMeterData.fixDate,
+                        unit:self.meterManager.addMeterData.unit
+                    },
+                    success:function (e) {
+                        console.log(e);
+                        if (e.success){
+                            self.message('success',"添加仪表成功!");
+                            self.meterManager.addMeterVisible = false
+                            self.meterData();
+                        }else {
+                            self.message('error',e.statusText);
+                        }
+                    },
+                    error:function (e) {
+                        self.message('error',e.statusText);
+                    }
+                });
             },
             handleSelect: function (index) {
                 if ("1" == index) {
@@ -294,6 +333,7 @@ $(function () {
                     this.gsmManager.isShow = true
                     this.meterManager.isShow = false
                     this.meterDataManager.isShow = false
+                    this.gsmData();
                     return
                 }
                 if ("2-2" == index) {
@@ -303,6 +343,7 @@ $(function () {
                     this.gsmManager.isShow = false
                     this.meterManager.isShow = true
                     this.meterDataManager.isShow = false
+                    this.meterData();
                     return
                 }
                 if ("2-3" == index) {
@@ -346,6 +387,13 @@ $(function () {
             handleCurrentChange: function (val) {
                 this.currentPage = val
                 console.log('当前页: ${val}')
+            },
+            message:function (type,message) {
+                this.$message({
+                    showClose: true,
+                    message: message,
+                    type: type
+                });
             }
         }
     })

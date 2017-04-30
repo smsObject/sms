@@ -3,84 +3,44 @@
 <mapper namespace="com.hbh.sms.dal.dao.MeterDataMapper">
     <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.MeterData">
         <result column="id" property="id"/>
-        <result column="meterId" property="meterId"/>
+        <result column="meter_id" property="meterId"/>
         <result column="code" property="code"/>
         <result column="value" property="value"/>
-        <result column="upLoadTime" property="uploadTime"/>
+        <result column="valve_status" property="valveStatus"/>
+        <result column="up_load_time" property="upLoadTime"/>
         <result column="unit" property="unit"/>
-        <result column="createTime" property="createTime"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_person" property="createPerson"/>
+        <result column="update_person" property="updatePerson"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, meterId, code, value, upLoadTime, unit, createTime
+        id, meter_id, code, value, up_load_time, unit, create_time,create_person,update_person,update_time,valve_status
     </sql>
 
     <insert id="insert" parameterType="com.hbh.sms.model.entity.MeterData">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into t_meterdata (meterId, code, value,
-        upLoadTime, unit, createTime
+        insert into t_meter_data (meter_id, code, value,
+        up_load_time, unit, create_time,create_person,update_person,update_time,valve_status
         )
-        values (#{meterid}, #{code}, #{value},
-        now(), #{unit}, now()
+        values (#{meterId}, #{code}, #{value},
+        #{upLoadTime}, #{unit}, now(),"system","system",now(),#{valveStatus}
         )
     </insert>
-
-    <!--<insert id="insertSelective" parameterType="com.hbh.sms.model.entity.MeterData" >-->
-    <!--<selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >-->
-    <!--SELECT LAST_INSERT_ID()-->
-    <!--</selectKey>-->
-    <!--insert into t_meterdata-->
-    <!--<trim prefix="(" suffix=")" suffixOverrides="," >-->
-    <!--<if test="meterid != null" >-->
-    <!--meterId,-->
-    <!--</if>-->
-    <!--<if test="code != null" >-->
-    <!--code,-->
-    <!--</if>-->
-    <!--<if test="value != null" >-->
-    <!--value,-->
-    <!--</if>-->
-    <!--<if test="uploadtime != null" >-->
-    <!--upLoadTime,-->
-    <!--</if>-->
-    <!--<if test="unit != null" >-->
-    <!--unit,-->
-    <!--</if>-->
-    <!--<if test="createtime != null" >-->
-    <!--createTime,-->
-    <!--</if>-->
-    <!--</trim>-->
-    <!--<trim prefix="values (" suffix=")" suffixOverrides="," >-->
-    <!--<if test="meterid != null" >-->
-    <!--#{meterid},-->
-    <!--</if>-->
-    <!--<if test="code != null" >-->
-    <!--#{code},-->
-    <!--</if>-->
-    <!--<if test="value != null" >-->
-    <!--#{value},-->
-    <!--</if>-->
-    <!--<if test="uploadtime != null" >-->
-    <!--now(),-->
-    <!--</if>-->
-    <!--<if test="unit != null" >-->
-    <!--#{unit},-->
-    <!--</if>-->
-    <!--<if test="createtime != null" >-->
-    <!--now(),-->
-    <!--</if>-->
-    <!--</trim>-->
-    <!--</insert>-->
 
     <sql id="queyWhere">
         <where>
             <if test="meterId !=null and meterId !=0">
-                AND meterId = #{meterId}
+                AND meter_id = #{meterId}
             </if>
             <if test="code !=null and code !=''">
                 AND code = #{code}
+            </if>
+            <if test="upLoadTime != null">
+                AND up_load_time = #{upLoadTime}
             </if>
         </where>
     </sql>
@@ -88,7 +48,7 @@
     <select id="query" resultMap="BaseResultMap" parameterType="com.hbh.sms.model.entity.MeterData">
         SELECT
         <include refid="Base_Column_List" />
-          FROM t_meterdata
+          FROM t_meter_data
         <include refid="queyWhere"/>
     </select>
 

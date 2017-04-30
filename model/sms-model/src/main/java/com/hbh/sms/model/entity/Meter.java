@@ -22,7 +22,7 @@ public class Meter extends BaseDO implements Serializable {
     /**
      * 所属集中器
      */
-    private Long concentratorId;
+    private Long controllerId;
     /**
      * 仪表名称
      */
@@ -55,6 +55,11 @@ public class Meter extends BaseDO implements Serializable {
      * 水表单位
      */
     private String unit;
+
+    /**
+     *初始值
+     */
+    private Float baseValue;
 
     /**
      * 所属GSM名称

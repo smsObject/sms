@@ -9,14 +9,9 @@ public interface MeterMapper {
 
     int insert(Meter record);
 
-//    int insertSelective(Meter record);
-
     Meter selectByPrimaryKey(Long id);
-
-//    int updateByPrimaryKeySelective(Meter record);
 
     int updateByPrimaryKey(Meter record);
 
     List<Meter> query(Meter record);
-
 }
