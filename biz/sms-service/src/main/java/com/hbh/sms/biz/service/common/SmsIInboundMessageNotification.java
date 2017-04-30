@@ -31,8 +31,4 @@ public class SmsIInboundMessageNotification implements IInboundMessageNotificati
             Logger.getInstance().logError("Error deleting received message!", e, null);
         }
     }
-
-    public static void main(String[] args) {
-        Service.getInstance().setInboundMessageNotification(new SmsIInboundMessageNotification());
-    }
 }

@@ -23,6 +23,18 @@
                :disabled="meterManager.disabledCloseMeter">关阀
     </el-button>
 
+    <el-button type="primary" size="small" @click="setManagerCenter">管理中心设置
+    </el-button>
+
+    <el-button type="primary" size="small"
+                 @click="timeUpload" >定时上传设置
+    </el-button>
+
+    <el-button type="primary" size="small"
+               @click="timeUpload" >激活延时时间
+    </el-button>
+
+
     <!--table-->
     <template>
         <el-table stripe
@@ -93,5 +105,52 @@
         </div>
     </template>
 </div>
+
+<el-dialog title="设置管理中心号码" size = "tiny" v-model="meterManager.managerCenterVisible">
+    <el-form :model="meterManager.form">
+        <el-form-item label="管理中心号码1"  >
+            <el-input v-model="meterManager.mc1" placeholder="请输入管理中心号码"></el-input>
+        </el-form-item>
+        <el-form-item label="管理中心号码2"  >
+            <el-input v-model="meterManager.mc2" placeholder="请输入管理中心号码"></el-input>
+        </el-form-item>
+        <el-form-item label="管理中心号码3"  >
+            <el-input v-model="meterManager.mc3" placeholder="请输入管理中心号码"></el-input>
+        </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+        <el-button @click="meterManager.managerCenterVisible = false">取 消</el-button>
+        <el-button type="primary" @click="meterManager.managerCenterVisible = false">确 定</el-button>
+    </div>
+</el-dialog>
+
+<!--添加设备 -->
+<%--<el-dialog title="添加仪表设备" size = "tiny" v-model="meterManager.addMeterVisible">--%>
+    <%--<el-form :model="meterManager.form1">--%>
+        <%--<el-form-item label="手机号"  >--%>
+            <%--<el-input v-model="meterManager.add.meterCode" placeholder="请输入手机号"></el-input>--%>
+        <%--</el-form-item>--%>
+        <%--<el-form-item label="仪表名称"  >--%>
+            <%--<el-input v-model="meterManager.mc2" placeholder="请输入内容"></el-input>--%>
+        <%--</el-form-item>--%>
+        <%--<el-form-item label="gsm设备"  >--%>
+            <%--<el-input v-model="meterManager.mc3" placeholder="请输入内容"></el-input>--%>
+        <%--</el-form-item>--%>
+
+        <%--<el-select v-model="form.region" placeholder="请选择单位">--%>
+            <%--<el-option label="单位" value="吨"></el-option>--%>
+        <%--</el-select>--%>
+
+        <%--<el-form-item label="单位"  >--%>
+            <%--<el-input v-model="meterManager.mc3" placeholder="请输入内容"></el-input>--%>
+        <%--</el-form-item>--%>
+    <%--</el-form>--%>
+    <%--<div slot="footer" class="dialog-footer">--%>
+        <%--<el-button @click="meterManager.addMeterVisible = false">取 消</el-button>--%>
+        <%--<el-button type="primary" @click="meterManager.addMeterVisible = false">确 定</el-button>--%>
+    <%--</div>--%>
+<%--</el-dialog>--%>
+
+
 </body>
 </html>

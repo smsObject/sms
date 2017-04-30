@@ -40,4 +40,9 @@ public class MeterData extends BaseDO implements Serializable {
      * 单位
      */
     private String unit;
+
+    /**
+     *阀状态
+     */
+    private Integer status;
 }

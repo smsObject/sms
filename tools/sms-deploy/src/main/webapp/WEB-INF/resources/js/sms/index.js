@@ -8,6 +8,7 @@ $(function () {
             return {
                 item1: "我的设备",
                 item2: "GSM",
+                waitDataMsg:"等待仪表返回。。。。。",
                 gsmManager: {
                     loadSearchGsm: false,
                     isShow: true,
@@ -23,6 +24,12 @@ $(function () {
                     disabledReadMeter: false,
                     disabledOpenMeter: false,
                     disabledCloseMeter: false,
+                    managerCenterVisible: false,
+                    mc1:"",
+                    mc2:"",
+                    mc3:"",
+                    form:{},
+                    formLabelWidth:100,
                     page: 1,
                     isShow: false,
                     data: [],
@@ -86,9 +93,9 @@ $(function () {
                 self.gsmManager.loadSearchGsm = true;
 
                 $.ajax({
-                    url:"/device/scanner",
-                    success:function (e) {
-                        if (e.success){
+                    url: "/device/scanner",
+                    success: function (e) {
+                        if (e.success) {
                             console.log(e)
                             self.$message({
                                 showClose: true,
@@ -100,13 +107,13 @@ $(function () {
                             //     message: '这是一条成功的提示消息',
                             //     type: 'success'
                             // });
-                        }else{
+                        } else {
 
                         }
                         self.gsmManager.loadSearchGsm = false;
                         self.gsmData();
                     },
-                    error:function (e) {
+                    error: function (e) {
                         self.gsmManager.loadSearchGsm = false;
                     }
                 });
@@ -125,24 +132,25 @@ $(function () {
                 self.meterManager.disabledOpenMeter = true
                 self.meterManager.disabledCloseMeter = true
                 $.ajax({
-                    url:"/device/readMeterData",
-                    data:{id:self.meterRow.id},
-                    success:function (e) {
+                    url: "/device/readMeterData",
+                    data: {id: self.meterRow.id},
+                    success: function (e) {
                         console.log(e);
-                        if (e.success){
+                        if (e.success) {
                             self.$message({
                                 showClose: true,
                                 message: '命令发送成功!',
                                 type: 'success'
                             });
-                        }else{
+                            self.waitData();
+                        } else {
                             alert(e.statusText);
                         }
                         self.meterManager.loadReadMeter = false
                         self.meterManager.disabledOpenMeter = false
                         self.meterManager.disabledCloseMeter = false
                     },
-                    error:function (e) {
+                    error: function (e) {
                         self.meterManager.loadReadMeter = false
                         self.meterManager.disabledOpenMeter = false
                         self.meterManager.disabledCloseMeter = false
@@ -165,16 +173,16 @@ $(function () {
                 self.meterManager.disabledCloseMeter = true
 
                 $.ajax({
-                    url:"/device/setValveStatus",
-                    data:{id:this.meterRow.id,status:1},
-                    success:function (e) {
-                        if(e.success){
+                    url: "/device/setValveStatus",
+                    data: {id: this.meterRow.id, status: 1},
+                    success: function (e) {
+                        if (e.success) {
                             self.$message({
                                 showClose: true,
                                 message: "命令发送成功",
                                 type: 'success'
                             });
-                        }else{
+                        } else {
                             self.$message({
                                 showClose: true,
                                 message: e.statusText,
@@ -185,7 +193,7 @@ $(function () {
                         self.meterManager.disabledReadMeter = false
                         self.meterManager.disabledCloseMeter = false
                     },
-                    error:function (e) {
+                    error: function (e) {
                         self.meterManager.loadOpenMeter = false
                         self.meterManager.disabledReadMeter = false
                         self.meterManager.disabledCloseMeter = false
@@ -212,17 +220,17 @@ $(function () {
                 self.meterManager.disabledReadMeter = true
 
                 $.ajax({
-                    url:"/device/setValveStatus",
-                    data:{id:this.meterRow.id,status:0},
-                    success:function (e) {
+                    url: "/device/setValveStatus",
+                    data: {id: this.meterRow.id, status: 0},
+                    success: function (e) {
                         console.log(e);
-                        if (e.success){
+                        if (e.success) {
                             self.$message({
                                 showClose: true,
                                 message: '命令发送成功!',
                                 type: 'success'
                             });
-                        }else{
+                        } else {
                             self.$message({
                                 showClose: true,
                                 message: e.statusText,
@@ -233,7 +241,7 @@ $(function () {
                         self.meterManager.disabledOpenMeter = false
                         self.meterManager.disabledReadMeter = false
                     },
-                    error:function (e) {
+                    error: function (e) {
                         self.$message({
                             showClose: true,
                             message: e.statusText,
@@ -244,10 +252,37 @@ $(function () {
                         self.meterManager.disabledReadMeter = false
                     }
                 })
-
             },
-            addMeter:function () {
-                
+            setManagerCenter:function () {
+                var self = this;
+                if (self.meterRow == null) {
+                    self.$message({
+                        showClose: true,
+                        message: '请先选择一个仪表再操作',
+                        type: 'error'
+                    });
+                    return;
+                }
+                $.ajax({
+                    url:"/device/setManagerCenter",
+                    data:{meterId:self.meterRow.id,mc1:"17681860857"},
+                    success:function (e) {
+                        console.log(e)
+                    },
+                    error:function (e) {
+                    }
+                })
+                // this.$alert(this.waitDataMsg, '管理中心号码', {
+                //     confirmButtonText: '确定'
+                // });
+            },
+            timeUpload:function(){
+                this.$alert(this.waitDataMsg, '定时上传', {
+                    confirmButtonText: '确定'
+                });
+            },
+            addMeter: function () {
+                var self = this;
             },
             handleSelect: function (index) {
                 if ("1" == index) {
@@ -286,6 +321,11 @@ $(function () {
                     this.message = "系统设置"
                     return
                 }
+            },
+             waitData:function(){
+                 this.$alert(this.waitDataMsg, '发送成功等待返回', {
+                     confirmButtonText: '确定'
+                 });
             },
             handleMeterChange: function (val) {
                 this.meterRow = val

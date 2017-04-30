@@ -183,4 +183,55 @@ public class DeviceController {
        Result<Boolean> result =  meterService.update(meter);
         return result;
     }
+
+    @RequestMapping("/setManagerCenter")
+    public Result<Boolean> setMenegerCenter(Long meterId,Long concentratorId,String mc1,String mc2,String mc3){
+        if ((meterId == null || meterId.longValue() == 0) && (concentratorId == null || concentratorId.longValue() == 0)){
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED,"参数缺失");
+        }
+        String cmd1 = null;
+        String cmd2 = null;
+        String cmd3 = null;
+
+        Result<Meter> result = meterService.getMeterById(meterId);
+        Concentrator concentrator = null;
+        Meter meter1 = null ;
+        if (result.getData() != null) {
+            meter1 = result.getData();
+            Result<Concentrator> result1 = concentratorService.getConcentratorById(meter1.getConcentratorId());
+            if (result1.getData() != null) {
+              concentrator = result1.getData();
+            }else {
+                return ResultUtil.newFailedResult(StateCode.ERROR);
+            }
+        }else {
+            return ResultUtil.newFailedResult(StateCode.ERROR);
+        }
+
+        if (mc1 != null && mc1.trim().length() >0){
+             cmd1 = DataCenter.getSetManagerCenterCmd(1,mc1);
+            System.out.println(cmd1);
+            SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), cmd1);
+            if (bizDeviceService.sendMessage(concentrator, messageData))
+                return ResultUtil.newFailedResult(StateCode.SUCCESS);
+        }
+
+        if (mc2 != null && mc2.trim().length() >0){
+            cmd2 = DataCenter.getSetManagerCenterCmd(2,mc2);
+            System.out.println(cmd2);
+            SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), cmd2);
+            if (bizDeviceService.sendMessage(concentrator, messageData))
+                return ResultUtil.newFailedResult(StateCode.SUCCESS);
+        }
+
+        if (mc3 != null && mc3.trim().length() >0){
+            cmd1 = DataCenter.getSetManagerCenterCmd(3,mc3);
+            System.out.println(cmd3);
+            SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), cmd3);
+            if (bizDeviceService.sendMessage(concentrator, messageData))
+                return ResultUtil.newFailedResult(StateCode.SUCCESS);
+        }
+
+        return ResultUtil.newFailedResult(StateCode.ERROR);
+    }
 }
