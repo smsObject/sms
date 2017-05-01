@@ -19,17 +19,20 @@
         <result column="update_person" property="updatePerson"/>
         <result column="unit" property="unit"/>
         <result column="controller_name" property="controllerName"/>
+        <result column="mc1" property="mc1"/>
+        <result column="mc2" property="mc2"/>
+        <result column="mc3" property="mc3"/>
     </resultMap>
 
     <sql id="Base_Column_List">
       tm.id, tm.meter_no, tm.meter_code, tm.controller_id,tc.name as controller_name, tm.meter_name, tm.fix_date,
       tm.use_type, tm.user_type, tm.base_value, tm.buy_way, tm.meter_model, tm.create_time, tm.create_person,
-      tm.update_time, tm.update_person,tm.unit
+      tm.update_time, tm.update_person,tm.unit,tm.mc1,tm.mc2,tm.mc3
   </sql>
     <sql id="meterWhere">
         <where>
-            <if test="meterNo != null and meterNo !='' ">
-                AND tm.meter_no = #{meterNo}
+            <if test="meterCode != null and meterCode !='' ">
+                AND tm.meter_code = #{meterCode}
             </if>
             <if test="startTime != null">
                 AND tm.create_time >= #{startTime}

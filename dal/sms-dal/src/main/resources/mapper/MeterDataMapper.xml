@@ -13,10 +13,11 @@
         <result column="create_person" property="createPerson"/>
         <result column="update_person" property="updatePerson"/>
         <result column="update_time" property="updateTime"/>
+        <result column="sms_date" property="smsDate"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, meter_id, code, value, up_load_time, unit, create_time,create_person,update_person,update_time,valve_status
+        id, meter_id, code, value, up_load_time, unit, create_time,create_person,update_person,update_time,valve_status,sms_date
     </sql>
 
     <insert id="insert" parameterType="com.hbh.sms.model.entity.MeterData">
@@ -24,10 +25,10 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into t_meter_data (meter_id, code, value,
-        up_load_time, unit, create_time,create_person,update_person,update_time,valve_status
+        up_load_time, unit, create_time,create_person,update_person,update_time,valve_status,sms_date
         )
         values (#{meterId}, #{code}, #{value},
-        #{upLoadTime}, #{unit}, now(),"system","system",now(),#{valveStatus}
+        #{upLoadTime}, #{unit}, now(),"system","system",now(),#{valveStatus},#{smsDate}
         )
     </insert>
 
@@ -39,8 +40,8 @@
             <if test="code !=null and code !=''">
                 AND code = #{code}
             </if>
-            <if test="upLoadTime != null">
-                AND up_load_time = #{upLoadTime}
+            <if test="smsDate != null">
+                AND sms_date = #{smsDate}
             </if>
             <if test="startTime != null">
                 AND create_time >= #{startTime}
@@ -53,6 +54,7 @@
         <include refid="Base_Column_List" />
           FROM t_meter_data
         <include refid="queyWhere"/>
+        order by create_time desc
     </select>
 
 </mapper>

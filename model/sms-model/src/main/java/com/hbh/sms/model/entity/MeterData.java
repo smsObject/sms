@@ -47,4 +47,6 @@ public class MeterData extends BaseDO implements Serializable {
     private Integer valveStatus;
 
     private Date startTime;
+
+    private Date  smsDate;
 }

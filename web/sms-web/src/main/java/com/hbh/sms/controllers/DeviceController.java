@@ -117,6 +117,59 @@ public class DeviceController {
         return ResultUtil.newFailedResult(StateCode.ERROR);
     }
 
+    @RequestMapping("/setTiming")
+    public Result setTiming(Long meterId,String day1,String day2,String day3,String timing1,String timing2,String timing3){
+        if (meterId == null || meterId == 0 ) {
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        }
+        if ((day1 == null || day1.trim().length() == 0) && (day2 == null || day2.trim().length() == 0) && (day3 == null || day3.trim().length() == 0)) {
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        }
+        if ((timing1 == null || timing1.trim().length() == 0) && (timing2 == null || timing2.trim().length() == 0) && (timing3 == null || timing3.trim().length() == 0)) {
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        }
+
+        Result<Meter> result = meterService.getMeterById(meterId);
+        Concentrator concentrator = null;
+        Meter meter1 = null ;
+        if (result.getData() != null) {
+            meter1 = result.getData();
+            Result<Concentrator> result1 = concentratorService.getConcentratorById(meter1.getControllerId());
+            if (result1.getData() != null) {
+                concentrator = result1.getData();
+            }else {
+                return ResultUtil.newFailedResult(StateCode.ERROR,"没有关联的GSM设备");
+            }
+        }else {
+            return ResultUtil.newFailedResult(StateCode.ERROR,"没有该仪表设备");
+        }
+
+        if ((day1 != null && day1.trim().length() > 0) && (timing1 != null || timing1.trim().length() > 0)){
+//            cmd2 = DataCenter.getSetManagerCenterCmd(2,mc2);
+//            System.out.println(cmd2);
+//            SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), cmd2);
+//            if (bizDeviceService.sendMessage(concentrator, messageData))
+//                return ResultUtil.newFailedResult(StateCode.SUCCESS);
+        }
+
+        if ((day2 != null && day2.trim().length() > 0) && (timing2 != null || timing2.trim().length() > 0)){
+//            cmd2 = DataCenter.getSetManagerCenterCmd(2,mc2);
+//            System.out.println(cmd2);
+//            SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), cmd2);
+//            if (bizDeviceService.sendMessage(concentrator, messageData))
+//                return ResultUtil.newFailedResult(StateCode.SUCCESS);
+        }
+
+        if ((day3 != null && day3.trim().length() > 0) && (timing3 != null || timing3.trim().length() > 0)){
+//            cmd2 = DataCenter.getSetManagerCenterCmd(2,mc2);
+//            System.out.println(cmd2);
+//            SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), cmd2);
+//            if (bizDeviceService.sendMessage(concentrator, messageData))
+//                return ResultUtil.newFailedResult(StateCode.SUCCESS);
+        }
+        return ResultUtil.newFailedResult(StateCode.ERROR);
+    }
+
     @RequestMapping("/getMeterData")
     @ResponseBody
     public Result<List<MeterData>> getMeterData(Long meterId){

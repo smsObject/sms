@@ -11,6 +11,7 @@ import org.smslib.InboundMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +30,7 @@ public class DataServiceImpl implements DataService {
     public void parseGsmData(InboundMessage msg) {
 //        将数据写到日志表
         try {
+            Date smsDate = msg.getDate();
             Result<MeterData> result = DataCenter.parseReadMeterData(msg.getText());
             if (result.isSuccess()) {
                 MeterData meterData = result.getData();
@@ -45,6 +47,7 @@ public class DataServiceImpl implements DataService {
                 }
                 meterData.setMeterId(meterId);
                 meterData.setUnit("吨");
+                meterData.setSmsDate(smsDate);
                 List<MeterData> meterDatas = meterDataMapper.query(meterData);
                 if (meterDatas.isEmpty()) {
                     int i = meterDataMapper.insert(meterData);
@@ -52,7 +55,7 @@ public class DataServiceImpl implements DataService {
                         org.smslib.Service.getInstance().deleteMessage(msg);
                     }
                 } else {
-                    org.smslib.Service.getInstance().getInstance().deleteMessage(msg);
+                    org.smslib.Service.getInstance().deleteMessage(msg);
                 }
             } else {
                 System.out.println(result.getStatusText());

@@ -27,7 +27,7 @@
     </el-button>
 
     <el-button type="primary" size="small"
-               @click="timeUpload">定时上传设置
+               @click="setTiming">定时上传设置
     </el-button>
 
     <el-button type="primary" size="small"
@@ -66,6 +66,31 @@
                     property="unit"
                     label="单位">
             </el-table-column>
+            <%--<el-table-column--%>
+                    <%--width="200"--%>
+                    <%--property="mc1"--%>
+                    <%--label="管理中心号码1">--%>
+            <%--</el-table-column>--%>
+            <%--<el-table-column--%>
+                    <%--width="200"--%>
+                    <%--property="mc2"--%>
+                    <%--label="管理中心号码2">--%>
+            <%--</el-table-column>--%>
+            <%--<el-table-column--%>
+                    <%--width="200"--%>
+                    <%--property="mc3"--%>
+                    <%--label="管理中心号码3">--%>
+            <%--</el-table-column>--%>
+            <el-table-column
+                    width="200"
+                    property="unit"
+                    label="单位">
+            </el-table-column>
+            <el-table-column
+                    width="200"
+                    property="unit"
+                    label="单位">
+            </el-table-column>
             <el-table-column
                     property="createTime"
                     label="创建时间">
@@ -81,9 +106,9 @@
                             @click="handleEdit(scope.$index, scope.row)">编辑
                     </el-button>
                     <%--<el-button--%>
-                            <%--size="small"--%>
-                            <%--type="danger"--%>
-                            <%--@click="handleDelete(scope.$index, scope.row)">删除--%>
+                    <%--size="small"--%>
+                    <%--type="danger"--%>
+                    <%--@click="handleDelete(scope.$index, scope.row)">删除--%>
                     <%--</el-button>--%>
                 </template>
             </el-table-column>
@@ -118,8 +143,12 @@
         </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-        <el-button @click="meterManager.managerCenterVisible = false">取 消</el-button>
-        <el-button type="primary" @click="meterManager.managerCenterVisible = false">确 定</el-button>
+        <el-button @click="meterManager.managerCenterVisible = false" :disabled="meterManager.disabledManagerCenter">取
+            消
+        </el-button>
+        <el-button type="primary" :loading="meterManager.loadManagerCenter"
+                   @click="setManagerCenterData">确 定
+        </el-button>
     </div>
 </el-dialog>
 
@@ -154,13 +183,155 @@
     </div>
 </el-dialog>
 
+<!--添加设备 -->
+<el-dialog title="定时上传设置" size="tiny" v-model="meterManager.timingVisible">
+    <el-form :model="meterManager.form2">
+
+        <el-select v-model="meterManager.day1" >
+            <el-option label="请选择日期" value="0"></el-option>
+            <el-option label="1" value="1"></el-option>
+            <el-option label="2" value="2"></el-option>
+            <el-option label="3" value="3"></el-option>
+            <el-option label="4" value="4"></el-option>
+            <el-option label="5" value="5"></el-option>
+            <el-option label="6" value="6"></el-option>
+            <el-option label="7" value="7"></el-option>
+            <el-option label="8" value="8"></el-option>
+            <el-option label="9" value="9"></el-option>
+            <el-option label="10" value="10"></el-option>
+            <el-option label="11" value="11"></el-option>
+            <el-option label="12" value="12"></el-option>
+            <el-option label="13" value="13"></el-option>
+            <el-option label="14" value="14"></el-option>
+            <el-option label="15" value="15"></el-option>
+            <el-option label="16" value="16"></el-option>
+            <el-option label="17" value="17"></el-option>
+            <el-option label="18" value="18"></el-option>
+            <el-option label="19" value="19"></el-option>
+            <el-option label="20" value="20"></el-option>
+            <el-option label="21" value="21"></el-option>
+            <el-option label="22" value="22"></el-option>
+            <el-option label="23" value="23"></el-option>
+            <el-option label="24" value="24"></el-option>
+            <el-option label="25" value="25"></el-option>
+            <el-option label="26" value="26"></el-option>
+            <el-option label="27" value="27"></el-option>
+            <el-option label="28" value="28"></el-option>
+            <el-option label="29" value="29"></el-option>
+            <el-option label="30" value="30"></el-option>
+            <el-option label="31" value="31"></el-option>
+        </el-select>
+
+        <el-time-picker
+                v-model="meterManager.timing1"
+                placeholder="定时点1">
+        </el-time-picker>
+
+        <el-select v-model="meterManager.day2">
+            <el-option label="请选择日期" value="0"></el-option>
+            <el-option label="1" value="1"></el-option>
+            <el-option label="2" value="2"></el-option>
+            <el-option label="3" value="3"></el-option>
+            <el-option label="4" value="4"></el-option>
+            <el-option label="5" value="5"></el-option>
+            <el-option label="6" value="6"></el-option>
+            <el-option label="7" value="7"></el-option>
+            <el-option label="8" value="8"></el-option>
+            <el-option label="9" value="9"></el-option>
+            <el-option label="10" value="10"></el-option>
+            <el-option label="11" value="11"></el-option>
+            <el-option label="12" value="12"></el-option>
+            <el-option label="13" value="13"></el-option>
+            <el-option label="14" value="14"></el-option>
+            <el-option label="15" value="15"></el-option>
+            <el-option label="16" value="16"></el-option>
+            <el-option label="17" value="17"></el-option>
+            <el-option label="18" value="18"></el-option>
+            <el-option label="19" value="19"></el-option>
+            <el-option label="20" value="20"></el-option>
+            <el-option label="21" value="21"></el-option>
+            <el-option label="22" value="22"></el-option>
+            <el-option label="23" value="23"></el-option>
+            <el-option label="24" value="24"></el-option>
+            <el-option label="25" value="25"></el-option>
+            <el-option label="26" value="26"></el-option>
+            <el-option label="27" value="27"></el-option>
+            <el-option label="28" value="28"></el-option>
+            <el-option label="29" value="29"></el-option>
+            <el-option label="30" value="30"></el-option>
+            <el-option label="31" value="31"></el-option>
+        </el-select>
+        <el-time-picker
+                v-model="meterManager.timing2"
+                placeholder="定时点2">
+        </el-time-picker>
+
+        <el-select v-model="meterManager.day3">
+            <el-option label="请选择日期" value="0"></el-option>
+            <el-option label="1" value="1"></el-option>
+            <el-option label="2" value="2"></el-option>
+            <el-option label="3" value="3"></el-option>
+            <el-option label="4" value="4"></el-option>
+            <el-option label="5" value="5"></el-option>
+            <el-option label="6" value="6"></el-option>
+            <el-option label="7" value="7"></el-option>
+            <el-option label="8" value="8"></el-option>
+            <el-option label="9" value="9"></el-option>
+            <el-option label="10" value="10"></el-option>
+            <el-option label="11" value="11"></el-option>
+            <el-option label="12" value="12"></el-option>
+            <el-option label="13" value="13"></el-option>
+            <el-option label="14" value="14"></el-option>
+            <el-option label="15" value="15"></el-option>
+            <el-option label="16" value="16"></el-option>
+            <el-option label="17" value="17"></el-option>
+            <el-option label="18" value="18"></el-option>
+            <el-option label="19" value="19"></el-option>
+            <el-option label="20" value="20"></el-option>
+            <el-option label="21" value="21"></el-option>
+            <el-option label="22" value="22"></el-option>
+            <el-option label="23" value="23"></el-option>
+            <el-option label="24" value="24"></el-option>
+            <el-option label="25" value="25"></el-option>
+            <el-option label="26" value="26"></el-option>
+            <el-option label="27" value="27"></el-option>
+            <el-option label="28" value="28"></el-option>
+            <el-option label="29" value="29"></el-option>
+            <el-option label="30" value="30"></el-option>
+            <el-option label="31" value="31"></el-option>
+        </el-select>
+        <el-time-picker
+                v-model="meterManager.timing3"
+                placeholder="定时点3">
+        </el-time-picker>
+
+    </el-form>
+
+    <div slot="footer" class="dialog-footer">
+        <el-button @click="meterManager.timingVisible = false" :disabled="meterManager.disabledTiming">取 消</el-button>
+        <el-button type="primary" :loading="meterManager.loadTiming"  @click="setTimingData">确 定</el-button>
+    </div>
+</el-dialog>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <el-dialog :title="title"
-        v-model="dialogVisible"
-        size="tiny" >
+           v-model="dialogVisible"
+           size="tiny">
     <span>{{waitDataMsg}}</span>
-  </span>
+    </span>
 </el-dialog>
 
 </body>

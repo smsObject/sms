@@ -67,4 +67,10 @@ public class Meter extends BaseDO implements Serializable {
     private String controllerName;
 
     private Date startTime;
+
+    private String mc1;
+
+    private String mc2;
+
+    private String mc3;
 }
