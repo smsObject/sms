@@ -153,5 +153,15 @@
         <el-button type="primary" @click="addMeter">确 定</el-button>
     </div>
 </el-dialog>
+
+
+
+<el-dialog :title="title"
+        v-model="dialogVisible"
+        size="tiny" >
+    <span>{{waitDataMsg}}</span>
+  </span>
+</el-dialog>
+
 </body>
 </html>

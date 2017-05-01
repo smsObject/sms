@@ -34,7 +34,12 @@
                     label="单位">
             </el-table-column>
             <el-table-column
-                    property="createDate"
+                    width="90"
+                    property="valveStatus"
+                    label="阀状态">
+            </el-table-column>
+            <el-table-column
+                    property="createTime"
                     label="创建时间">
             </el-table-column>
             <el-table-column

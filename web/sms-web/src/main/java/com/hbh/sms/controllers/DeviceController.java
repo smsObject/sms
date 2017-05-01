@@ -87,7 +87,7 @@ public class DeviceController {
                     return ResultUtil.newFailedResult(StateCode.SUCCESS);
             }
         }
-        return ResultUtil.newFailedResult(StateCode.ERROR);
+        return ResultUtil.newFailedResult(StateCode.SUCCESS);
     }
 
     //发送数据 设置阀的状态值

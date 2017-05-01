@@ -45,4 +45,6 @@ public class MeterData extends BaseDO implements Serializable {
      *阀状态 0 阀开 1是阀关
      */
     private Integer valveStatus;
+
+    private Date startTime;
 }

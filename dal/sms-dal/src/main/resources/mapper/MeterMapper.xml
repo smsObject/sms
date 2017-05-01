@@ -29,7 +29,10 @@
     <sql id="meterWhere">
         <where>
             <if test="meterNo != null and meterNo !='' ">
-                AND meter_no = #{meterNo}
+                AND tm.meter_no = #{meterNo}
+            </if>
+            <if test="startTime != null">
+                AND tm.create_time >= #{startTime}
             </if>
         </where>
     </sql>

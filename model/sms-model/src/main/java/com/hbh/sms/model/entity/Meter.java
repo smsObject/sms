@@ -65,4 +65,6 @@ public class Meter extends BaseDO implements Serializable {
      * 所属GSM名称
      */
     private String controllerName;
+
+    private Date startTime;
 }

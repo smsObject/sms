@@ -42,6 +42,9 @@
             <if test="upLoadTime != null">
                 AND up_load_time = #{upLoadTime}
             </if>
+            <if test="startTime != null">
+                AND create_time >= #{startTime}
+            </if>
         </where>
     </sql>
 
