@@ -1,7 +1,6 @@
 package com.hbh.sms.model.entity;
 
 import lombok.Data;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -73,4 +72,10 @@ public class Meter extends BaseDO implements Serializable {
     private String mc2;
 
     private String mc3;
+
+    private Date lastUpLoadTime ;
+
+    private Integer lastValveStatus;
+
+    private Float lastValue;
 }

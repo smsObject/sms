@@ -50,7 +50,13 @@ public class DataServiceImpl implements DataService {
                 meterData.setSmsDate(smsDate);
                 List<MeterData> meterDatas = meterDataMapper.query(meterData);
                 if (meterDatas.isEmpty()) {
+
                     int i = meterDataMapper.insert(meterData);
+                    meter.setLastUpLoadTime(meterData.getSmsDate());
+                    meter.setLastValveStatus(meterData.getValveStatus());
+                    meter.setLastValue(meterData.getValue());
+                    meterMapper.updateLastByCode(meter);
+
                     if (i > 0) {
                         org.smslib.Service.getInstance().deleteMessage(msg);
                     }

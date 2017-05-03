@@ -42,30 +42,48 @@
                   highlight-current-row
                   @current-change="handleMeterChange"
                   style="width: 100%;height:100%">
+
             <el-table-column
                     type="index"
                     width="50">
             </el-table-column>
+
             <el-table-column
                     property="meterCode"
-                    label="手机号"
+                    label="编号"
                     width="200">
             </el-table-column>
-            <el-table-column
-                    property="controllerName"
-                    label="集中器"
-                    width="200">
-            </el-table-column>
+
             <el-table-column
                     property="meterName"
                     label="仪表名称"
                     width="200">
             </el-table-column>
+
+            <el-table-column
+                    width="200"
+                    property="lastValue"
+                    label="最后数据">
+            </el-table-column>
+
+            <el-table-column
+                    width="200"
+                    property="lastValveStatus"
+                    label="最后阀状态">
+            </el-table-column>
+
+            <el-table-column
+                    width="200"
+                    property="lastUpLoadTime"
+                    label="最后上传时间">
+            </el-table-column>
+
             <el-table-column
                     width="200"
                     property="unit"
                     label="单位">
             </el-table-column>
+
             <%--<el-table-column--%>
                     <%--width="200"--%>
                     <%--property="mc1"--%>
@@ -81,16 +99,6 @@
                     <%--property="mc3"--%>
                     <%--label="管理中心号码3">--%>
             <%--</el-table-column>--%>
-            <el-table-column
-                    width="200"
-                    property="unit"
-                    label="单位">
-            </el-table-column>
-            <el-table-column
-                    width="200"
-                    property="unit"
-                    label="单位">
-            </el-table-column>
             <el-table-column
                     property="createTime"
                     label="创建时间">

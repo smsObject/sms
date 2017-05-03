@@ -14,4 +14,6 @@ public interface MeterMapper {
     int updateByPrimaryKey(Meter record);
 
     List<Meter> query(Meter record);
+
+    int updateLastByCode(Meter record);
 }

@@ -426,6 +426,7 @@ $(function () {
                                 self.waitDataMsg = "返回结果:仪表度数: " + data[0].value + " 吨" + " 阀: " + self.getValveStatus(data[0].valveStatus) + " 状态"
                                 clearInterval(self.intervalId);
                                 clearTimeout(self.timeOutId);
+                                self.meterData();
                             }
                         } else {
 

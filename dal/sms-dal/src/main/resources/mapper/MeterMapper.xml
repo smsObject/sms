@@ -22,12 +22,16 @@
         <result column="mc1" property="mc1"/>
         <result column="mc2" property="mc2"/>
         <result column="mc3" property="mc3"/>
+        <result column="last_upload_time" property="lastUpLoadTime"/>
+        <result column="last_valve_status" property="lastValveStatus"/>
+        <result column="last_value" property="lastValue"/>
     </resultMap>
 
     <sql id="Base_Column_List">
       tm.id, tm.meter_no, tm.meter_code, tm.controller_id,tc.name as controller_name, tm.meter_name, tm.fix_date,
       tm.use_type, tm.user_type, tm.base_value, tm.buy_way, tm.meter_model, tm.create_time, tm.create_person,
-      tm.update_time, tm.update_person,tm.unit,tm.mc1,tm.mc2,tm.mc3
+      tm.update_time, tm.update_person,tm.unit,tm.mc1,tm.mc2,tm.mc3,tm.last_upload_time,tm.last_valve_status,
+      tm.last_value
   </sql>
     <sql id="meterWhere">
         <where>
@@ -92,4 +96,14 @@
       update_person = #{updatePerson}
     where id = #{id}
   </update>
+
+    <update id="updateLastByCode" parameterType="com.hbh.sms.model.entity.Meter">
+    update  t_meter
+       set  last_upload_time = #{lastUpLoadTime},
+            last_valve_status = #{lastValveStatus},
+            last_value = #{lastValue},
+            update_time = now(),
+            update_person = 'system'
+     where  meter_code = #{meterCode}
+    </update>
 </mapper>
