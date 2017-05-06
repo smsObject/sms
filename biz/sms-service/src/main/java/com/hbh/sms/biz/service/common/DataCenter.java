@@ -92,21 +92,19 @@ public class DataCenter {
         return  ResultUtil.newSuccessResult(meterData);
     }
 
-    public static String getSetManagerCenterCmd(Integer number,String phone){
-        if (phone.trim().length() > 11 ||number == null || number.intValue() == 0){
-            return null;
-        }
-        String str1 = phone.substring(0,10);
-        String str2 = phone.substring(10,11)+"E";
-        String str0 = "";
-        if (number == 1){
-            str0 = "C206";// 42+80 = c2
-        }else if (number == 2){
-            str0 = "D206";
-        }else if (number == 3){
-            str0 = "E206";
-        }
-        String hexStr = str0+str1+str2;
+    public static String getSetManagerCenterCmd(String phone1,String phone2,String phone3){
+        String str11 = phone1.substring(0,10);
+        String str12 = phone1.substring(10,11)+"EEEEE";
+
+        String str21 = phone2.substring(0,10);
+        String str22 = phone2.substring(10,11)+"EEEEE";
+
+        String str31 = phone3.substring(0,10);
+        String str32 = phone3.substring(10,11)+"EEEEE";
+
+        String  str0 = "C248";// 42+80 = c2 16*3
+
+        String hexStr = str0+str11 + str12 + str21 + str22 + str31 + str32;
         return getCrc16(hexStr);
     }
 
@@ -125,7 +123,7 @@ public class DataCenter {
 
     public static void main(String[] args) {
         System.out.println("00110000012700000000002C0011041D16171EA60F".length());
-        getSetManagerCenterCmd(1,"18205815108");
+//        getSetManagerCenterCmd(1,"18205815108");
 //        System.out.println(getCrc16("122356782C"));
     }
 

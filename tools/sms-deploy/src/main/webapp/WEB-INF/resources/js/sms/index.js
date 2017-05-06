@@ -13,6 +13,7 @@ $(function () {
                 intervalId: "",
                 timeOutId: "",
                 dialogVisible: false,
+                days:[],
                 gsmManager: {
                     loadSearchGsm: false,
                     isShow: true,
@@ -47,6 +48,9 @@ $(function () {
                     data: [],
                     gsmData: [],
                     day1:"0",
+                    on1:false,
+                    on2:false,
+                    on3:false,
                     day2:"0",
                     day3:"0",
                     timing1:"",
@@ -69,6 +73,7 @@ $(function () {
         components: {},
         mounted: function () {
             this.gsmData();
+            this.initData();
         },
         computed: {},
         watch: {
@@ -83,6 +88,15 @@ $(function () {
             },
         },
         methods: {
+            initData:function () {
+                for (var i = 0;i<32;i++){
+                    if (i == 0){
+                        this.days[i] = {label:"请选择日期",value:"0"};
+                    }else {
+                        this.days[i] = {label:i+"号",value:i};
+                    }
+                }
+            },
             gsmData: function () {
                 var self = this;
                 $.ajax({
@@ -280,16 +294,18 @@ $(function () {
                 var self = this;
                 self.meterManager.loadTiming = true;
                 self.meterManager.disabledTiming = true;
-
                 $.ajax({
                     url:'/device/setTiming',
                     data:{meterId:self.meterRow.id,
                         day1:self.meterManager.day1,
                         timing1:self.meterManager.timing1,
+                        on1:self.meterManager.on1,
                         day2:self.meterManager.day2,
                         timing2:self.meterManager.timing2,
+                        on2:self.meterManager.on2,
                         day3:self.meterManager.day3,
-                        timing3:self.meterManager.timing3
+                        timing3:self.meterManager.timing3,
+                        on3:self.meterManager.on3
                     },
                     success:function (e) {
                         if(e.success){
@@ -320,7 +336,6 @@ $(function () {
                 var self = this;
                 self.meterManager.loadManagerCenter = true;
                 self.meterManager.disabledManagerCenter = true;
-
                 $.ajax({
                     url: "/device/setManagerCenter",
                     data: {meterId: self.meterRow.id, mc1: self.meterManager.mc1,mc2: self.meterManager.mc2,mc3: self.meterManager.mc3},

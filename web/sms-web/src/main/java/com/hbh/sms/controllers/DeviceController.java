@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.util.List;
 
 @Controller
@@ -46,19 +47,19 @@ public class DeviceController {
     @RequestMapping("/scanner")
     @ResponseBody
     public Result<List<Concentrator>> scanner() {
-        Result<List<Concentrator>> result= bizDeviceService.scanner();
-        if (result.isSuccess()){
-            for (Concentrator concentrator :result.getData()){
+        Result<List<Concentrator>> result = bizDeviceService.scanner();
+        if (result.isSuccess()) {
+            for (Concentrator concentrator : result.getData()) {
                 Concentrator concentrator1 = new Concentrator();
                 concentrator1.setComPort(concentrator.getComPort());
-                concentrator.setCode("hbh"+concentrator.getComPort());
+                concentrator.setCode("hbh" + concentrator.getComPort());
                 concentrator.setCreatePerson("system");
                 concentrator.setUpdatePerson("system");
                 concentrator.setName(concentrator.getComPort());
-                Result<List<Concentrator>> list=concentratorService.list(concentrator1);
-                if (list.isSuccess() && list.getData().size() == 0){
+                Result<List<Concentrator>> list = concentratorService.list(concentrator1);
+                if (list.isSuccess() && list.getData().size() == 0) {
                     concentratorService.add(concentrator);
-                }else  if(list.isSuccess()){
+                } else if (list.isSuccess()) {
                     concentratorService.updateByComPort(concentrator);
                 }
             }
@@ -93,9 +94,9 @@ public class DeviceController {
     //发送数据 设置阀的状态值
     @RequestMapping("/setValveStatus")
     @ResponseBody
-    public Result setValveStatus(Meter meter,Integer status){
+    public Result setValveStatus(Meter meter, Integer status) {
         Long id = meter.getId();
-        if (id == null || id == 0 || status== null) {
+        if (id == null || id == 0 || status == null) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
         Result<Meter> result = meterService.getMeterById(id);
@@ -105,9 +106,9 @@ public class DeviceController {
             if (result1.getData() != null) {
                 Concentrator concentrator = result1.getData();
                 SendMessageData messageData = null;
-                if (status == 0){
+                if (status == 0) {
                     messageData = new SendMessageData(meter1.getMeterCode(), DataCenter.CLOSE_VALVE_CMD);
-                }else if (status == 1){
+                } else if (status == 1) {
                     messageData = new SendMessageData(meter1.getMeterCode(), DataCenter.OPEN_VALVE_CMD);
                 }
                 if (bizDeviceService.sendMessage(concentrator, messageData))
@@ -118,33 +119,33 @@ public class DeviceController {
     }
 
     @RequestMapping("/setTiming")
-    public Result setTiming(Long meterId,String day1,String day2,String day3,String timing1,String timing2,String timing3){
-        if (meterId == null || meterId == 0 ) {
-            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
-        }
-        if ((day1 == null || day1.trim().length() == 0) && (day2 == null || day2.trim().length() == 0) && (day3 == null || day3.trim().length() == 0)) {
-            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
-        }
-        if ((timing1 == null || timing1.trim().length() == 0) && (timing2 == null || timing2.trim().length() == 0) && (timing3 == null || timing3.trim().length() == 0)) {
+    public Result setTiming(Long meterId, String day1, String day2, String day3, String timing1, String timing2, String timing3,Boolean on1,Boolean on2,Boolean on3) {
+        if (meterId == null || meterId == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
 
         Result<Meter> result = meterService.getMeterById(meterId);
         Concentrator concentrator = null;
-        Meter meter1 = null ;
+        Meter meter1 = null;
         if (result.getData() != null) {
             meter1 = result.getData();
             Result<Concentrator> result1 = concentratorService.getConcentratorById(meter1.getControllerId());
             if (result1.getData() != null) {
                 concentrator = result1.getData();
-            }else {
-                return ResultUtil.newFailedResult(StateCode.ERROR,"没有关联的GSM设备");
+            } else {
+                return ResultUtil.newFailedResult(StateCode.ERROR, "没有关联的GSM设备");
             }
-        }else {
-            return ResultUtil.newFailedResult(StateCode.ERROR,"没有该仪表设备");
+        } else {
+            return ResultUtil.newFailedResult(StateCode.ERROR, "没有该仪表设备");
         }
 
-        if ((day1 != null && day1.trim().length() > 0) && (timing1 != null || timing1.trim().length() > 0)){
+        if (on1){
+            if ((day1 != null && !"0".equals(day1)) && (timing1 != null || timing1.trim().length() > 0)) {
+
+            }
+        }
+
+        if ((day1 != null && day1.trim().length() > 0) && (timing1 != null || timing1.trim().length() > 0)) {
 //            cmd2 = DataCenter.getSetManagerCenterCmd(2,mc2);
 //            System.out.println(cmd2);
 //            SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), cmd2);
@@ -152,7 +153,7 @@ public class DeviceController {
 //                return ResultUtil.newFailedResult(StateCode.SUCCESS);
         }
 
-        if ((day2 != null && day2.trim().length() > 0) && (timing2 != null || timing2.trim().length() > 0)){
+        if ((day2 != null && day2.trim().length() > 0) && (timing2 != null || timing2.trim().length() > 0)) {
 //            cmd2 = DataCenter.getSetManagerCenterCmd(2,mc2);
 //            System.out.println(cmd2);
 //            SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), cmd2);
@@ -160,7 +161,7 @@ public class DeviceController {
 //                return ResultUtil.newFailedResult(StateCode.SUCCESS);
         }
 
-        if ((day3 != null && day3.trim().length() > 0) && (timing3 != null || timing3.trim().length() > 0)){
+        if ((day3 != null && day3.trim().length() > 0) && (timing3 != null || timing3.trim().length() > 0)) {
 //            cmd2 = DataCenter.getSetManagerCenterCmd(2,mc2);
 //            System.out.println(cmd2);
 //            SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), cmd2);
@@ -172,7 +173,7 @@ public class DeviceController {
 
     @RequestMapping("/getMeterData")
     @ResponseBody
-    public Result<List<MeterData>> getMeterData(Long meterId){
+    public Result<List<MeterData>> getMeterData(Long meterId) {
         MeterData meterData = new MeterData();
         meterData.setMeterId(meterId);
         return meterDataService.list(meterData);
@@ -232,63 +233,48 @@ public class DeviceController {
     }
 
     @RequestMapping("/updateMeter")
-    public Result<Boolean> updateMeter(Meter meter){
-        if (meter == null || meter.getId() == null || meter.getId().longValue() == 0){
+    public Result<Boolean> updateMeter(Meter meter) {
+        if (meter == null || meter.getId() == null || meter.getId().longValue() == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
-       Result<Boolean> result =  meterService.update(meter);
+        Result<Boolean> result = meterService.update(meter);
         return result;
     }
 
     @RequestMapping("/setManagerCenter")
-    public Result<Boolean> setMenegerCenter(Long meterId,Long concentratorId,String mc1,String mc2,String mc3){
-        if ((meterId == null || meterId.longValue() == 0) && (concentratorId == null || concentratorId.longValue() == 0)){
-            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED,"参数缺失");
+    public Result<Boolean> setMenegerCenter(Long meterId, String mc1, String mc2, String mc3) {
+        if ((meterId == null || meterId.longValue() == 0)) {
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "参数缺失");
         }
 
-        String cmd1 = null;
-        String cmd2 = null;
-        String cmd3 = null;
+        if (mc1 == null || mc1.trim().length() == 0 ||
+                mc2 == null || mc1.trim().length() == 0 ||
+                mc3 == null || mc3.trim().length() == 0) {
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        }
 
         Result<Meter> result = meterService.getMeterById(meterId);
         Concentrator concentrator = null;
-        Meter meter1 = null ;
+        Meter meter1 = null;
+
         if (result.getData() != null) {
             meter1 = result.getData();
             Result<Concentrator> result1 = concentratorService.getConcentratorById(meter1.getControllerId());
             if (result1.getData() != null) {
-              concentrator = result1.getData();
-            }else {
-                return ResultUtil.newFailedResult(StateCode.ERROR,"没有关联的GSM设备");
+                concentrator = result1.getData();
+            } else {
+                return ResultUtil.newFailedResult(StateCode.ERROR, "没有关联的GSM设备");
             }
-        }else {
-            return ResultUtil.newFailedResult(StateCode.ERROR,"没有该仪表设备");
+        } else {
+            return ResultUtil.newFailedResult(StateCode.ERROR, "没有该仪表设备");
         }
 
-        if (mc1 != null && mc1.trim().length() >0){
-            cmd1 = DataCenter.getSetManagerCenterCmd(1,mc1);
-            System.out.println(cmd1);
-            SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), cmd1);
-            if (bizDeviceService.sendMessage(concentrator, messageData))
-                return ResultUtil.newFailedResult(StateCode.SUCCESS);
+        String cmd = DataCenter.getSetManagerCenterCmd(mc1, mc2, mc3);
+        System.out.println(cmd);
+        SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), cmd);
+        if (bizDeviceService.sendMessage(concentrator, messageData)) {
+            return ResultUtil.newFailedResult(StateCode.SUCCESS);
         }
-
-        if (mc2 != null && mc2.trim().length() >0){
-            cmd2 = DataCenter.getSetManagerCenterCmd(2,mc2);
-            System.out.println(cmd2);
-            SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), cmd2);
-            if (bizDeviceService.sendMessage(concentrator, messageData))
-                return ResultUtil.newFailedResult(StateCode.SUCCESS);
-        }
-
-        if (mc3 != null && mc3.trim().length() >0){
-            cmd1 = DataCenter.getSetManagerCenterCmd(3,mc3);
-            System.out.println(cmd3);
-            SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), cmd3);
-            if (bizDeviceService.sendMessage(concentrator, messageData))
-                return ResultUtil.newFailedResult(StateCode.SUCCESS);
-        }
-
         return ResultUtil.newFailedResult(StateCode.ERROR);
     }
 }

@@ -1,7 +1,6 @@
 package com.hbh.sms.model.entity;
 
 import lombok.Data;
-
 import java.io.Serializable;
 
 /**
@@ -9,7 +8,6 @@ import java.io.Serializable;
  */
 @Data
 public class SendMessageData implements Serializable{
-
     /**接收者*/
     private  String receiver;
     /**消息体*/
