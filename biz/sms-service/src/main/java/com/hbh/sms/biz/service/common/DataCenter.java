@@ -41,7 +41,7 @@ public class DataCenter {
             return ResultUtil.newFailedResult(StateCode.ERROR, "校验失败");
         }
 
-        if (hexStr.length() == 132) {
+        if (hexStr.length() == 136) {
             return parseReadSetting(hexStr);
         } else if (hexStr.length() == 42){
             return parseReadMeterData(hexStr);
@@ -59,6 +59,7 @@ public class DataCenter {
         }
 
         System.out.println("激活延迟时间:"+strs[2]+strs[3]);
+        String str0 = strs[2]+strs[3];
 
         String str1 = strs[4];
         String str2 = strs[5];
@@ -101,6 +102,8 @@ public class DataCenter {
         String timing42 = strs[63];
 
         Meter meter = new Meter();
+
+        meter.setActivateTime(Integer.parseInt(str0));
         meter.setMc1(phone1);
         meter.setMc2(phone2);
         meter.setMc3(phone3);
@@ -250,7 +253,7 @@ public class DataCenter {
     }
 
     public static void main(String[] args) {
-        System.out.println("00110000012700000000002C0011041D16171EA60F".length());
+        System.out.println("4040360015372508177EEEEEEEEEEEEEEEEEEEEE15372508177EEEEEEEEEEEEEEEEEEEEE15032131012131032131052131381FEFE72037082320152320212320AA00E3F5".length());
 //        System.out.println(getCrc16("122356782C"));
     }
 

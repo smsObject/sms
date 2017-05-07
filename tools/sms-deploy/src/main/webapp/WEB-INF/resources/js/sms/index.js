@@ -62,7 +62,7 @@ $(function () {
                     timing2: "",
                     timing3: "",
                     timing4: "",
-                    activateTime:"",
+                    activateTime: "",
                     addMeterData: {meterCode: "", controllerId: "0", meterName: "", fixDate: "", unit: "吨"},
                     total: 0,
                     row: null
@@ -326,6 +326,7 @@ $(function () {
                         if (e.success) {
                             self.meterManager.timingVisible = false;
                             self.message('success', "命令发送成功!");
+                            self.waitSetting(self.meterRow.id);
                         } else {
                             self.meterManager.disabledTiming = false;
                             self.meterManager.loadTiming = false;
@@ -364,6 +365,7 @@ $(function () {
                         if (e.success) {
                             self.meterManager.managerCenterVisible = false;
                             self.message('success', "命令发送成功！");
+                            self.waitSetting(self.meterRow.id);
                         } else {
                             self.message('error', e.statusText);
                         }
@@ -393,12 +395,13 @@ $(function () {
                     url: '/device/setActivateTime',
                     data: {
                         meterId: self.meterRow.id,
-                        time:self.activateTime
+                        time: self.activateTime
                     },
                     success: function (e) {
                         if (e.success) {
                             self.meterManager.activateTimeVisible = false;
                             self.message('success', "命令发送成功!");
+                            self.waitSetting(self.meterRow.id);
                         } else {
                             self.meterManager.disabledActivate = false;
                             self.meterManager.loadActivateTime = false;
@@ -504,12 +507,40 @@ $(function () {
                     }
                 })
             },
+            loadWaitSetting: function (date, timeOut1, str, meterId) {
+                var self = this;
+                self.waitDataMsg = str + " 倒计时：" + timeOut1 + "s";
+                $.ajax({
+                    url: '/device/meterPage',
+                    data: {meterId: meterId, startUpdateTime: date},
+                    success: function (data) {
+                        if (data.success) {
+                            console.log(data);
+                            var data = data.data.resultList;
+                            if (data.length > 0) {
+                                self.waitDataMsg = "返回结果:管理中心号码1: " + data[0].mc1 + ";号码2:"+data[0].mc2+";号码3:"+data[0].mc3+";"
+                                +" 定时点"+data[0].day1+"/"+data[0].timing1+"; 定时点"+data[0].day2+"/"+data[0].timing2+"; 定时点"+data[0].day3+"/"+data[0].timing3
+                                    +"; 定时点"+data[0].day4+"/"+data[0].timing4;
+                                clearInterval(self.intervalId);
+                                clearTimeout(self.timeOutId);
+                                self.meterData();
+                            }
+                        } else {
+
+                        }
+                    },
+                    error: function (e) {
+                        self.waitDataMsg = "服务器端异常";
+                        clearInterval(int);
+                        clearTimeout(id);
+                    }
+                })
+            },
             waitData: function (meterId) {
                 var self = this;
                 self.title = "抄表返回结果";
                 self.waitDataMsg = "等待仪表返回。。。。。";
                 self.dialogVisible = true;
-
 
                 var date = new Date();
                 var timeOut = 5 * 60 * 1000;
@@ -525,7 +556,27 @@ $(function () {
                     clearInterval(self.intervalId);
                     self.waitDataMsg = "获取读表数据超时。。。。。";
                 }, timeOut);
+            },
+            waitSetting: function (meterId) {
+                var self = this;
+                self.title = "抄表返回结果";
+                self.waitDataMsg = "等待仪表返回。。。。。";
+                self.dialogVisible = true;
 
+                var date = new Date();
+                var timeOut = 5 * 60 * 1000;
+                var str = self.waitDataMsg;
+
+                var timeOut1 = 5 * 60 - 3;
+                self.intervalId = setInterval(function () {
+                    self.loadWaitSetting(date, timeOut1, str, meterId);
+                    timeOut1 = timeOut1 - 3;
+                }, 3000);
+
+                self.timeOutId = setTimeout(function () {
+                    clearInterval(self.intervalId);
+                    self.waitDataMsg = "获取读表数据超时。。。。。";
+                }, timeOut);
             },
             handleMeterChange: function (val) {
                 this.meterRow = val

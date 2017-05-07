@@ -90,4 +90,8 @@ public class Meter extends BaseDO implements Serializable {
     private String timing2;
     private String timing3;
     private String timing4;
+
+    private Date startUpdateTime;
+
+    private Integer activateTime;
 }
