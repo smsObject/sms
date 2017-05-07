@@ -31,7 +31,7 @@
     </el-button>
 
     <el-button type="primary" size="small"
-               @click="timeUpload">激活延时时间
+               @click="setActivateTime">激活延时时间
     </el-button>
 
     <!--table-->
@@ -81,22 +81,6 @@
                     property="lastUpLoadTime"
                     label="当前上传时间">
             </el-table-column>
-
-            <%--<el-table-column--%>
-                    <%--width="200"--%>
-                    <%--property="mc1"--%>
-                    <%--label="管理中心号码1">--%>
-            <%--</el-table-column>--%>
-            <%--<el-table-column--%>
-                    <%--width="200"--%>
-                    <%--property="mc2"--%>
-                    <%--label="管理中心号码2">--%>
-            <%--</el-table-column>--%>
-            <%--<el-table-column--%>
-                    <%--width="200"--%>
-                    <%--property="mc3"--%>
-                    <%--label="管理中心号码3">--%>
-            <%--</el-table-column>--%>
             <el-table-column
                     property="createTime"
                     label="创建时间">
@@ -134,8 +118,10 @@
             </el-pagination>
         </div>
     </template>
+
 </div>
 
+<!--设置管理中心号码-->
 <el-dialog title="设置管理中心号码" :close-on-click-modal="false" size="tiny" v-model="meterManager.managerCenterVisible">
     <el-form :model="meterManager.form">
         <el-form-item label="管理中心号码1">
@@ -158,38 +144,7 @@
     </div>
 </el-dialog>
 
-<!--添加设备 -->
-<el-dialog title="添加仪表设备" size="tiny" :close-on-click-modal="false" v-model="meterManager.addMeterVisible">
-    <el-form :model="meterManager.form1">
-
-        <el-input v-model="meterManager.addMeterData.meterCode" placeholder="请输入手机号"></el-input>
-
-        <el-input v-model="meterManager.addMeterData.meterName" placeholder="请输入仪表名称"></el-input>
-
-        <el-select v-model="meterManager.addMeterData.controllerId">
-            <el-option label="请选择gsm" value="0"></el-option>
-            <el-option v-for="gsm in this.meterManager.gsmData" :label="gsm.name" :value="gsm.id"></el-option>
-        </el-select>
-
-        <el-date-picker
-                v-model="meterManager.addMeterData.fixDate"
-                type="date"
-                placeholder="选择安装日期">
-        </el-date-picker>
-
-        <el-select v-model="meterManager.addMeterData.unit">
-            <el-option label="吨" value="吨"></el-option>
-        </el-select>
-
-    </el-form>
-
-    <div slot="footer" class="dialog-footer">
-        <el-button @click="meterManager.addMeterVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addMeter">确 定</el-button>
-    </div>
-</el-dialog>
-
-<!--添加设备 -->
+<!--定时上传设置 -->
 <el-dialog title="定时上传设置" :close-on-click-modal="false" size="tiny" v-model="meterManager.timingVisible">
     <el-form :model="meterManager.form2">
 
@@ -253,6 +208,45 @@
     </div>
 </el-dialog>
 
+<!--添加设备 -->
+<el-dialog title="添加仪表设备" size="tiny" :close-on-click-modal="false" v-model="meterManager.addMeterVisible">
+    <el-form :model="meterManager.form1">
+
+        <el-input v-model="meterManager.addMeterData.meterCode" placeholder="请输入手机号"></el-input>
+
+        <el-input v-model="meterManager.addMeterData.meterName" placeholder="请输入仪表名称"></el-input>
+
+        <el-select v-model="meterManager.addMeterData.controllerId">
+            <el-option label="请选择gsm" value="0"></el-option>
+            <el-option v-for="gsm in this.meterManager.gsmData" :label="gsm.name" :value="gsm.id"></el-option>
+        </el-select>
+
+        <el-date-picker
+                v-model="meterManager.addMeterData.fixDate"
+                type="date"
+                placeholder="选择安装日期">
+        </el-date-picker>
+
+        <el-select v-model="meterManager.addMeterData.unit">
+            <el-option label="吨" value="吨"></el-option>
+        </el-select>
+
+    </el-form>
+
+    <div slot="footer" class="dialog-footer">
+        <el-button @click="meterManager.addMeterVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addMeter">确 定</el-button>
+    </div>
+</el-dialog>
+
+
+<el-dialog title="激活时间设置" size="tiny" :close-on-click-modal="false" v-model="meterManager.activateTimeVisible">
+    <el-input v-model="meterManager.activateTime" placeholder="请输入激活时间(秒)"></el-input>
+    <div slot="footer" class="dialog-footer">
+        <el-button @click="meterManager.activateTimeVisible = false" :disabled="meterManager.disabledActivate" >取 消</el-button>
+        <el-button type="primary" :loading="meterManager.loadActivateTime"  @click="setActivateTimeData">确 定</el-button>
+    </div>
+</el-dialog>
 
 <el-dialog :title="title" :close-on-click-modal="false"
            v-model="dialogVisible"

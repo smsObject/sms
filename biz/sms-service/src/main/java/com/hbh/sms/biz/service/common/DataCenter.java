@@ -1,6 +1,8 @@
 package com.hbh.sms.biz.service.common;
 
+import com.hbh.sms.model.entity.Meter;
 import com.hbh.sms.model.entity.MeterData;
+import com.hbh.sms.model.entity.SmsData;
 import com.sms.common.Result;
 import com.sms.common.ResultUtil;
 import com.sms.common.StateCode;
@@ -28,34 +30,118 @@ public class DataCenter {
      */
     public static String CLOSE_VALVE_CMD = getCrc16("8a0101"); //8601017950
 
+
+    public static Result<SmsData> parseSmsData(String hexStr) {
+
+        if (hexStr == null || hexStr.trim().length() == 0 || hexStr.length() % 2 != 0) {
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "入参错误");
+        }
+        short[] smsDatas = hexStringToShort(hexStr);
+        if (!check(smsDatas)) {
+            return ResultUtil.newFailedResult(StateCode.ERROR, "校验失败");
+        }
+
+        if (hexStr.length() == 132) {
+            return parseReadSetting(hexStr);
+        } else if (hexStr.length() == 42){
+            return parseReadMeterData(hexStr);
+        }else {
+            return ResultUtil.newFailedResult(StateCode.ERROR);
+        }
+    }
+
+    private static Result<SmsData> parseReadSetting(String hexStr) {
+        System.out.println("返回仪表设置:" + hexStr);
+        int length = hexStr.length() / 2 - 2;
+        String[] strs = new String[length];
+        for (int i = 0; i < length; i++) {
+            strs[i] = hexStr.substring(i * 2, i * 2 + 2);
+        }
+
+        System.out.println("激活延迟时间:"+strs[2]+strs[3]);
+
+        String str1 = strs[4];
+        String str2 = strs[5];
+        String str3 = strs[6];
+        String str4 = strs[7];
+        String str5 = strs[8];
+        String str6 = strs[9];
+        String phone1 = str1 + str2 + str3 + str4 + str5 + str6.substring(0,1);
+
+        String str7 = strs[20];
+        String str8 = strs[21];
+        String str9 = strs[22];
+        String str10 = strs[23];
+        String str11 = strs[24];
+        String str12 = strs[25];
+        String phone2 = str7 + str8 + str9 + str10 + str11 + str12.substring(0,1);
+
+        String str13 = strs[36];
+        String str14 = strs[37];
+        String str15 = strs[38];
+        String str16 = strs[39];
+        String str17 = strs[40];
+        String str18 = strs[41];
+        String phone3 = str13 + str14 + str15 + str16 + str17 + str18.substring(0,1);
+
+        String day1 = strs[52];
+        String timing11 = strs[53];
+        String timing12 = strs[54];
+
+        String day2 = strs[55];
+        String timing21 = strs[56];
+        String timing22 = strs[57];
+
+        String day3 = strs[58];
+        String timing31 = strs[59];
+        String timing32 = strs[60];
+
+        String day4 = strs[61];
+        String timing41 = strs[62];
+        String timing42 = strs[63];
+
+        Meter meter = new Meter();
+        meter.setMc1(phone1);
+        meter.setMc2(phone2);
+        meter.setMc3(phone3);
+        System.out.println("管理中心号码:"+phone1+";"+phone2+";"+phone3);
+
+        meter.setDay1(day1);
+        meter.setDay2(day2);
+        meter.setDay3(day3);
+        meter.setDay4(day4);
+
+        meter.setTiming1(timing11+":"+timing12);
+        meter.setTiming2(timing21+":"+timing22);
+        meter.setTiming3(timing31+":"+timing32);
+        meter.setTiming4(timing41+":"+timing42);
+
+        System.out.println("定时点1:"+meter.getDay1()+"-"+meter.getTiming1());
+        System.out.println("定时点2:"+meter.getDay2()+"-"+meter.getTiming2());
+        System.out.println("定时点3:"+meter.getDay3()+"-"+meter.getTiming3());
+        System.out.println("定时点4:"+meter.getDay4()+"-"+meter.getTiming4());
+
+        SmsData smsData = new SmsData();
+        smsData.setMeter(meter);
+
+        return ResultUtil.newSuccessResult(smsData);
+    }
+
     /**
      * 解析 读取仪表数据的返回结果
      *
      * @param hexStr
      * @return
      */
-    public static Result<MeterData> parseReadMeterData(String hexStr) {
-        //长度判断 17 或 64的长度
-        if (hexStr.length() == 132) {
-            System.out.println("132:"+hexStr);
-            return ResultUtil.newFailedResult(StateCode.ERROR);
-        }
+    private static Result<SmsData> parseReadMeterData(String hexStr) {
+        System.out.println("返回仪表读数:"+hexStr);
 
-        if (hexStr == null || hexStr.trim().length() == 0 || hexStr.length() % 2 != 0) {
-            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "入参错误");
-        }
-        short[] meterDatas = hexStringToShort(hexStr);
-        if (!check(meterDatas)) {
-            return ResultUtil.newFailedResult(StateCode.ERROR, "校验失败");
-        }
-        //解析
-        //0x12 0x23 0x56 0x78 0x2C  785623.12吨•
-        System.out.println(hexStr);
         int length = hexStr.length() / 2 - 2;
         String[] strs = new String[length];
         for (int i = 0; i < length; i++) {
             strs[i] = hexStr.substring(i * 2, i * 2 + 2);
         }
+
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append(strs[2]);
         stringBuffer.append(strs[3]);
@@ -81,21 +167,22 @@ public class DataCenter {
         String upLoadTime = "20" + year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
         System.out.println(year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
         MeterData meterData = new MeterData();
+        SmsData smsData = new SmsData();
         meterData.setValue(Float.valueOf(stringBuffer.toString()));
         meterData.setValveStatus(Integer.parseInt(status));
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
         try {
             meterData.setUpLoadTime(dateFormat.parse(upLoadTime));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-        return ResultUtil.newSuccessResult(meterData);
+        smsData.setMeterData(meterData);
+        return ResultUtil.newSuccessResult(smsData);
     }
 
     /**
      * 设置管理中心号码
+     *
      * @param phone1
      * @param phone2
      * @param phone3
@@ -103,13 +190,13 @@ public class DataCenter {
      */
     public static String getSetManagerCenterCmd(String phone1, String phone2, String phone3) {
         String str11 = phone1.substring(0, 10);
-        String str12 = phone1.substring(10, 11) + "EEEEE";
+        String str12 = phone1.substring(10, 11) + "EEEEEEEEEEEEEEEEEEEEE";
 
         String str21 = phone2.substring(0, 10);
-        String str22 = phone2.substring(10, 11) + "EEEEE";
+        String str22 = phone2.substring(10, 11) + "EEEEEEEEEEEEEEEEEEEEE";
 
         String str31 = phone3.substring(0, 10);
-        String str32 = phone3.substring(10, 11) + "EEEEE";
+        String str32 = phone3.substring(10, 11) + "EEEEEEEEEEEEEEEEEEEEE";
 
         String str0 = "C248";// 42+80 = c2 16*3
 
@@ -119,6 +206,7 @@ public class DataCenter {
 
     /**
      * 设置定时点上传
+     *
      * @param cmd1
      * @param cmd2
      * @param cmd3
@@ -133,6 +221,7 @@ public class DataCenter {
 
     /**
      * 设置激活时间
+     *
      * @param time
      * @return
      */
@@ -140,8 +229,8 @@ public class DataCenter {
         String str0 = "C002";
         int length = time.length();
         String str1 = "";
-        for (int i = 0; i<4 - length; i++){
-            str1+="0";
+        for (int i = 0; i < 4 - length; i++) {
+            str1 += "0";
         }
         String hexStr = str0 + str1 + time;
         return getCrc16(hexStr);
@@ -162,7 +251,6 @@ public class DataCenter {
 
     public static void main(String[] args) {
         System.out.println("00110000012700000000002C0011041D16171EA60F".length());
-//        getSetManagerCenterCmd(1,"18205815108");
 //        System.out.println(getCrc16("122356782C"));
     }
 

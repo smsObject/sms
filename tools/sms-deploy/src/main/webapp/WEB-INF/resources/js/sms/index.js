@@ -13,7 +13,7 @@ $(function () {
                 intervalId: "",
                 timeOutId: "",
                 dialogVisible: false,
-                days:[],
+                days: [],
                 gsmManager: {
                     loadSearchGsm: false,
                     isShow: true,
@@ -27,15 +27,18 @@ $(function () {
                     loadOpenMeter: false,
                     loadCloseMeter: false,
                     loadManagerCenter: false,
-                    loadTiming:false,
-                    timingVisible:false,
-                    disabledTiming:false,
+                    loadTiming: false,
+                    timingVisible: false,
+                    disabledTiming: false,
                     disabledReadMeter: false,
                     disabledManagerCenter: false,
                     disabledOpenMeter: false,
                     disabledCloseMeter: false,
                     managerCenterVisible: false,
                     addMeterVisible: false,
+                    activateTimeVisible: false,
+                    disabledActivate: false,
+                    loadActivateTime: false,
                     mc1: "",
                     mc2: "",
                     mc3: "",
@@ -47,18 +50,19 @@ $(function () {
                     isShow: false,
                     data: [],
                     gsmData: [],
-                    on1:false,
-                    on2:false,
-                    on3:false,
-                    on4:false,
-                    day1:"0",
-                    day2:"0",
-                    day3:"0",
-                    day4:"0",
-                    timing1:"",
-                    timing2:"",
-                    timing3:"",
-                    timing4:"",
+                    on1: false,
+                    on2: false,
+                    on3: false,
+                    on4: false,
+                    day1: "0",
+                    day2: "0",
+                    day3: "0",
+                    day4: "0",
+                    timing1: "",
+                    timing2: "",
+                    timing3: "",
+                    timing4: "",
+                    activateTime:"",
                     addMeterData: {meterCode: "", controllerId: "0", meterName: "", fixDate: "", unit: "吨"},
                     total: 0,
                     row: null
@@ -91,16 +95,16 @@ $(function () {
             },
         },
         methods: {
-            initData:function () {
-                for (var i = 0;i<32;i++){
-                    if (i == 0){
-                        this.days[i] = {label:"请选择日期",value:"0"};
-                    }else {
+            initData: function () {
+                for (var i = 0; i < 32; i++) {
+                    if (i == 0) {
+                        this.days[i] = {label: "请选择日期", value: "0"};
+                    } else {
                         var value = i;
-                        if(i<10){
-                            value = "0"+i;
+                        if (i < 10) {
+                            value = "0" + i;
                         }
-                        this.days[i] = {label:i+"号",value:value};
+                        this.days[i] = {label: i + "号", value: value};
                     }
                 }
             },
@@ -207,10 +211,10 @@ $(function () {
                     success: function (e) {
                         console.log(e);
                         if (e.success) {
-                            self.message('success','命令发送成功!');
+                            self.message('success', '命令发送成功!');
                             self.waitData(self.meterRow.id);
                         } else {
-                            self.message('error',e.statusText);
+                            self.message('error', e.statusText);
                         }
                         self.meterManager.loadReadMeter = false
                         self.meterManager.disabledOpenMeter = false
@@ -220,14 +224,14 @@ $(function () {
                         self.meterManager.loadReadMeter = false
                         self.meterManager.disabledOpenMeter = false
                         self.meterManager.disabledCloseMeter = false
-                        self.message('error',e.statusText);
+                        self.message('error', e.statusText);
                     }
                 })
             },
             openMeter: function () {
                 var self = this;
                 if (self.meterRow == null) {
-                    self.message('error','请先选择一个仪表再操作');
+                    self.message('error', '请先选择一个仪表再操作');
                     return;
                 }
                 self.meterManager.loadOpenMeter = true
@@ -239,10 +243,10 @@ $(function () {
                     data: {id: this.meterRow.id, status: 1},
                     success: function (e) {
                         if (e.success) {
-                            self.message('success','命令发送成功!');
+                            self.message('success', '命令发送成功!');
                             self.waitData(self.meterRow.id);
                         } else {
-                            self.message('error',e.statusText);
+                            self.message('error', e.statusText);
                         }
                         self.meterManager.loadOpenMeter = false
                         self.meterManager.disabledReadMeter = false
@@ -252,14 +256,14 @@ $(function () {
                         self.meterManager.loadOpenMeter = false
                         self.meterManager.disabledReadMeter = false
                         self.meterManager.disabledCloseMeter = false
-                        self.message('error',e.statusText);
+                        self.message('error', e.statusText);
                     }
                 });
             },
             closeMeter: function () {
                 var self = this;
                 if (self.meterRow == null) {
-                    self.message('error','请先选择一个仪表再操作');
+                    self.message('error', '请先选择一个仪表再操作');
                     return;
                 }
                 self.meterManager.loadCloseMeter = true
@@ -272,17 +276,17 @@ $(function () {
                     success: function (e) {
                         console.log(e);
                         if (e.success) {
-                            self.message('success','命令发送成功!');
+                            self.message('success', '命令发送成功!');
                             self.waitData(self.meterRow.id);
                         } else {
-                            self.message('error',e.statusText);
+                            self.message('error', e.statusText);
                         }
                         self.meterManager.loadCloseMeter = false
                         self.meterManager.disabledOpenMeter = false
                         self.meterManager.disabledReadMeter = false
                     },
                     error: function (e) {
-                        self.message('error',e.statusText);
+                        self.message('error', e.statusText);
                         self.meterManager.loadCloseMeter = false
                         self.meterManager.disabledOpenMeter = false
                         self.meterManager.disabledReadMeter = false
@@ -292,52 +296,53 @@ $(function () {
             setTiming: function () {
                 var self = this;
                 if (self.meterRow == null) {
-                    self.message('error','请先选择一个仪表再操作');
+                    self.message('error', '请先选择一个仪表再操作');
                     return;
                 }
                 self.meterManager.timingVisible = true;
             },
-            setTimingData:function () {
+            setTimingData: function () {
                 var self = this;
                 self.meterManager.loadTiming = true;
                 self.meterManager.disabledTiming = true;
                 $.ajax({
-                    url:'/device/setTiming',
-                    data:{meterId:self.meterRow.id,
-                        day1:self.meterManager.day1,
-                        timing1:self.meterManager.timing1,
-                        on1:self.meterManager.on1,
-                        day2:self.meterManager.day2,
-                        timing2:self.meterManager.timing2,
-                        on2:self.meterManager.on2,
-                        day3:self.meterManager.day3,
-                        timing3:self.meterManager.timing3,
-                        on3:self.meterManager.on3,
-                        day4:self.meterManager.day4,
-                        timing4:self.meterManager.timing4,
-                        on4:self.meterManager.on4
+                    url: '/device/setTiming',
+                    data: {
+                        meterId: self.meterRow.id,
+                        day1: self.meterManager.day1,
+                        timing1: self.meterManager.timing1,
+                        on1: self.meterManager.on1,
+                        day2: self.meterManager.day2,
+                        timing2: self.meterManager.timing2,
+                        on2: self.meterManager.on2,
+                        day3: self.meterManager.day3,
+                        timing3: self.meterManager.timing3,
+                        on3: self.meterManager.on3,
+                        day4: self.meterManager.day4,
+                        timing4: self.meterManager.timing4,
+                        on4: self.meterManager.on4
                     },
-                    success:function (e) {
-                        if(e.success){
+                    success: function (e) {
+                        if (e.success) {
                             self.meterManager.timingVisible = false;
-                            self.message('success',"命令发送成功!");
-                        }else{
+                            self.message('success', "命令发送成功!");
+                        } else {
                             self.meterManager.disabledTiming = false;
                             self.meterManager.loadTiming = false;
-                            self.message('error',e.statusText);
+                            self.message('error', e.statusText);
                         }
                     },
-                    error:function (e) {
+                    error: function (e) {
                         self.meterManager.disabledTiming = false;
                         self.meterManager.loadTiming = false;
-                        self.message('error',e.statusText);
+                        self.message('error', e.statusText);
                     }
                 })
             },
             setManagerCenter: function () {
                 var self = this;
                 if (self.meterRow == null) {
-                    self.message('error','请先选择一个仪表再操作');
+                    self.message('error', '请先选择一个仪表再操作');
                     return;
                 }
                 self.meterManager.managerCenterVisible = true;
@@ -348,14 +353,19 @@ $(function () {
                 self.meterManager.disabledManagerCenter = true;
                 $.ajax({
                     url: "/device/setManagerCenter",
-                    data: {meterId: self.meterRow.id, mc1: self.meterManager.mc1,mc2: self.meterManager.mc2,mc3: self.meterManager.mc3},
+                    data: {
+                        meterId: self.meterRow.id,
+                        mc1: self.meterManager.mc1,
+                        mc2: self.meterManager.mc2,
+                        mc3: self.meterManager.mc3
+                    },
                     success: function (e) {
                         console.log(e)
                         if (e.success) {
                             self.meterManager.managerCenterVisible = false;
-                            self.message('success',"命令发送成功！");
+                            self.message('success', "命令发送成功！");
                         } else {
-                            self.message('error',e.statusText);
+                            self.message('error', e.statusText);
                         }
                         self.meterManager.loadManagerCenter = false;
                         self.meterManager.disabledManagerCenter = false;
@@ -363,14 +373,44 @@ $(function () {
                     error: function (e) {
                         self.meterManager.loadManagerCenter = false;
                         self.meterManager.disabledManagerCenter = false;
-                        self.message('error',e.statusText);
+                        self.message('error', e.statusText);
                     }
                 });
             },
-            timeUpload: function () {
-                this.$alert(this.waitDataMsg, '定时上传', {
-                    confirmButtonText: '确定'
-                });
+            setActivateTime: function () {
+                var self = this;
+                if (self.meterRow == null) {
+                    self.message('error', '请先选择一个仪表再操作');
+                    return;
+                }
+                self.meterManager.activateTimeVisible = true;
+            },
+            setActivateTimeData: function () {
+                var self = this;
+                self.meterManager.loadActivateTime = true;
+                self.meterManager.disabledActivate = true;
+                $.ajax({
+                    url: '/device/setActivateTime',
+                    data: {
+                        meterId: self.meterRow.id,
+                        time:self.activateTime
+                    },
+                    success: function (e) {
+                        if (e.success) {
+                            self.meterManager.activateTimeVisible = false;
+                            self.message('success', "命令发送成功!");
+                        } else {
+                            self.meterManager.disabledActivate = false;
+                            self.meterManager.loadActivateTime = false;
+                            self.message('error', e.statusText);
+                        }
+                    },
+                    error: function (e) {
+                        self.meterManager.disabledActivate = false;
+                        self.meterManager.loadActivateTime = false;
+                        self.message('error', e.statusText);
+                    }
+                })
             },
             addMeter: function () {
                 var self = this;

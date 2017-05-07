@@ -115,4 +115,23 @@
             update_person = 'system'
      where  meter_code = #{meterCode}
     </update>
+    
+    <update id="updateSettingById" parameterType="com.hbh.sms.model.entity.Meter">
+      UPDATE t_meter
+         SET  mc1 = #{mc1},
+              mc2 = #{mc2},
+              mc3 = #{mc3},
+              day1 = #{day1},
+              day2 = #{day2},
+              day3 = #{day3},
+              day4 = #{day4},
+              timing1 = #{timing1},
+              timing2 = #{timing2},
+              timing3 = #{timing3},
+              timing4 = #{timing4},
+              update_time = now(),
+              update_person = 'system'
+       WHERE id = #{id}
+    </update>
+
 </mapper>

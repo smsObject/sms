@@ -10,6 +10,8 @@ import java.util.Date;
 
 @Data
 public class Meter extends BaseDO implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     /**
      * 编号
      */

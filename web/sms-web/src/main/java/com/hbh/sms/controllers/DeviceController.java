@@ -122,6 +122,7 @@ public class DeviceController {
     }
 
     @RequestMapping("/setTiming")
+    @ResponseBody
     public Result setTiming(Long meterId, String day1, String day2, String day3,String day4,
                             String timing1, String timing2, String timing3,String timing4,
                             Boolean on1, Boolean on2, Boolean on3, Boolean on4) {
@@ -207,7 +208,7 @@ public class DeviceController {
                 return ResultUtil.newFailedResult(StateCode.ERROR, "时间1输入格式异常");
             }
         }
-
+        System.out.println(DataCenter.getSetTimingCmd(cmd1,cmd2,cmd3,cmd4));
         SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), DataCenter.getSetTimingCmd(cmd1,cmd2,cmd3,cmd4));
             if (bizDeviceService.sendMessage(concentrator, messageData))
                 return ResultUtil.newFailedResult(StateCode.SUCCESS);
@@ -315,6 +316,7 @@ public class DeviceController {
     }
 
     @RequestMapping("/setManagerCenter")
+    @ResponseBody
     public Result<Boolean> setMenegerCenter(Long meterId, String mc1, String mc2, String mc3) {
         if ((meterId == null || meterId.longValue() == 0)) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "参数缺失");

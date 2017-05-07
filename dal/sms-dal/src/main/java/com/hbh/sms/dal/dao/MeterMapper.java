@@ -13,6 +13,8 @@ public interface MeterMapper {
 
     int updateByPrimaryKey(Meter record);
 
+    int updateSettingById(Meter meter);
+
     List<Meter> query(Meter record);
 
     int updateLastByCode(Meter record);
