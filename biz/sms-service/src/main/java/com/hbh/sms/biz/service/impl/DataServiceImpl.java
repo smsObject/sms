@@ -11,7 +11,6 @@ import com.sms.common.Result;
 import org.smslib.InboundMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
@@ -52,7 +51,6 @@ public class DataServiceImpl implements DataService {
     }
 
     private void parseMeter(Meter meter, InboundMessage msg) throws Exception {
-        Date smsDate = msg.getDate();
         meter.setMeterCode(msg.getOriginator());
         List<Meter> meters = meterMapper.query(meter);
         Long meterId = 0L;
