@@ -497,6 +497,9 @@ $(function () {
             handleEdit: function (index, row) {
                 console.log(index)
             },
+            handleDetail: function (index, row) {
+                console.log(index)
+            },
             handleDelete: function (index, row) {
                 console.log(index)
             },

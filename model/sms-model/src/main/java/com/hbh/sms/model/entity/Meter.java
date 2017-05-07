@@ -78,4 +78,14 @@ public class Meter extends BaseDO implements Serializable {
     private Integer lastValveStatus;
 
     private Float lastValue;
+
+    private String day1;
+    private String day2;
+    private String day3;
+    private String day4;
+
+    private String timing1;
+    private String timing2;
+    private String timing3;
+    private String timing4;
 }

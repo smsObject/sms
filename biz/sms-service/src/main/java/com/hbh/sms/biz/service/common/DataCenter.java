@@ -40,6 +40,7 @@ public class DataCenter {
             System.out.println("132:"+hexStr);
             return ResultUtil.newFailedResult(StateCode.ERROR);
         }
+
         if (hexStr == null || hexStr.trim().length() == 0 || hexStr.length() % 2 != 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "入参错误");
         }
@@ -93,6 +94,13 @@ public class DataCenter {
         return ResultUtil.newSuccessResult(meterData);
     }
 
+    /**
+     * 设置管理中心号码
+     * @param phone1
+     * @param phone2
+     * @param phone3
+     * @return
+     */
     public static String getSetManagerCenterCmd(String phone1, String phone2, String phone3) {
         String str11 = phone1.substring(0, 10);
         String str12 = phone1.substring(10, 11) + "EEEEE";
@@ -109,9 +117,33 @@ public class DataCenter {
         return getCrc16(hexStr);
     }
 
+    /**
+     * 设置定时点上传
+     * @param cmd1
+     * @param cmd2
+     * @param cmd3
+     * @param cmd4
+     * @return
+     */
     public static String getSetTimingCmd(String cmd1, String cmd2, String cmd3, String cmd4) {
         String str0 = "E312";
         String hexStr = str0 + cmd1 + cmd2 + cmd3 + cmd4;
+        return getCrc16(hexStr);
+    }
+
+    /**
+     * 设置激活时间
+     * @param time
+     * @return
+     */
+    public static String getSetActivateCmd(String time) {
+        String str0 = "C002";
+        int length = time.length();
+        String str1 = "";
+        for (int i = 0; i<4 - length; i++){
+            str1+="0";
+        }
+        String hexStr = str0 + str1 + time;
         return getCrc16(hexStr);
     }
 

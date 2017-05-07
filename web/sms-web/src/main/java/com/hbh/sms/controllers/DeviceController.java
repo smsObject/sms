@@ -223,6 +223,35 @@ public class DeviceController {
         return meterDataService.list(meterData);
     }
 
+    @RequestMapping("/setActivateTime")
+    @ResponseBody
+    public Result setActivateTime(Long meterId,String time){
+        if (time == null || time.trim().length() == 0){
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        }
+
+        Result<Meter> result = meterService.getMeterById(meterId);
+        Concentrator concentrator = null;
+        Meter meter1 = null;
+        if (result.getData() != null) {
+            meter1 = result.getData();
+            Result<Concentrator> result1 = concentratorService.getConcentratorById(meter1.getControllerId());
+            if (result1.getData() != null) {
+                concentrator = result1.getData();
+            } else {
+                return ResultUtil.newFailedResult(StateCode.ERROR, "没有关联的GSM设备");
+            }
+        } else {
+            return ResultUtil.newFailedResult(StateCode.ERROR, "没有该仪表设备");
+        }
+
+        SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), DataCenter.getSetActivateCmd(time));
+        if (bizDeviceService.sendMessage(concentrator, messageData))
+            return ResultUtil.newFailedResult(StateCode.SUCCESS);
+
+        return ResultUtil.newFailedResult(StateCode.ERROR);
+    }
+
     @RequestMapping("/concentratorPage")
     @ResponseBody
     public Result<PagedData<Concentrator>> gsmPage(Concentrator concentrator) {

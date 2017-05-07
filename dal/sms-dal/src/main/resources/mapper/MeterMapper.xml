@@ -25,13 +25,22 @@
         <result column="last_upload_time" property="lastUpLoadTime"/>
         <result column="last_valve_status" property="lastValveStatus"/>
         <result column="last_value" property="lastValue"/>
+        <result column="day1" property="day1"/>
+        <result column="day2" property="day2"/>
+        <result column="day3" property="day3"/>
+        <result column="day4" property="day4"/>
+
+        <result column="timing1" property="timing1"/>
+        <result column="timing2" property="timing2"/>
+        <result column="timing3" property="timing3"/>
+        <result column="timing4" property="timing4"/>
     </resultMap>
 
     <sql id="Base_Column_List">
       tm.id, tm.meter_no, tm.meter_code, tm.controller_id,tc.name as controller_name, tm.meter_name, tm.fix_date,
       tm.use_type, tm.user_type, tm.base_value, tm.buy_way, tm.meter_model, tm.create_time, tm.create_person,
       tm.update_time, tm.update_person,tm.unit,tm.mc1,tm.mc2,tm.mc3,tm.last_upload_time,tm.last_valve_status,
-      tm.last_value
+      tm.last_value,tm.day1,tm.day2,tm.day3,tm.day4,tm.timing1,tm.timing2,tm.timing3,tm.timing4
   </sql>
     <sql id="meterWhere">
         <where>

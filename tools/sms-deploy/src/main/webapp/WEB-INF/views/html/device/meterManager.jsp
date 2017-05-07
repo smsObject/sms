@@ -111,11 +111,11 @@
                             size="small"
                             @click="handleEdit(scope.$index, scope.row)">编辑
                     </el-button>
-                    <%--<el-button--%>
-                    <%--size="small"--%>
-                    <%--type="danger"--%>
-                    <%--@click="handleDelete(scope.$index, scope.row)">删除--%>
-                    <%--</el-button>--%>
+                    <el-button
+                    size="small"
+                    type="danger"
+                    @click="handleDetail(scope.$index, scope.row)">详情
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>
