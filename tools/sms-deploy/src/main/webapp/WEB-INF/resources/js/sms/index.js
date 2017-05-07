@@ -47,15 +47,18 @@ $(function () {
                     isShow: false,
                     data: [],
                     gsmData: [],
-                    day1:"0",
                     on1:false,
                     on2:false,
                     on3:false,
+                    on4:false,
+                    day1:"0",
                     day2:"0",
                     day3:"0",
+                    day4:"0",
                     timing1:"",
                     timing2:"",
                     timing3:"",
+                    timing4:"",
                     addMeterData: {meterCode: "", controllerId: "0", meterName: "", fixDate: "", unit: "吨"},
                     total: 0,
                     row: null
@@ -93,7 +96,11 @@ $(function () {
                     if (i == 0){
                         this.days[i] = {label:"请选择日期",value:"0"};
                     }else {
-                        this.days[i] = {label:i+"号",value:i};
+                        var value = i;
+                        if(i<10){
+                            value = "0"+i;
+                        }
+                        this.days[i] = {label:i+"号",value:value};
                     }
                 }
             },
@@ -305,7 +312,10 @@ $(function () {
                         on2:self.meterManager.on2,
                         day3:self.meterManager.day3,
                         timing3:self.meterManager.timing3,
-                        on3:self.meterManager.on3
+                        on3:self.meterManager.on3,
+                        day4:self.meterManager.day4,
+                        timing4:self.meterManager.timing4,
+                        on4:self.meterManager.on4
                     },
                     success:function (e) {
                         if(e.success){

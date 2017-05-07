@@ -36,7 +36,8 @@ public class DataCenter {
      */
     public static Result<MeterData> parseReadMeterData(String hexStr) {
         //长度判断 17 或 64的长度
-        if (hexStr.length() == 132){
+        if (hexStr.length() == 132) {
+            System.out.println("132:"+hexStr);
             return ResultUtil.newFailedResult(StateCode.ERROR);
         }
         if (hexStr == null || hexStr.trim().length() == 0 || hexStr.length() % 2 != 0) {
@@ -49,9 +50,9 @@ public class DataCenter {
         //解析
         //0x12 0x23 0x56 0x78 0x2C  785623.12吨•
         System.out.println(hexStr);
-        int length = hexStr.length()/2 -2;
+        int length = hexStr.length() / 2 - 2;
         String[] strs = new String[length];
-        for (int i = 0 ;i<length ; i++){
+        for (int i = 0; i < length; i++) {
             strs[i] = hexStr.substring(i * 2, i * 2 + 2);
         }
         StringBuffer stringBuffer = new StringBuffer();
@@ -67,7 +68,7 @@ public class DataCenter {
         String status = strs[12];
         String year = strs[13];
         String month = strs[14];
-        String day =strs[15];
+        String day = strs[15];
         String hour = strs[16];
         String minute = strs[17];
         String second = strs[18];
@@ -76,8 +77,8 @@ public class DataCenter {
         System.out.println(error);
         System.out.println(status);
 
-        String upLoadTime = "20"+year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second;
-        System.out.println(year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second);
+        String upLoadTime = "20" + year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+        System.out.println(year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
         MeterData meterData = new MeterData();
         meterData.setValue(Float.valueOf(stringBuffer.toString()));
         meterData.setValveStatus(Integer.parseInt(status));
@@ -85,26 +86,32 @@ public class DataCenter {
 
         try {
             meterData.setUpLoadTime(dateFormat.parse(upLoadTime));
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        return  ResultUtil.newSuccessResult(meterData);
+        return ResultUtil.newSuccessResult(meterData);
     }
 
-    public static String getSetManagerCenterCmd(String phone1,String phone2,String phone3){
-        String str11 = phone1.substring(0,10);
-        String str12 = phone1.substring(10,11)+"EEEEE";
+    public static String getSetManagerCenterCmd(String phone1, String phone2, String phone3) {
+        String str11 = phone1.substring(0, 10);
+        String str12 = phone1.substring(10, 11) + "EEEEE";
 
-        String str21 = phone2.substring(0,10);
-        String str22 = phone2.substring(10,11)+"EEEEE";
+        String str21 = phone2.substring(0, 10);
+        String str22 = phone2.substring(10, 11) + "EEEEE";
 
-        String str31 = phone3.substring(0,10);
-        String str32 = phone3.substring(10,11)+"EEEEE";
+        String str31 = phone3.substring(0, 10);
+        String str32 = phone3.substring(10, 11) + "EEEEE";
 
-        String  str0 = "C248";// 42+80 = c2 16*3
+        String str0 = "C248";// 42+80 = c2 16*3
 
-        String hexStr = str0+str11 + str12 + str21 + str22 + str31 + str32;
+        String hexStr = str0 + str11 + str12 + str21 + str22 + str31 + str32;
+        return getCrc16(hexStr);
+    }
+
+    public static String getSetTimingCmd(String cmd1, String cmd2, String cmd3, String cmd4) {
+        String str0 = "E312";
+        String hexStr = str0 + cmd1 + cmd2 + cmd3 + cmd4;
         return getCrc16(hexStr);
     }
 

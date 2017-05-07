@@ -15,6 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -119,7 +122,9 @@ public class DeviceController {
     }
 
     @RequestMapping("/setTiming")
-    public Result setTiming(Long meterId, String day1, String day2, String day3, String timing1, String timing2, String timing3,Boolean on1,Boolean on2,Boolean on3) {
+    public Result setTiming(Long meterId, String day1, String day2, String day3,String day4,
+                            String timing1, String timing2, String timing3,String timing4,
+                            Boolean on1, Boolean on2, Boolean on3, Boolean on4) {
         if (meterId == null || meterId == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
@@ -139,35 +144,74 @@ public class DeviceController {
             return ResultUtil.newFailedResult(StateCode.ERROR, "没有该仪表设备");
         }
 
-        if (on1){
+        String cmd1 = "000000";
+        if (on1) {
             if ((day1 != null && !"0".equals(day1)) && (timing1 != null || timing1.trim().length() > 0)) {
-
+                try {
+                    timing1 = timing1.substring(16, 21);
+                    String[] strs = timing1.split(":");
+                    cmd1 = day1 + strs[0] + strs[1];
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    return ResultUtil.newFailedResult(StateCode.ERROR, "时间1输入格式异常");
+                }
+            } else {
+                return ResultUtil.newFailedResult(StateCode.ERROR, "时间1输入格式异常");
             }
         }
 
-        if ((day1 != null && day1.trim().length() > 0) && (timing1 != null || timing1.trim().length() > 0)) {
-//            cmd2 = DataCenter.getSetManagerCenterCmd(2,mc2);
-//            System.out.println(cmd2);
-//            SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), cmd2);
-//            if (bizDeviceService.sendMessage(concentrator, messageData))
-//                return ResultUtil.newFailedResult(StateCode.SUCCESS);
+        String cmd2 = "000000";
+        if (on2){
+            if ((day2 != null && !"0".equals(day2)) && (timing2 != null || timing2.trim().length() > 0)) {
+                try {
+                    timing2 = timing2.substring(16, 21);
+                    String[] strs = timing2.split(":");
+                    cmd2 = day2 + strs[0] + strs[1];
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    return ResultUtil.newFailedResult(StateCode.ERROR, "时间1输入格式异常");
+                }
+            } else {
+                return ResultUtil.newFailedResult(StateCode.ERROR, "时间1输入格式异常");
+            }
         }
 
-        if ((day2 != null && day2.trim().length() > 0) && (timing2 != null || timing2.trim().length() > 0)) {
-//            cmd2 = DataCenter.getSetManagerCenterCmd(2,mc2);
-//            System.out.println(cmd2);
-//            SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), cmd2);
-//            if (bizDeviceService.sendMessage(concentrator, messageData))
-//                return ResultUtil.newFailedResult(StateCode.SUCCESS);
+        String cmd3 = "000000";
+        if (on3){
+            if ((day3 != null && !"0".equals(day3)) && (timing3 != null || timing3.trim().length() > 0)) {
+                try {
+                    timing3 = timing3.substring(16, 21);
+                    String[] strs = timing3.split(":");
+                    cmd3 = day3 + strs[0] + strs[1];
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    return ResultUtil.newFailedResult(StateCode.ERROR, "时间1输入格式异常");
+                }
+            } else {
+                return ResultUtil.newFailedResult(StateCode.ERROR, "时间1输入格式异常");
+            }
         }
 
-        if ((day3 != null && day3.trim().length() > 0) && (timing3 != null || timing3.trim().length() > 0)) {
-//            cmd2 = DataCenter.getSetManagerCenterCmd(2,mc2);
-//            System.out.println(cmd2);
-//            SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), cmd2);
-//            if (bizDeviceService.sendMessage(concentrator, messageData))
-//                return ResultUtil.newFailedResult(StateCode.SUCCESS);
+        String cmd4 = "000000";
+        if (on4){
+            if ((day4 != null && !"0".equals(day4)) && (timing4 != null || timing4.trim().length() > 0)) {
+                try {
+                    timing4 = timing4.substring(16, 21);
+                    String[] strs = timing4.split(":");
+                    cmd4 = day4 + strs[0] + strs[1];
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    return ResultUtil.newFailedResult(StateCode.ERROR, "时间1输入格式异常");
+                }
+            } else {
+                return ResultUtil.newFailedResult(StateCode.ERROR, "时间1输入格式异常");
+            }
         }
+
+        SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), DataCenter.getSetTimingCmd(cmd1,cmd2,cmd3,cmd4));
+            if (bizDeviceService.sendMessage(concentrator, messageData))
+                return ResultUtil.newFailedResult(StateCode.SUCCESS);
+
         return ResultUtil.newFailedResult(StateCode.ERROR);
     }
 

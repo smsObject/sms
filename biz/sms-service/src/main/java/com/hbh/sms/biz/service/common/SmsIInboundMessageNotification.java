@@ -22,6 +22,7 @@ public class SmsIInboundMessageNotification implements IInboundMessageNotificati
         System.out.println("IInboundMessageNotification .................");
         try {
             if (msg.getText().length() != 42 && msg.getText().length() != 132 ){
+                System.out.println("长度不正确的内容:"+msg.getText());
                 return;
             }
             System.out.println(msg);

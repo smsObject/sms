@@ -136,7 +136,7 @@
     </template>
 </div>
 
-<el-dialog title="设置管理中心号码" size="tiny" v-model="meterManager.managerCenterVisible">
+<el-dialog title="设置管理中心号码" :close-on-click-modal="false" size="tiny" v-model="meterManager.managerCenterVisible">
     <el-form :model="meterManager.form">
         <el-form-item label="管理中心号码1">
             <el-input v-model="meterManager.mc1" placeholder="请输入管理中心号码"></el-input>
@@ -159,7 +159,7 @@
 </el-dialog>
 
 <!--添加设备 -->
-<el-dialog title="添加仪表设备" size="tiny" v-model="meterManager.addMeterVisible">
+<el-dialog title="添加仪表设备" size="tiny" :close-on-click-modal="false" v-model="meterManager.addMeterVisible">
     <el-form :model="meterManager.form1">
 
         <el-input v-model="meterManager.addMeterData.meterCode" placeholder="请输入手机号"></el-input>
@@ -190,13 +190,12 @@
 </el-dialog>
 
 <!--添加设备 -->
-<el-dialog title="定时上传设置" size="tiny" v-model="meterManager.timingVisible">
+<el-dialog title="定时上传设置" :close-on-click-modal="false" size="tiny" v-model="meterManager.timingVisible">
     <el-form :model="meterManager.form2">
 
         <el-select v-model="meterManager.day1" >
             <el-option v-for="item in days" :label="item.label" :value="item.value"></el-option>
         </el-select>
-
         <el-time-picker
                 v-model="meterManager.timing1"
                 placeholder="定时点1">
@@ -233,6 +232,19 @@
                 off-color="#ff4949">
         </el-switch>
 
+        <el-select v-model="meterManager.day4">
+            <el-option v-for="item in days" :label="item.label" :value="item.value"></el-option>
+        </el-select>
+        <el-time-picker
+                v-model="meterManager.timing4"
+                placeholder="定时点4">
+        </el-time-picker>
+        <el-switch
+                v-model="meterManager.on4"
+                on-color="#13ce66"
+                off-color="#ff4949">
+        </el-switch>
+
     </el-form>
 
     <div slot="footer" class="dialog-footer">
@@ -242,7 +254,7 @@
 </el-dialog>
 
 
-<el-dialog :title="title"
+<el-dialog :title="title" :close-on-click-modal="false"
            v-model="dialogVisible"
            size="tiny">
     <span>{{waitDataMsg}}</span>
