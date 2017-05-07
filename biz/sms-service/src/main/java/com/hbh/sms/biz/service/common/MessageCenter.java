@@ -1,6 +1,7 @@
 package com.hbh.sms.biz.service.common;
 
 import com.hbh.sms.biz.service.DataService;
+import com.hbh.sms.model.entity.Concentrator;
 import com.hbh.sms.model.entity.SendMessageData;
 import org.smslib.*;
 import org.smslib.modem.SerialModemGateway;
@@ -20,6 +21,8 @@ public class MessageCenter {
             msg.setEncoding(Message.MessageEncodings.ENCUCS2);
             b = Service.getInstance().sendMessage(msg); //执行发送短信
         } catch (Exception ex) {
+            Concentrator concentrator = DataCenter.concentrator;
+            concentrator.setIsOnline(0);
             ex.printStackTrace();
             b = false;
         }

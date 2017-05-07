@@ -17,7 +17,7 @@ public class GatewayCenter {
         return serialModemGateway;
     }
 
-    private static String getId(Concentrator concentrator) {
+    public static String getId(Concentrator concentrator) {
         return concentrator.getComPort() + concentrator.getBaudRate() + concentrator.getManufacturer() + concentrator.getModel();
     }
 

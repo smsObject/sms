@@ -1,29 +1,34 @@
 package com.hbh.sms.biz.service.impl;
 
+import com.hbh.sms.biz.service.common.DataCenter;
+import com.hbh.sms.biz.service.common.GatewayCenter;
 import com.hbh.sms.model.entity.Concentrator;
 import com.hbh.sms.biz.service.common.DeviceCenter;
 import com.hbh.sms.biz.service.DeviceService;
 import com.sms.common.Result;
 import com.sms.common.ResultUtil;
 import com.sms.common.StateCode;
+import org.smslib.AGateway;
 import org.smslib.helper.CommPortIdentifier;
 import org.smslib.helper.SerialPort;
+import org.smslib.modem.SerialModemGateway;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * Created by hbh on 2016/7/31.
  */
 @Service("deviceService")
-public class DeviceServiceImpl implements DeviceService {
+public class DeviceServiceImpl extends Thread implements DeviceService {
     private static CommPortIdentifier portId;
     static Enumeration portList;
-    static int bauds[] = {19200,9600, 57600, 115200};    //检测端口所支持的波特率
+    static int bauds[] = {19200, 9600, 57600, 115200};    //检测端口所支持的波特率
 
     //AT+CGMM  TC35i AT+CGMI SIEMENS
     public Result<List<Concentrator>> scanner() {
@@ -52,18 +57,53 @@ public class DeviceServiceImpl implements DeviceService {
                         if (b) {
                             String model = deviceCenter.getDeviceByCmd("AT+CGMM");
                             String manufacturer = deviceCenter.getDeviceByCmd("AT+CGMI");
-                            Concentrator concentrator = new Concentrator();
+                            Concentrator concentrator = DataCenter.concentrator;
                             concentrator.setComPort(portId.getName());
                             concentrator.setModel(model);
                             concentrator.setBaudRate(bauds[i]);
                             concentrator.setManufacturer(manufacturer);
                             concentrator.setIsOnline(1);//在线
                             concentrators.add(concentrator);
+                            try {
+                                if (serialPort != null) serialPort.close();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            //网关
+                            SerialModemGateway gateway= GatewayCenter.getGateway(concentrator);
+                            if (org.smslib.Service.getInstance().getGateways().size() == 0) {
+                                org.smslib.Service.getInstance().addGateway(gateway);  //将网关添加到短信猫服务中
+                            }else {
+                                Iterator e = org.smslib.Service.getInstance().getGateways().iterator();
+                                boolean c = true;
+                                List<AGateway> remove = new ArrayList<>();
+                                while (e.hasNext()){
+                                    SerialModemGateway serialModemGateway = (SerialModemGateway)e.next();
+                                    if (gateway.getGatewayId().equals(serialModemGateway.getGatewayId())){
+                                        c = false;
+                                        break;
+                                    }else {
+                                        remove.add(serialModemGateway);
+                                    }
+                                }
+                                org.smslib.Service.getInstance().getGateways().removeAll(remove);
+                                if (c){
+                                    org.smslib.Service.getInstance().addGateway(gateway);  //将网关添加到短信猫服务中
+                                }
+                            }
+
+                            if (org.smslib.Service.getInstance().getServiceStatus() != org.smslib.Service.ServiceStatus.STARTED) {
+                                System.out.println("正在启动服务。。。。。");
+                                org.smslib.Service.getInstance().startService();   //启动服务，进入短信发送就绪状态
+                                System.out.println("启动服务成功。。。。。");
+                            }
+
                             System.out.println("检测完毕并返回!");
                             break;
                         }
                     } catch (Exception e) {
-                        System.out.println("  没有发现设备!");
+                        System.out.println("没有发现设备!");
                         return ResultUtil.newFailedResult(StateCode.ERROR);
                     } finally {
                         try {
@@ -76,6 +116,39 @@ public class DeviceServiceImpl implements DeviceService {
             }
         }
         return ResultUtil.newSuccessResult(concentrators);
+    }
+
+    @Override
+    public void run() {
+        super.run();
+        while (true) {
+            Concentrator concentrator = DataCenter.concentrator;
+            if (concentrator.getComPort() != null){
+                AGateway aGateway = org.smslib.Service.getInstance().getGateway(GatewayCenter.getId(concentrator));
+                if (aGateway == null){
+                    concentrator.setIsOnline(0);
+                }else {
+                    AGateway.GatewayStatuses gatewayStatuses = aGateway.getStatus();
+                    if (gatewayStatuses != AGateway.GatewayStatuses.STARTING && gatewayStatuses != AGateway.GatewayStatuses.STARTED){
+                        try {
+                            aGateway.stopGateway();
+                            org.smslib.Service.getInstance().stopService();
+                        }catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+                        concentrator.setIsOnline(0);
+                    }
+                }
+            }
+            if (concentrator.getIsOnline() == null || concentrator.getIsOnline() != 1){
+                scanner();
+            }
+            try {
+                Thread.sleep(3000);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     public static void main(String[] args) {

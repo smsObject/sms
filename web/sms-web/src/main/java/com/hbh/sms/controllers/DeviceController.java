@@ -2,6 +2,7 @@ package com.hbh.sms.controllers;
 
 import com.hbh.sms.biz.service.MeterData.MeterDataService;
 import com.hbh.sms.biz.service.common.DataCenter;
+import com.hbh.sms.biz.service.impl.DeviceServiceImpl;
 import com.hbh.sms.model.entity.Concentrator;
 import com.hbh.sms.model.entity.Meter;
 import com.hbh.sms.model.entity.MeterData;
@@ -50,24 +51,28 @@ public class DeviceController {
     @RequestMapping("/scanner")
     @ResponseBody
     public Result<List<Concentrator>> scanner() {
-        Result<List<Concentrator>> result = bizDeviceService.scanner();
-        if (result.isSuccess()) {
-            for (Concentrator concentrator : result.getData()) {
-                Concentrator concentrator1 = new Concentrator();
-                concentrator1.setComPort(concentrator.getComPort());
-                concentrator.setCode("hbh" + concentrator.getComPort());
-                concentrator.setCreatePerson("system");
-                concentrator.setUpdatePerson("system");
-                concentrator.setName(concentrator.getComPort());
-                Result<List<Concentrator>> list = concentratorService.list(concentrator1);
-                if (list.isSuccess() && list.getData().size() == 0) {
-                    concentratorService.add(concentrator);
-                } else if (list.isSuccess()) {
-                    concentratorService.updateByComPort(concentrator);
-                }
-            }
-        }
-        return result;
+        Concentrator concentrator = DataCenter.concentrator;
+        concentrator.setIsOnline(0);
+        DeviceServiceImpl deviceService = new DeviceServiceImpl();
+        deviceService.start();
+//        Result<List<Concentrator>> result = bizDeviceService.scanner();
+//        if (result.isSuccess()) {
+//            for (Concentrator concentrator : result.getData()) {
+//                Concentrator concentrator1 = new Concentrator();
+//                concentrator1.setComPort(concentrator.getComPort());
+//                concentrator.setCode("hbh" + concentrator.getComPort());
+//                concentrator.setCreatePerson("system");
+//                concentrator.setUpdatePerson("system");
+//                concentrator.setName(concentrator.getComPort());
+//                Result<List<Concentrator>> list = concentratorService.list(concentrator1);
+//                if (list.isSuccess() && list.getData().size() == 0) {
+//                    concentratorService.add(concentrator);
+//                } else if (list.isSuccess()) {
+//                    concentratorService.updateByComPort(concentrator);
+//                }
+//            }
+//        }
+        return null;
     }
 
     //发送短信 读数据命令
@@ -85,7 +90,7 @@ public class DeviceController {
             Meter meter1 = result.getData();
             Result<Concentrator> result1 = concentratorService.getConcentratorById(meter1.getControllerId());
             if (result1.getData() != null) {
-                Concentrator concentrator = result1.getData();
+                Concentrator concentrator = DataCenter.concentrator;
                 SendMessageData messageData = new SendMessageData(meter1.getMeterCode(), DataCenter.READ_METER_CMD);
                 if (bizDeviceService.sendMessage(concentrator, messageData))
                     return ResultUtil.newFailedResult(StateCode.SUCCESS);

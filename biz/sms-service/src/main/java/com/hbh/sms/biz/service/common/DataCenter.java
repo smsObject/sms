@@ -1,5 +1,6 @@
 package com.hbh.sms.biz.service.common;
 
+import com.hbh.sms.model.entity.Concentrator;
 import com.hbh.sms.model.entity.Meter;
 import com.hbh.sms.model.entity.MeterData;
 import com.hbh.sms.model.entity.SmsData;
@@ -12,7 +13,7 @@ import java.text.SimpleDateFormat;
 /**
  * Created by user on 2016/12/18.
  */
-@lombok.Data
+
 public class DataCenter {
 
     /**
@@ -30,6 +31,7 @@ public class DataCenter {
      */
     public static String CLOSE_VALVE_CMD = getCrc16("8a0101"); //8601017950
 
+    public static Concentrator concentrator = new Concentrator();
 
     public static Result<SmsData> parseSmsData(String hexStr) {
 
