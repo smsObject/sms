@@ -12,5 +12,5 @@ public interface UserInfoService {
     Result<Boolean> deleteById(Long id);
     Result<Boolean> update(UserInfo userInfo);
     Result<PagedData<UserInfo>> page(UserInfo userInfo);
-    Result<UserInfo> getCompanyInfoById(Long id);
+    Result<UserInfo> getUserInfoById(Long id);
 }

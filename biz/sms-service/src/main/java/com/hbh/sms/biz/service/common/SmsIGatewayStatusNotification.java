@@ -4,7 +4,7 @@ import org.smslib.AGateway;
 import org.smslib.IGatewayStatusNotification;
 
 /**
- * Created by user on 2017/4/2.
+ * Created by user on
  */
 public class SmsIGatewayStatusNotification implements IGatewayStatusNotification {
 

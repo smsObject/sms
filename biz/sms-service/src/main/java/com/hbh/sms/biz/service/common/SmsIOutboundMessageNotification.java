@@ -5,7 +5,7 @@ import org.smslib.IOutboundMessageNotification;
 import org.smslib.OutboundMessage;
 
 /**
- * Created by user on 2017/4/2.
+ * Created by user on
  */
 public class SmsIOutboundMessageNotification implements IOutboundMessageNotification {
     public  void process(AGateway var1, OutboundMessage var2){

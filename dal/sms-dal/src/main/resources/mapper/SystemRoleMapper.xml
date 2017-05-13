@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hbh.sms.dal.dao.SystemRoleMapper">
+    <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.SystemRole">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="remarks" property="remarks"/>
+        <result column="create_person" property="createPerson"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_person" property="updatePerson"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,create_person,remarks,
+        creaye_time,update_person,update_time
+    </sql>
+
+    <sql id="queryWhere" >
+        where 1 = 1
+        <if test="id != null" >
+            AND id = #{id}
+        </if>
+    </sql>
+
+    <select id="query" resultMap="BaseResultMap" parameterType="com.hbh.sms.model.entity.SystemRole">
+        SELECT  <include refid="Base_Column_List"/>
+        FROM  t_role
+        <include refid="queryWhere"/>
+    </select>
+
+    <insert id="insert" parameterType="com.hbh.sms.model.entity.SystemRole">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO t_role(
+        name,remarks,create_person,
+        creaye_time,update_person,update_time
+        )
+        VALUES (#{name},#{remarks},#{create_person},
+        now(),#{create_person},now())
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.SystemRole">
+        UPDATE  t_role
+           SET  name = #{name},
+                remarks = #{remarks},
+                update_person = #{updatePerson},
+                update_time = now()
+         WHERE  id = #{id}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE
+        FROM t_role
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

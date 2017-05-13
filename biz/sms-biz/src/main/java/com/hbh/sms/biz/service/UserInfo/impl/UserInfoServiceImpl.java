@@ -67,12 +67,17 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public Result<UserInfo> getCompanyInfoById(Long id) {
-        if (id == null || id.longValue() == 0) {
+    public Result<UserInfo> getUserInfoById(Long id) {
+        if (id == null){
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
-        UserInfo userInfo = userInfoMapper.selectByPrimaryKey(id);
-        return ResultUtil.newSuccessResult(userInfo);
-    }
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(id);
+        List<UserInfo> list = userInfoMapper.query(userInfo);
 
+        if (!list.isEmpty()){
+            return ResultUtil.newSuccessResult(list.get(0));
+        }
+        return ResultUtil.newSuccessResult(null);
+    }
 }

@@ -3,7 +3,7 @@ package com.hbh.sms.biz.service.job;
 import org.smslib.*;
 
 /**
- * Created by user on 2017/3/9.
+ * Created by user on
  */
 public class ReadMessageNotification implements IInboundMessageNotification {
 //@Autowired

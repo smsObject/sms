@@ -1,188 +1,86 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hbh.sms.dal.dao.UserInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.UserInfo" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="user_name" property="userName" jdbcType="VARCHAR" />
-    <result column="id_no" property="idNo" jdbcType="VARCHAR" />
-    <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="household_person" property="householdPerson" jdbcType="INTEGER" />
-    <result column="pay_type" property="payType" jdbcType="INTEGER" />
-    <result column="payment_bank" property="paymentBank" jdbcType="VARCHAR" />
-    <result column="bank_account" property="bankAccount" jdbcType="VARCHAR" />
-    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
-    <result column="createUser" property="createuser" jdbcType="VARCHAR" />
-    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
-    <result column="updateUser" property="updateuser" jdbcType="VARCHAR" />
-    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, user_name, id_no, phone, household_person, pay_type, payment_bank, bank_account, 
-    remarks, createUser, createTime, updateUser, updateTime
+<mapper namespace="com.hbh.sms.dal.dao.UserInfoMapper">
+    <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.UserInfo">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="id_no" property="idNo"/>
+        <result column="phone" property="phone"/>
+        <result column="pay_type" property="payType"/>
+        <result column="user_type" property="userType"/>
+        <result column="buy_type" property="buyType"/>
+        <result column="address" property="address"/>
+        <result column="mobill_phone" property="mobillPhone"/>
+        <result column="fix_time" property="fixTime"/>
+        <result column="opening_time" property="openingTime"/>
+        <result column="basic_allowance" property="basicAllowance"/>
+        <result column="remaining_balance" property="remainingBalance"/>
+        <result column="status" property="status"/>
+        <result column="remarks" property="remarks"/>
+        <result column="create_person" property="createPerson"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_person" property="updatePerson"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, id_no, phone, pay_type,user_type,buy_type,address,mobill_phone,fix_time,
+    remarks, create_person, create_time, update_person, update_time,opening_time,basic_allowance,
+    remaining_balance,status
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_user_info
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from t_user_info
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.hbh.sms.model.entity.UserInfo" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_user_info (user_name, id_no, phone, 
-      household_person, pay_type, payment_bank, 
-      bank_account, remarks, createUser, 
-      createTime, updateUser, updateTime
-      )
-    values (#{userName,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{householdPerson,jdbcType=INTEGER}, #{payType,jdbcType=INTEGER}, #{paymentBank,jdbcType=VARCHAR}, 
-      #{bankAccount,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{createuser,jdbcType=VARCHAR}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{updateuser,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.hbh.sms.model.entity.UserInfo" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into t_user_info
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="userName != null" >
-        user_name,
-      </if>
-      <if test="idNo != null" >
-        id_no,
-      </if>
-      <if test="phone != null" >
-        phone,
-      </if>
-      <if test="householdPerson != null" >
-        household_person,
-      </if>
-      <if test="payType != null" >
-        pay_type,
-      </if>
-      <if test="paymentBank != null" >
-        payment_bank,
-      </if>
-      <if test="bankAccount != null" >
-        bank_account,
-      </if>
-      <if test="remarks != null" >
-        remarks,
-      </if>
-      <if test="createuser != null" >
-        createUser,
-      </if>
-      <if test="createtime != null" >
-        createTime,
-      </if>
-      <if test="updateuser != null" >
-        updateUser,
-      </if>
-      <if test="updatetime != null" >
-        updateTime,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="userName != null" >
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="idNo != null" >
-        #{idNo,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null" >
-        #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="householdPerson != null" >
-        #{householdPerson,jdbcType=INTEGER},
-      </if>
-      <if test="payType != null" >
-        #{payType,jdbcType=INTEGER},
-      </if>
-      <if test="paymentBank != null" >
-        #{paymentBank,jdbcType=VARCHAR},
-      </if>
-      <if test="bankAccount != null" >
-        #{bankAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="remarks != null" >
-        #{remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="createuser != null" >
-        #{createuser,jdbcType=VARCHAR},
-      </if>
-      <if test="createtime != null" >
-        #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateuser != null" >
-        #{updateuser,jdbcType=VARCHAR},
-      </if>
-      <if test="updatetime != null" >
-        #{updatetime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hbh.sms.model.entity.UserInfo" >
-    update t_user_info
-    <set >
-      <if test="userName != null" >
-        user_name = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="idNo != null" >
-        id_no = #{idNo,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null" >
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="householdPerson != null" >
-        household_person = #{householdPerson,jdbcType=INTEGER},
-      </if>
-      <if test="payType != null" >
-        pay_type = #{payType,jdbcType=INTEGER},
-      </if>
-      <if test="paymentBank != null" >
-        payment_bank = #{paymentBank,jdbcType=VARCHAR},
-      </if>
-      <if test="bankAccount != null" >
-        bank_account = #{bankAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="remarks != null" >
-        remarks = #{remarks,jdbcType=VARCHAR},
-      </if>
-      <if test="createuser != null" >
-        createUser = #{createuser,jdbcType=VARCHAR},
-      </if>
-      <if test="createtime != null" >
-        createTime = #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateuser != null" >
-        updateUser = #{updateuser,jdbcType=VARCHAR},
-      </if>
-      <if test="updatetime != null" >
-        updateTime = #{updatetime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.UserInfo" >
-    update t_user_info
-    set user_name = #{userName,jdbcType=VARCHAR},
-      id_no = #{idNo,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      household_person = #{householdPerson,jdbcType=INTEGER},
-      pay_type = #{payType,jdbcType=INTEGER},
-      payment_bank = #{paymentBank,jdbcType=VARCHAR},
-      bank_account = #{bankAccount,jdbcType=VARCHAR},
-      remarks = #{remarks,jdbcType=VARCHAR},
-      createUser = #{createuser,jdbcType=VARCHAR},
-      createTime = #{createtime,jdbcType=TIMESTAMP},
-      updateUser = #{updateuser,jdbcType=VARCHAR},
-      updateTime = #{updatetime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+
+    <sql id="queryWhere">
+        where 1 = 1
+        <if test="id != null">
+          AND id = #{id}
+        </if>
+    </sql>
+
+    <select id="query" resultMap="BaseResultMap" parameterType="com.hbh.sms.model.entity.UserInfo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_user_info
+        <include refid="queryWhere"/>
+    </select>
+    
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE
+        FROM t_user_info
+        WHERE id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.hbh.sms.model.entity.UserInfo">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_user_info (
+        name, id_no, phone, pay_type,user_type,buy_type,
+        address,mobill_phone,fix_time, remarks, create_person,
+        create_time, update_person, update_time,opening_time,
+        basic_allowance,remaining_balance,status
+        )
+        values (#{name}, #{id_no}, #{phone}, #{pay_type},#{user_type},#{buy_type},
+        #{address},#{mobill_phone},#{fix_time}, #{remarks}, #{create_person},
+        now(), #{create_person}, now(),#{opening_time},
+        #{basic_allowance},#{remaining_balance},#{status})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.UserInfo">
+      update  t_user_info
+         set  name = #{name},
+              id_no = #{idNo},
+              phone = #{phone},
+              pay_type = #{payType},
+              user_type = #{userType},
+              buy_type = #{buyType},
+              address = #{address},
+              mobill_phone = #{mobillPhone},
+              fix_time = #{fix_time},
+              basic_allowance = #{basicAllowance},
+              remaining_balance = #{remainingBalance},
+              status = #{status},
+              remarks = #{remarks},
+              updateUser = #{updateuser},
+              updateTime = #{updatetime}
+       where  id = #{id}
   </update>
 </mapper>

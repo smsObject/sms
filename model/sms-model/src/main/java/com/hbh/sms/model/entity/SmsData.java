@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * ${DESCRIPTION}
  * @author hbh
- * @create 2017-05-07 14:00
+ * @create
  **/
 @Data
 public class SmsData implements Serializable {

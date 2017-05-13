@@ -7,7 +7,7 @@ import org.smslib.InboundMessage;
 /**
  *
  * @author hbh
- * @create 2017-04-30 23:19
+ * @create
  **/
 public interface DataService {
     void parseGsmData(InboundMessage msg);

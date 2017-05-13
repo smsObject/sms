@@ -4,7 +4,7 @@ import org.smslib.helper.Logger;
 import org.smslib.smsserver.SMSServer;
 
 /**
- * Created by user on 2017/4/2.
+ * Created by user on
  */
 public class InboundPollingThread extends Thread{
 

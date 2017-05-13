@@ -6,7 +6,7 @@ import org.smslib.helper.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * Created by user on 2017/3/9.
+ * Created by user on
  */
 public class SmsIInboundMessageNotification implements IInboundMessageNotification {
     @Autowired
