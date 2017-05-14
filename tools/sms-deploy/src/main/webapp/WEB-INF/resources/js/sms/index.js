@@ -111,7 +111,7 @@ $(function () {
             gsmData: function () {
                 var self = this;
                 $.ajax({
-                    url: "/device/concentratorPage",
+                    url: "/sms/device/concentratorPage",
                     success: function (e) {
                         if (e.success) {
                             self.gsmManager.data = e.data.resultList;
@@ -129,7 +129,7 @@ $(function () {
             meterData: function () {
                 var self = this;
                 $.ajax({
-                    url: "/device/meterPage",
+                    url: "/sms/device/meterPage",
                     success: function (e) {
                         if (e.success) {
                             self.meterManager.data = e.data.resultList;
@@ -147,7 +147,7 @@ $(function () {
             meterDatas: function () {
                 var self = this;
                 $.ajax({
-                    url: "/meterData/page",
+                    url: "/sms/meterData/page",
                     success: function (e) {
                         if (e.success) {
                             self.meterDataManager.data = e.data.resultList;
@@ -167,7 +167,7 @@ $(function () {
                 self.gsmManager.loadSearchGsm = true;
 
                 $.ajax({
-                    url: "/device/scanner",
+                    url: "/sms/device/scanner",
                     success: function (e) {
                         if (e.success) {
                             console.log(e)
@@ -206,7 +206,7 @@ $(function () {
                 self.meterManager.disabledOpenMeter = true
                 self.meterManager.disabledCloseMeter = true
                 $.ajax({
-                    url: "/device/readMeterData",
+                    url: "/sms/device/readMeterData",
                     data: {id: self.meterRow.id},
                     success: function (e) {
                         console.log(e);
@@ -239,7 +239,7 @@ $(function () {
                 self.meterManager.disabledCloseMeter = true
 
                 $.ajax({
-                    url: "/device/setValveStatus",
+                    url: "/sms/device/setValveStatus",
                     data: {id: this.meterRow.id, status: 1},
                     success: function (e) {
                         if (e.success) {
@@ -271,7 +271,7 @@ $(function () {
                 self.meterManager.disabledReadMeter = true
 
                 $.ajax({
-                    url: "/device/setValveStatus",
+                    url: "/sms/device/setValveStatus",
                     data: {id: this.meterRow.id, status: 0},
                     success: function (e) {
                         console.log(e);
@@ -306,7 +306,7 @@ $(function () {
                 self.meterManager.loadTiming = true;
                 self.meterManager.disabledTiming = true;
                 $.ajax({
-                    url: '/device/setTiming',
+                    url: '/sms/device/setTiming',
                     data: {
                         meterId: self.meterRow.id,
                         day1: self.meterManager.day1,
@@ -353,7 +353,7 @@ $(function () {
                 self.meterManager.loadManagerCenter = true;
                 self.meterManager.disabledManagerCenter = true;
                 $.ajax({
-                    url: "/device/setManagerCenter",
+                    url: "/sms/device/setManagerCenter",
                     data: {
                         meterId: self.meterRow.id,
                         mc1: self.meterManager.mc1,
@@ -392,7 +392,7 @@ $(function () {
                 self.meterManager.loadActivateTime = true;
                 self.meterManager.disabledActivate = true;
                 $.ajax({
-                    url: '/device/setActivateTime',
+                    url: '/sms/device/setActivateTime',
                     data: {
                         meterId: self.meterRow.id,
                         time: self.activateTime
@@ -418,7 +418,7 @@ $(function () {
             addMeter: function () {
                 var self = this;
                 $.ajax({
-                    url: "/device/addMeter",
+                    url: "/sms/device/addMeter",
                     data: {
                         meterCode: self.meterManager.addMeterData.meterCode,
                         controllerId: self.meterManager.addMeterData.controllerId,
@@ -485,7 +485,7 @@ $(function () {
                 var self = this;
                 self.waitDataMsg = str + " 倒计时：" + timeOut1 + "s";
                 $.ajax({
-                    url: '/meterData/page',
+                    url: '/sms/meterData/page',
                     data: {meterId: meterId, startTime: date},
                     success: function (e) {
                         if (e.success) {
@@ -511,7 +511,7 @@ $(function () {
                 var self = this;
                 self.waitDataMsg = str + " 倒计时：" + timeOut1 + "s";
                 $.ajax({
-                    url: '/device/meterPage',
+                    url: '/sms/device/meterPage',
                     data: {meterId: meterId, startUpdateTime: date},
                     success: function (data) {
                         if (data.success) {

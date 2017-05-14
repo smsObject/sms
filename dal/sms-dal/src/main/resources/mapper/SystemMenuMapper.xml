@@ -29,7 +29,7 @@
        WHERE  parent_id = #{value}
     </select>
     
-    <select id="getSystemMenuByRoleId" parameterType="java.lang.Long" resultType="BaseResultMap">
+    <select id="getSystemMenuByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT  <include refid="Base_Column_List"/>
           FROM  t_menu m,t_role_menu rm
          WHERE  m.id = rm.menu_id

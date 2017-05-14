@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by hbh on
  */
 @Controller
-@RequestMapping("/userInfo")
+@RequestMapping("/sms/userInfo")
 public class UserInfoController {
 
     @Autowired

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by user on 2016/8/16.
  */
 @Controller
-@RequestMapping("/meterData")
+@RequestMapping("/sms/meterData")
 public class MeterDataController {
 
     @Autowired

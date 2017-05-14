@@ -17,15 +17,15 @@
     <result column="bank_name" property="bankName"  />
     <result column="bank_account" property="bankAccount"  />
     <result column="allocated_region" property="allocatedRegion"  />
-    <result column="createUser" property="createuser"  />
-    <result column="createTime" property="createtime"  />
-    <result column="updateUser" property="updateuser"  />
-    <result column="updateDate" property="updatedate"  />
+    <result column="create_person" property="createPerson"  />
+    <result column="create_time" property="createTime"  />
+    <result column="update_person" property="updatePerson"  />
+    <result column="update_time" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, company_name, company_code, service_call, service_fax, service_email, complaint_call, 
     service_website, address, zip_code, contact_person, tax_no, bank_name, bank_account, 
-    allocated_region, createUser, createTime, updateUser, updateDate
+    allocated_region, create_person, create_time, update_person, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -37,63 +37,8 @@
   <select id="query" resultMap="BaseResultMap" parameterType="com.hbh.sms.model.entity.CompanyInfo">
     SELECT <include refid="Base_Column_List"/>
       FROM t_company_info
-    <where>
-      <if test="companyName != null" >
-        company_name,
-      </if>
-      <if test="companyCode != null" >
-        company_code,
-      </if>
-      <if test="serviceCall != null" >
-        service_call,
-      </if>
-      <if test="serviceFax != null" >
-        service_fax,
-      </if>
-      <if test="serviceEmail != null" >
-        service_email,
-      </if>
-      <if test="complaintCall != null" >
-        complaint_call,
-      </if>
-      <if test="serviceWebsite != null" >
-        service_website,
-      </if>
-      <if test="address != null" >
-        address,
-      </if>
-      <if test="zipCode != null" >
-        zip_code,
-      </if>
-      <if test="contactPerson != null" >
-        contact_person,
-      </if>
-      <if test="taxNo != null" >
-        tax_no,
-      </if>
-      <if test="bankName != null" >
-        bank_name,
-      </if>
-      <if test="bankAccount != null" >
-        bank_account,
-      </if>
-      <if test="allocatedRegion != null" >
-        allocated_region,
-      </if>
-      <if test="createuser != null" >
-        createUser,
-      </if>
-      <if test="createtime != null" >
-        createTime,
-      </if>
-      <if test="updateuser != null" >
-        updateUser,
-      </if>
-      <if test="updatedate != null" >
-        updateDate,
-      </if>
-    </where>
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from t_company_info
     where id = #{id}
@@ -106,15 +51,15 @@
       service_fax, service_email, complaint_call, 
       service_website, address, zip_code, 
       contact_person, tax_no, bank_name, 
-      bank_account, allocated_region, createUser, 
-      createTime, updateUser, updateDate
+      bank_account, allocated_region, create_person,
+      create_time, update_person, update_time
       )
     values (#{companyName}, #{companyCode}, #{serviceCall},
       #{serviceFax}, #{serviceEmail}, #{complaintCall},
       #{serviceWebsite}, #{address}, #{zipCode},
       #{contactPerson}, #{taxNo}, #{bankName},
-      #{bankAccount}, #{allocatedRegion}, #{createuser},
-      now(),#{createuser}, now()
+      #{bankAccount}, #{allocatedRegion}, #{createPerson},
+      now(),#{createPerson}, now()
       )
   </insert>
   <insert id="insertSelective" parameterType="com.hbh.sms.model.entity.CompanyInfo" >
@@ -165,17 +110,17 @@
       <if test="allocatedRegion != null" >
         allocated_region,
       </if>
-      <if test="createuser != null" >
-        createUser,
+      <if test="createPerson != null" >
+        create_person,
       </if>
       <if test="createtime != null" >
-        createTime,
+        create_time,
       </if>
       <if test="updateuser != null" >
-        updateUser,
+        update_person,
       </if>
       <if test="updatedate != null" >
-        updateDate,
+        update_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -221,80 +166,17 @@
       <if test="allocatedRegion != null" >
         #{allocatedRegion},
       </if>
-      <if test="createuser != null" >
-        #{createuser},
+      <if test="createPerson != null" >
+        #{createPerson},
       </if>
-      <if test="createtime != null" >
-        #{createtime},
+        now(),
+      <if test="createPerson != null" >
+        #{createPerson},
       </if>
-      <if test="updateuser != null" >
-        #{updateuser},
-      </if>
-      <if test="updatedate != null" >
-        #{updatedate},
-      </if>
+      now()
     </trim>
   </insert>
-  <!--<update id="updateByPrimaryKeySelective" parameterType="com.hbh.sms.model.entity.companyInfo" >-->
-    <!--update t_company_info-->
-    <!--<set >-->
-      <!--<if test="companyName != null" >-->
-        <!--company_name = #{companyName},-->
-      <!--</if>-->
-      <!--<if test="companyCode != null" >-->
-        <!--company_code = #{companyCode},-->
-      <!--</if>-->
-      <!--<if test="serviceCall != null" >-->
-        <!--service_call = #{serviceCall},-->
-      <!--</if>-->
-      <!--<if test="serviceFax != null" >-->
-        <!--service_fax = #{serviceFax},-->
-      <!--</if>-->
-      <!--<if test="serviceEmail != null" >-->
-        <!--service_email = #{serviceEmail},-->
-      <!--</if>-->
-      <!--<if test="complaintCall != null" >-->
-        <!--complaint_call = #{complaintCall},-->
-      <!--</if>-->
-      <!--<if test="serviceWebsite != null" >-->
-        <!--service_website = #{serviceWebsite},-->
-      <!--</if>-->
-      <!--<if test="address != null" >-->
-        <!--address = #{address},-->
-      <!--</if>-->
-      <!--<if test="zipCode != null" >-->
-        <!--zip_code = #{zipCode},-->
-      <!--</if>-->
-      <!--<if test="contactPerson != null" >-->
-        <!--contact_person = #{contactPerson},-->
-      <!--</if>-->
-      <!--<if test="taxNo != null" >-->
-        <!--tax_no = #{taxNo},-->
-      <!--</if>-->
-      <!--<if test="bankName != null" >-->
-        <!--bank_name = #{bankName},-->
-      <!--</if>-->
-      <!--<if test="bankAccount != null" >-->
-        <!--bank_account = #{bankAccount},-->
-      <!--</if>-->
-      <!--<if test="allocatedRegion != null" >-->
-        <!--allocated_region = #{allocatedRegion},-->
-      <!--</if>-->
-      <!--<if test="createuser != null" >-->
-        <!--createUser = #{createuser},-->
-      <!--</if>-->
-      <!--<if test="createtime != null" >-->
-        <!--createTime = #{createtime},-->
-      <!--</if>-->
-      <!--<if test="updateuser != null" >-->
-        <!--updateUser = #{updateuser},-->
-      <!--</if>-->
-      <!--<if test="updatedate != null" >-->
-        <!--updateDate = now(),-->
-      <!--</if>-->
-    <!--</set>-->
-    <!--where id = #{id}-->
-  <!--</update>-->
+
   <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.CompanyInfo" >
     update t_company_info
     set company_name = #{companyName},
@@ -311,8 +193,8 @@
       bank_name = #{bankName},
       bank_account = #{bankAccount},
       allocated_region = #{allocatedRegion},
-      updateUser = #{updateuser},
-      updateDate = now()
+      update_person = #{updatePerson},
+      update_time = now()
     where id = #{id}
   </update>
 </mapper>

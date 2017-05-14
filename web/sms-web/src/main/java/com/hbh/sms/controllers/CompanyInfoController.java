@@ -11,8 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
-@RequestMapping("/companyInfo")
+@RequestMapping("/sms/companyInfo")
 public class CompanyInfoController {
     @Autowired
     private CompanyInfoService companyInfoService;
@@ -23,6 +25,7 @@ public class CompanyInfoController {
     }
 
     @RequestMapping("/add")
+    @ResponseBody
     public Result<Long> addCompanyInfo(CompanyInfo companyInfo){
         if (companyInfo == null){
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
@@ -35,6 +38,7 @@ public class CompanyInfoController {
     }
 
     @RequestMapping("/delete")
+    @ResponseBody
     public Result<Boolean> deleteCompanyInfo(Long id){
         if (id == null || id.longValue() == 0){
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
@@ -68,14 +72,16 @@ public class CompanyInfoController {
         try {
             result = companyInfoService.page(companyInfo) ;
         }catch (Exception ex){
+            ex.printStackTrace();
             result = ResultUtil.newFailedResult(StateCode.ERROR);
         }
         return result;
     }
 
     @RequestMapping("/update")
+    @ResponseBody
     public Result<Boolean> update(CompanyInfo companyInfo){
-        if (companyInfo == null){
+        if (companyInfo == null || companyInfo.getId() == null){
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
         Result<Boolean> result =  null;

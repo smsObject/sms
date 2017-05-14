@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * Created by hbh
  */
-@RequestMapping("/system")
+@RequestMapping("/sms/system")
 @Controller
 public class SystemController {
 
