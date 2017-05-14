@@ -12,5 +12,5 @@ public interface SystemRoleService {
     Result<Boolean> deleteById(Long id);
     Result<Boolean> update(SystemRole systemRole);
     Result<PagedData<SystemRole>> page(SystemRole systemRole);
-    Result<SystemRole> getUserInfoById(Long id);
+    Result<SystemRole> getRoleById(Long id);
 }

@@ -38,7 +38,9 @@ public class SystemRoleServiceImpl implements SystemRoleService {
                 systemRoleMenus.add(systemRoleMenu);
             }
         }
-        systemRoleMapper.batchInsertRoleMenu(systemRoleMenus);
+        if (!systemRoleMenus.isEmpty()){
+            systemRoleMapper.batchInsertRoleMenu(systemRoleMenus);
+        }
         return ResultUtil.newSuccessResult(systemRole.getId());
     }
 
@@ -64,7 +66,9 @@ public class SystemRoleServiceImpl implements SystemRoleService {
             }
         }
         systemRoleMapper.deleteRoleMenuByRoleId(roleId);
-        systemRoleMapper.batchInsertRoleMenu(systemRoleMenus);
+        if (!systemRoleMenus.isEmpty()){
+            systemRoleMapper.batchInsertRoleMenu(systemRoleMenus);
+        }
         int i = systemRoleMapper.updateByPrimaryKey(systemRole);
         return ResultUtil.newSuccessResult(i>0);
     }
@@ -82,7 +86,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     }
 
     @Override
-    public Result<SystemRole> getUserInfoById(Long id) {
+    public Result<SystemRole> getRoleById(Long id) {
         SystemRole systemRole = new SystemRole();
         systemRole.setId(id);
         List<SystemRole> list = systemRoleMapper.query(systemRole);

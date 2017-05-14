@@ -9,6 +9,8 @@
         <result column="create_time" property="createTime"/>
         <result column="update_person" property="updatePerson"/>
         <result column="update_time" property="updateTime"/>
+
+        <collection property="systemMenus" column="id" select="com.hbh.sms.dal.dao.SystemMenuMapper.getSystemMenuByRoleId"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -64,7 +66,7 @@
     </select>
     
     <insert id="batchInsertUserRole" parameterType="java.util.List">
-        INSERT INTO t_role(
+        INSERT INTO t_user_role(
         user_id,role_id,create_person,
         creaye_time,update_person,update_time
         )
@@ -79,5 +81,22 @@
         DELETE FROM t_user_role
         WHERE user_id = #{value}
     </delete>
+
+    <delete id="deleteRoleMenuByRoleId" parameterType="java.lang.Long">
+        DELETE FROM t_role_menu
+        WHERE role_id = #{value}
+    </delete>
+
+    <insert id="batchInsertRoleMenu" parameterType="java.util.List">
+        INSERT INTO t_role_menu(
+        role_id,menu_id,create_person,
+        creaye_time,update_person,update_time
+        )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.roleId},#{item.menuId},#{item.create_person},
+            now(),#{item.create_person},now())
+        </foreach>
+    </insert>
 
 </mapper>

@@ -5,7 +5,6 @@ import com.hbh.sms.dal.dao.SystemMenuMapper;
 import com.hbh.sms.model.entity.SystemMenu;
 import com.sms.common.Result;
 import com.sms.common.ResultUtil;
-
 import javax.annotation.Resource;
 import java.util.List;
 

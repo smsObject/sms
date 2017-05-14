@@ -10,4 +10,5 @@ import java.util.List;
 public interface SystemMenuMapper {
     List<SystemMenu> getSystemMenuList();
     List<SystemMenu> getSystemMenuByRoleIds(List<Long> ids);
+    List<SystemMenu> getSystemMenuByRoleId(Long id);
 }

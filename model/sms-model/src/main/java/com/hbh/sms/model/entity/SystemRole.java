@@ -15,4 +15,5 @@ public class SystemRole extends BaseDO implements Serializable {
     private String name;
     private String remarks;
     private List<Long> menuIds;
+    private List<SystemMenu> systemMenus;
 }
