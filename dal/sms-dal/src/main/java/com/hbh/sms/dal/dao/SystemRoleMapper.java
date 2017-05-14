@@ -1,6 +1,9 @@
 package com.hbh.sms.dal.dao;
 
 import com.hbh.sms.model.entity.SystemRole;
+import com.hbh.sms.model.entity.SystemRoleMenu;
+import com.hbh.sms.model.entity.SystemUserRole;
+
 import java.util.List;
 
 /**
@@ -11,4 +14,9 @@ public interface SystemRoleMapper {
     int insert(SystemRole record);
     int updateByPrimaryKey(SystemRole record);
     List<SystemRole> query(SystemRole record);
+    List<SystemRole> getRoleByUserId(Long id);
+    int batchInsertUserRole(List<SystemUserRole> systemUserRoles);
+    int deleteUserRoleByUserId(Long id);
+    int batchInsertRoleMenu(List<SystemRoleMenu> systemRoleMenus);
+    int deleteRoleMenuByRoleId(Long roleId);
 }

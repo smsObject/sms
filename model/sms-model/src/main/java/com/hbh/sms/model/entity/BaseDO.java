@@ -6,13 +6,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by hbh on 2016/7/20.
+ * Created by hbh
  */
 @Data
-public class BaseDO extends PagedQuery implements Serializable{
+public class BaseDO extends PagedQuery implements Serializable {
     private Long id;
-    private Date    createTime;
-    private Date    updateTime;
-    private String  createPerson;
-    private String  updatePerson;
+    private Date createTime;
+    private Date updateTime;
+    private String operator;
+    private String createPerson;
+    private String updatePerson;
 }
