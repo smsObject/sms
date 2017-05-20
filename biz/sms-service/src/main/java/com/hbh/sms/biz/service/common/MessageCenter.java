@@ -18,7 +18,7 @@ public class MessageCenter {
         try {
             initServer(gateway ,dataService);
             OutboundMessage msg = new OutboundMessage(messageData.getReceiver(), messageData.getMessage());
-            msg.setEncoding(Message.MessageEncodings.ENCUCS2);
+            msg.setEncoding(Message.MessageEncodings.ENCCUSTOM);
             b = Service.getInstance().sendMessage(msg); //执行发送短信
         } catch (Exception ex) {
             Concentrator concentrator = DataCenter.concentrator;

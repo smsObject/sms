@@ -203,7 +203,7 @@ public class DataCenter {
         String str31 = phone3.substring(0, 10);
         String str32 = phone3.substring(10, 11) + "EEEEEEEEEEEEEEEEEEEEE";
 
-        String str0 = "C248";// 42+80 = c2 16*3
+        String str0 = "C230";// 42+80 = c2 16*3
 
         String hexStr = str0 + str11 + str12 + str21 + str22 + str31 + str32;
         return getCrc16(hexStr);
@@ -219,7 +219,7 @@ public class DataCenter {
      * @return
      */
     public static String getSetTimingCmd(String cmd1, String cmd2, String cmd3, String cmd4) {
-        String str0 = "E312";
+        String str0 = "F20C";
         String hexStr = str0 + cmd1 + cmd2 + cmd3 + cmd4;
         return getCrc16(hexStr);
     }
@@ -303,7 +303,7 @@ public class DataCenter {
     private static String shortToHexString(short[] sends) {
         StringBuffer stringBuffer = new StringBuffer();
         for (short i : sends) {
-            if (i < 10) {
+            if (i < 16) {
                 stringBuffer.append("0" + Integer.toHexString(i));
             } else {
                 stringBuffer.append(Integer.toHexString(i));

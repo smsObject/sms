@@ -55,6 +55,7 @@ public class DeviceServiceImpl extends Thread implements DeviceService {
                         DeviceCenter deviceCenter = new DeviceCenter(inStream, outStream);
                         boolean b = deviceCenter.isOnline();
                         if (b) {
+                            deviceCenter.getDeviceByCmd("AT+CMGF=1");
                             String model = deviceCenter.getDeviceByCmd("AT+CGMM");
                             String manufacturer = deviceCenter.getDeviceByCmd("AT+CGMI");
                             Concentrator concentrator = DataCenter.concentrator;
@@ -71,24 +72,24 @@ public class DeviceServiceImpl extends Thread implements DeviceService {
                             }
 
                             //网关
-                            SerialModemGateway gateway= GatewayCenter.getGateway(concentrator);
+                            SerialModemGateway gateway = GatewayCenter.getGateway(concentrator);
                             if (org.smslib.Service.getInstance().getGateways().size() == 0) {
                                 org.smslib.Service.getInstance().addGateway(gateway);  //将网关添加到短信猫服务中
-                            }else {
+                            } else {
                                 Iterator e = org.smslib.Service.getInstance().getGateways().iterator();
                                 boolean c = true;
                                 List<AGateway> remove = new ArrayList<>();
-                                while (e.hasNext()){
-                                    SerialModemGateway serialModemGateway = (SerialModemGateway)e.next();
-                                    if (gateway.getGatewayId().equals(serialModemGateway.getGatewayId())){
+                                while (e.hasNext()) {
+                                    SerialModemGateway serialModemGateway = (SerialModemGateway) e.next();
+                                    if (gateway.getGatewayId().equals(serialModemGateway.getGatewayId())) {
                                         c = false;
                                         break;
-                                    }else {
+                                    } else {
                                         remove.add(serialModemGateway);
                                     }
                                 }
                                 org.smslib.Service.getInstance().getGateways().removeAll(remove);
-                                if (c){
+                                if (c) {
                                     org.smslib.Service.getInstance().addGateway(gateway);  //将网关添加到短信猫服务中
                                 }
                             }
@@ -123,24 +124,24 @@ public class DeviceServiceImpl extends Thread implements DeviceService {
         super.run();
         while (true) {
             Concentrator concentrator = DataCenter.concentrator;
-            if (concentrator.getComPort() != null){
+            if (concentrator.getComPort() != null) {
                 AGateway aGateway = org.smslib.Service.getInstance().getGateway(GatewayCenter.getId(concentrator));
-                if (aGateway == null){
+                if (aGateway == null) {
                     concentrator.setIsOnline(0);
-                }else {
+                } else {
                     AGateway.GatewayStatuses gatewayStatuses = aGateway.getStatus();
-                    if (gatewayStatuses != AGateway.GatewayStatuses.STARTING && gatewayStatuses != AGateway.GatewayStatuses.STARTED){
+                    if (gatewayStatuses != AGateway.GatewayStatuses.STARTING && gatewayStatuses != AGateway.GatewayStatuses.STARTED) {
                         try {
                             aGateway.stopGateway();
                             org.smslib.Service.getInstance().stopService();
-                        }catch (Exception ex){
+                        } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                         concentrator.setIsOnline(0);
                     }
                 }
             }
-            if (concentrator.getIsOnline() == null || concentrator.getIsOnline() != 1){
+            if (concentrator.getIsOnline() == null || concentrator.getIsOnline() != 1) {
                 scanner();
             }
             try {
