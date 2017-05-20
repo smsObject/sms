@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Controller
@@ -44,32 +45,12 @@ public class DeviceController {
         return "device/gsmManager";
     }
 
-    //扫描设备
-    @RequestMapping("/scanner")
-    @ResponseBody
-    public Result<List<Concentrator>> scanner() {
+    @PostConstruct
+    public void scanner() {
         Concentrator concentrator = DataCenter.concentrator;
         concentrator.setIsOnline(0);
         DeviceServiceImpl deviceService = new DeviceServiceImpl();
         deviceService.start();
-//        Result<List<Concentrator>> result = bizDeviceService.scanner();
-//        if (result.isSuccess()) {
-//            for (Concentrator concentrator : result.getData()) {
-//                Concentrator concentrator1 = new Concentrator();
-//                concentrator1.setComPort(concentrator.getComPort());
-//                concentrator.setCode("hbh" + concentrator.getComPort());
-//                concentrator.setCreatePerson("system");
-//                concentrator.setUpdatePerson("system");
-//                concentrator.setName(concentrator.getComPort());
-//                Result<List<Concentrator>> list = concentratorService.list(concentrator1);
-//                if (list.isSuccess() && list.getData().size() == 0) {
-//                    concentratorService.add(concentrator);
-//                } else if (list.isSuccess()) {
-//                    concentratorService.updateByComPort(concentrator);
-//                }
-//            }
-//        }
-        return null;
     }
 
     //发送短信 读数据命令

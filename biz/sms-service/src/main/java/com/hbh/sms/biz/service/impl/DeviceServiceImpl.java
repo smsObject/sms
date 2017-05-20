@@ -130,7 +130,7 @@ public class DeviceServiceImpl extends Thread implements DeviceService {
                     concentrator.setIsOnline(0);
                 } else {
                     AGateway.GatewayStatuses gatewayStatuses = aGateway.getStatus();
-                    if (gatewayStatuses != AGateway.GatewayStatuses.STARTING && gatewayStatuses != AGateway.GatewayStatuses.STARTED) {
+                        if (gatewayStatuses != AGateway.GatewayStatuses.STARTING && gatewayStatuses != AGateway.GatewayStatuses.STARTED) {
                         try {
                             aGateway.stopGateway();
                             org.smslib.Service.getInstance().stopService();

@@ -395,7 +395,7 @@ $(function () {
                     url: '/sms/device/setActivateTime',
                     data: {
                         meterId: self.meterRow.id,
-                        time: self.activateTime
+                        time: self.meterManager.activateTime
                     },
                     success: function (e) {
                         if (e.success) {
