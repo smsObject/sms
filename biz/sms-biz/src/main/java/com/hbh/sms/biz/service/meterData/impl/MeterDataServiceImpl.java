@@ -1,9 +1,9 @@
-package com.hbh.sms.biz.service.MeterData.impl;
+package com.hbh.sms.biz.service.meterData.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hbh.sms.dal.dao.MeterDataMapper;
-import com.hbh.sms.biz.service.MeterData.MeterDataService;
+import com.hbh.sms.biz.service.meterData.MeterDataService;
 import com.hbh.sms.model.entity.MeterData;
 import com.sms.common.PagedData;
 import com.sms.common.Result;

@@ -1,6 +1,6 @@
 package com.hbh.sms.controllers;
 
-import com.hbh.sms.biz.service.MeterData.MeterDataService;
+import com.hbh.sms.biz.service.meterData.MeterDataService;
 import com.hbh.sms.biz.service.common.DataCenter;
 import com.hbh.sms.biz.service.impl.DeviceServiceImpl;
 import com.hbh.sms.model.entity.Concentrator;

@@ -13,7 +13,7 @@ public class ReadMessageNotification implements IInboundMessageNotification {
         inboundMessage.getText();
         //拿到数据,解析数据
         //存入数据库
-        //Result<MeterData> meterDataResult = DataCenter.parseReadMeterData(inboundMessage.getText());
+        //Result<meterData> meterDataResult = DataCenter.parseReadMeterData(inboundMessage.getText());
         //meterDataService.insert(meterDataResult.getData());
     }
 

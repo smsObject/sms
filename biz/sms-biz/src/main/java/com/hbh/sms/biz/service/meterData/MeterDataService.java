@@ -1,6 +1,5 @@
-package com.hbh.sms.biz.service.MeterData;
+package com.hbh.sms.biz.service.meterData;
 
-import com.hbh.sms.model.entity.Meter;
 import com.hbh.sms.model.entity.MeterData;
 import com.sms.common.PagedData;
 import com.sms.common.Result;
