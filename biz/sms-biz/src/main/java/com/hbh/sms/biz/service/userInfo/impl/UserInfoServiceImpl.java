@@ -1,8 +1,8 @@
-package com.hbh.sms.biz.service.UserInfo.impl;
+package com.hbh.sms.biz.service.userInfo.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.hbh.sms.biz.service.UserInfo.UserInfoService;
+import com.hbh.sms.biz.service.userInfo.UserInfoService;
 import com.hbh.sms.dal.dao.UserInfoMapper;
 import com.hbh.sms.model.entity.UserInfo;
 import com.sms.common.PagedData;

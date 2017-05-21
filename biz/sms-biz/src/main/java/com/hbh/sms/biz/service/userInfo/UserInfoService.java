@@ -1,4 +1,4 @@
-package com.hbh.sms.biz.service.UserInfo;
+package com.hbh.sms.biz.service.userInfo;
 
 import com.hbh.sms.model.entity.UserInfo;
 import com.sms.common.PagedData;
