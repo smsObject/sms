@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by hbh on 2016/8/18.
  */
-@Service
+@Service("meterDataService")
 public class MeterDataServiceImpl implements MeterDataService {
 
     @Autowired
