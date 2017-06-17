@@ -10,20 +10,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class PriceItem implements Serializable{
+public class PriceTemplate implements Serializable{
     private static final long serialVersionUID = 1L;
 
     private Long id;
 
-    private Float startValue;
+    private String name;
 
-    private Float endValue;
-
-    private Long priceId;
-
-    private Long templateId;
-
-    private Float price;
+    private String remarks;
 
     private String createPerson;
 

@@ -4,11 +4,11 @@
  */
 package com.hbh.sms.dal.dao;
 
-import com.hbh.sms.model.entity.Priceemplate;
+import com.hbh.sms.model.entity.PriceTemplate;
 
 import java.util.List;
 
-public interface PriceemplateMapper {
+public interface PriceTemplateMapper {
     /**
      *
      * 删除单条记录
@@ -19,17 +19,17 @@ public interface PriceemplateMapper {
      *
      * 增加单条记录
      */
-    int insert(Priceemplate record);
+    int insert(PriceTemplate record);
 
     /**
      *
      * 查询记录
      */
-    List<Priceemplate> query(Priceemplate condition);
+    List<PriceTemplate> query();
 
     /**
      *
      * 更新单条记录
      */
-    int update(Priceemplate record);
+    int update(PriceTemplate record);
 }

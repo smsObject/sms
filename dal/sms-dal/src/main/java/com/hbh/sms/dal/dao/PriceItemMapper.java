@@ -32,4 +32,8 @@ public interface PriceItemMapper {
      * 更新单条记录
      */
     int update(PriceItem record);
+
+    int batchInsert(List<PriceItem> priceItems);
+
+    int deleteByPriceId(Long id);
 }
