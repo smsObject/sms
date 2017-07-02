@@ -30,24 +30,23 @@ public class SystemUserServiceImpl implements SystemUserService {
 
     @Override
     public Result<Long> add(SystemUser systemUser) {
-        List<Long> roleIds = systemUser.getRoleIds();
-        if (roleIds == null || roleIds.isEmpty()) {
+        String roleIdStr = systemUser.getRoleIds();
+        if (roleIdStr == null || roleIdStr.trim().length() == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "岗位必填");
         }
         systemUserMapper.insert(systemUser);
         Long userId = systemUser.getId();
-        String createPerson = systemUser.getOperator();
-        if (roleIds != null && !roleIds.isEmpty()) {
-            List<SystemUserRole> systemUserRoles = new ArrayList<>();
-            for (Long roleId : roleIds) {
-                SystemUserRole systemUserRole = new SystemUserRole();
-                systemUserRole.setRoleId(roleId);
-                systemUserRole.setUserId(userId);
-                systemUserRole.setCreatePerson(createPerson);
-                systemUserRoles.add(systemUserRole);
-            }
-            systemRoleMapper.batchInsertUserRole(systemUserRoles);
+        String[] roleIds = roleIdStr.split(",");
+        String createPerson = "system";
+        List<SystemUserRole> systemUserRoles = new ArrayList<>();
+        for (String roleId : roleIds) {
+            SystemUserRole systemUserRole = new SystemUserRole();
+            systemUserRole.setRoleId(Long.parseLong(roleId));
+            systemUserRole.setUserId(userId);
+            systemUserRole.setCreatePerson(createPerson);
+            systemUserRoles.add(systemUserRole);
         }
+        systemRoleMapper.batchInsertUserRole(systemUserRoles);
         return ResultUtil.newSuccessResult(systemUser.getId());
     }
 
@@ -59,20 +58,21 @@ public class SystemUserServiceImpl implements SystemUserService {
 
     @Override
     public Result<Boolean> update(SystemUser systemUser) {
-        List<Long> roleIds = systemUser.getRoleIds();
+        String roleIdStr = systemUser.getRoleIds();
         Long userId = systemUser.getId();
-        String updatePerson = systemUser.getOperator();
-        if (roleIds == null || roleIds.isEmpty()) {
+        String updatePerson = "system";
+        if (roleIdStr == null || roleIdStr.trim().length() == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "岗位必填");
         }
         int i = systemUserMapper.updateByPrimaryKey(systemUser);
         systemRoleMapper.deleteUserRoleByUserId(userId);
+        String[] roleIds = roleIdStr.split(",");
         List<SystemUserRole> systemUserRoles = new ArrayList<>();
-        for (Long roleId : roleIds) {
+        for (String roleId : roleIds) {
             SystemUserRole systemUserRole = new SystemUserRole();
             systemUserRole.setCreatePerson(updatePerson);
             systemUserRole.setUserId(userId);
-            systemUserRole.setRoleId(roleId);
+            systemUserRole.setRoleId(Long.parseLong(roleId));
             systemUserRoles.add(systemUserRole);
         }
         systemRoleMapper.batchInsertUserRole(systemUserRoles);

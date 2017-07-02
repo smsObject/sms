@@ -15,7 +15,7 @@
 
     <sql id="Base_Column_List">
         id,name,phone,password,create_person,
-        creaye_time,update_person,update_time
+        create_time,update_person,update_time
     </sql>
     
     <sql id="queryWhere" >
@@ -32,15 +32,14 @@
     </select>
 
     <insert id="insert" parameterType="com.hbh.sms.model.entity.SystemUser">
-        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        INSERT INTO t_system_user(
-        name,phone,password,create_person,
-        creaye_time,update_person,update_time
+        INSERT INTO t_system_user(name,phone,password,create_person,
+        create_time,update_person,update_time
         )
-        VALUES (#{name},#{phone},#{password},#{create_person},
-                now(),#{create_person},now())
+        VALUES (#{name},#{phone},#{password},#{createPerson},
+                now(),#{createPerson},now())
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.SystemUser">

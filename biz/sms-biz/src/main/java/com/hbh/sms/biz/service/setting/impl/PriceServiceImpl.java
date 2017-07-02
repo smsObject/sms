@@ -9,6 +9,7 @@ import com.hbh.sms.model.entity.PriceItem;
 import com.hbh.sms.model.entity.PriceTemplate;
 import com.sms.common.Result;
 import com.sms.common.ResultUtil;
+import com.sms.common.StateCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,20 +36,25 @@ public class PriceServiceImpl implements PriceService {
     }
 
     @Override
-    public Result<Long> addPriceTemplate(PriceTemplate priceTemplate) {
-        priceTemplateMapper.insert(priceTemplate);
-        return ResultUtil.newSuccessResult(priceTemplate.getId());
+    public Result<Long> addAndUpdatePriceTemplate(PriceTemplate priceTemplate) {
+        if (priceTemplate == null){
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        }
+        if (priceTemplate.getId() == null || priceTemplate.getId().longValue() == 0){
+            if (priceTemplate.getParentId() == null){
+                priceTemplate.setParentId(0L);
+            }
+            priceTemplateMapper.insert(priceTemplate);
+            return ResultUtil.newSuccessResult(priceTemplate.getId());
+        } else {
+            int i = priceTemplateMapper.update(priceTemplate);
+            return ResultUtil.newSuccessResult(priceTemplate.getId());
+        }
     }
 
     @Override
     public Result<Boolean> deletePriceTemplate(Long id) {
         int i = priceTemplateMapper.delete(id);
-        return ResultUtil.newSuccessResult(i>0);
-    }
-
-    @Override
-    public Result<Boolean> updatePriceTemplate(PriceTemplate priceTemplate) {
-        int i = priceTemplateMapper.update(priceTemplate);
         return ResultUtil.newSuccessResult(i>0);
     }
 

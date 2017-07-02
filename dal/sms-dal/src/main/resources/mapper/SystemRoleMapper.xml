@@ -15,7 +15,7 @@
 
     <sql id="Base_Column_List">
         id,name,create_person,remarks,
-        creaye_time,update_person,update_time
+        create_time,update_person,update_time
     </sql>
 
     <sql id="queryWhere" >
@@ -32,15 +32,15 @@
     </select>
 
     <insert id="insert" parameterType="com.hbh.sms.model.entity.SystemRole">
-        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
         INSERT INTO t_role(
         name,remarks,create_person,
-        creaye_time,update_person,update_time
+        create_time,update_person,update_time
         )
-        VALUES (#{name},#{remarks},#{create_person},
-        now(),#{create_person},now())
+        VALUES (#{name},#{remarks},#{createPerson},
+        now(),#{createPerson},now())
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.SystemRole">
@@ -59,7 +59,8 @@
     </delete>
 
     <select id="getRoleByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-      SELECT  <include refid="Base_Column_List" />
+      SELECT  r.id,r.name,r.create_person,r.remarks,
+              r.create_time,r.update_person,r.update_time
         FROM  t_role r,t_user_role ur
        WHERE  r.id = ur.role_id
          AND  ur.user_id = #{value}
@@ -68,12 +69,12 @@
     <insert id="batchInsertUserRole" parameterType="java.util.List">
         INSERT INTO t_user_role(
         user_id,role_id,create_person,
-        creaye_time,update_person,update_time
+        create_time,update_person,update_time
         )
         VALUES
         <foreach collection="list" item="item" index="index" separator="," >
-            (#{item.userId},#{item.roleId},#{item.create_person},
-            now(),#{item.create_person},now())
+            (#{item.userId},#{item.roleId},#{item.createPerson},
+            now(),#{item.createPerson},now())
         </foreach>
     </insert>
 
@@ -90,12 +91,12 @@
     <insert id="batchInsertRoleMenu" parameterType="java.util.List">
         INSERT INTO t_role_menu(
         role_id,menu_id,create_person,
-        creaye_time,update_person,update_time
+        create_time,update_person,update_time
         )
         VALUES
         <foreach collection="list" item="item" index="index" separator="," >
-            (#{item.roleId},#{item.menuId},#{item.create_person},
-            now(),#{item.create_person},now())
+            (#{item.roleId},#{item.menuId},#{item.createPerson},
+            now(),#{item.createPerson},now())
         </foreach>
     </insert>
 

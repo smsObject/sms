@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class PriceTemplate implements Serializable{
@@ -26,4 +27,8 @@ public class PriceTemplate implements Serializable{
     private String updatePerson;
 
     private Date updateTime;
+
+    private Long parentId;
+
+    private List<PriceTemplate> childs;
 }

@@ -10,17 +10,20 @@
         <result column="create_time" property="createTime"/>
         <result column="update_person" property="updatePerson"/>
         <result column="update_time" property="updateTime"/>
-        <collection column="id" property="buttons" select="com.hbh.sms.dal.dao.SystemMenuMapper.getSystemMenuByParentId"/>
+        <result column="code" property="code"/>
+        <result column="path" property="path" />
+        <!--<collection column="id" property="buttons" select="com.hbh.sms.dal.dao.SystemMenuMapper.getSystemMenuByParentId"/>-->
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,level,parent_id,create_person,create_time,update_person,update_time
+        id,name,level,parent_id,create_person,create_time,update_person,update_time,code,path
     </sql>
 
     <select id="getSystemMenuList" resultMap="BaseResultMap">
       SELECT  <include refid="Base_Column_List" />
         FROM  t_menu
-       WHERE  level = 1
+       WHERE  level > 1
+    ORDER by  id
     </select>
 
     <select id="getSystemMenuByParentId" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -30,7 +33,8 @@
     </select>
     
     <select id="getSystemMenuByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        SELECT  <include refid="Base_Column_List"/>
+        SELECT  m.id,m.name,m.level,m.parent_id,m.create_person,m.create_time,
+                m.update_person,m.update_time,m.code,m.path
           FROM  t_menu m,t_role_menu rm
          WHERE  m.id = rm.menu_id
            AND  rm.role_id = #{value}

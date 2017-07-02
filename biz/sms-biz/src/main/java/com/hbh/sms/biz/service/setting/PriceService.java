@@ -14,11 +14,9 @@ public interface PriceService {
 
     Result<List<PriceTemplate>> listPriceTemplates();
 
-    Result<Long> addPriceTemplate(PriceTemplate priceTemplate);
+    Result<Long> addAndUpdatePriceTemplate(PriceTemplate priceTemplate);
 
     Result<Boolean> deletePriceTemplate(Long id);
-
-    Result<Boolean> updatePriceTemplate(PriceTemplate priceTemplate);
 
     Result<Long> addPrice(Price price);
 

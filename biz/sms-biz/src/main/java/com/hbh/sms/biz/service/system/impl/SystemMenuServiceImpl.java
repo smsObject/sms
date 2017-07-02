@@ -5,6 +5,8 @@ import com.hbh.sms.dal.dao.SystemMenuMapper;
 import com.hbh.sms.model.entity.SystemMenu;
 import com.sms.common.Result;
 import com.sms.common.ResultUtil;
+import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import java.util.List;
  *
  * @author hbh
  **/
+@Service("systemMenuService")
 public class SystemMenuServiceImpl implements SystemMenuService {
     @Resource
     private SystemMenuMapper systemMenuMapper;

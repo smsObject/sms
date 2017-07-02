@@ -14,7 +14,7 @@ import java.util.List;
  * Created by hbh on 2017/6/13.
  */
 
-@RequestMapping("/setting")
+@RequestMapping("sms/setting")
 @Controller
 public class SettingController {
 
@@ -22,10 +22,10 @@ public class SettingController {
     private PriceService priceService;
 
     // -----------------费用模版----------------------------//
-    @RequestMapping("/addPriceTemplate")
+    @RequestMapping("/addAndUpdatePriceTemplate")
     @ResponseBody
     public Result<Long> addPriceTemplate(PriceTemplate priceTemplate) {
-        Result<Long> result = priceService.addPriceTemplate(priceTemplate);
+        Result<Long> result = priceService.addAndUpdatePriceTemplate(priceTemplate);
         return result;
     }
 
@@ -33,13 +33,6 @@ public class SettingController {
     @ResponseBody
     public Result<Boolean> deletePriceTemplate(Long id) {
         Result<Boolean> result = priceService.deletePriceTemplate(id);
-        return result;
-    }
-
-    @RequestMapping("/updatePriceTemplate")
-    @ResponseBody
-    public Result<Boolean> updatePriceTemplate(PriceTemplate priceTemplate) {
-        Result<Boolean> result = priceService.updatePriceTemplate(priceTemplate);
         return result;
     }
 

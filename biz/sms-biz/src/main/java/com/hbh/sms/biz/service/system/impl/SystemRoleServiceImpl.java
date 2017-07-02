@@ -9,7 +9,10 @@ import com.hbh.sms.model.entity.SystemRoleMenu;
 import com.sms.common.PagedData;
 import com.sms.common.Result;
 import com.sms.common.ResultUtil;
+import com.sms.common.StateCode;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,59 +26,61 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     private SystemRoleMapper systemRoleMapper;
 
     @Override
+    @Transactional
     public Result<Long> add(SystemRole systemRole) {
-        List<Long> menuIds = systemRole.getMenuIds();
+        String str = systemRole.getMenuIds();
+        if (str == null || str.trim().length() == 0) {
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        }
+        String[] menuIds = str.split(",");
+
         systemRoleMapper.insert(systemRole);
         Long roleId = systemRole.getId();
         String createPerson = systemRole.getOperator();
         List<SystemRoleMenu> systemRoleMenus = new ArrayList<>();
-        if (menuIds != null && !menuIds.isEmpty()){
-            for (Long menuId : menuIds){
-                SystemRoleMenu systemRoleMenu = new SystemRoleMenu();
-                systemRoleMenu.setRoleId(roleId);
-                systemRoleMenu.setMenuId(menuId);
-                systemRoleMenu.setCreatePerson(createPerson);
-                systemRoleMenus.add(systemRoleMenu);
-            }
+        for (String menuId : menuIds) {
+            SystemRoleMenu systemRoleMenu = new SystemRoleMenu();
+            systemRoleMenu.setRoleId(roleId);
+            systemRoleMenu.setMenuId(Long.valueOf(menuId));
+            systemRoleMenu.setCreatePerson(createPerson);
+            systemRoleMenus.add(systemRoleMenu);
         }
-        if (!systemRoleMenus.isEmpty()){
-            systemRoleMapper.batchInsertRoleMenu(systemRoleMenus);
-        }
+        systemRoleMapper.batchInsertRoleMenu(systemRoleMenus);
         return ResultUtil.newSuccessResult(systemRole.getId());
     }
 
     @Override
     public Result<Boolean> deleteById(Long id) {
         int i = systemRoleMapper.deleteByPrimaryKey(id);
-        return ResultUtil.newSuccessResult(i>0);
+        return ResultUtil.newSuccessResult(i > 0);
     }
 
     @Override
     public Result<Boolean> update(SystemRole systemRole) {
-        List<Long> menuIds = systemRole.getMenuIds();
+        String str = systemRole.getMenuIds();
+        if (str == null || str.trim().length() == 0) {
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        }
+        String[] menuIds = str.split(",");
         Long roleId = systemRole.getId();
         String createPerson = systemRole.getOperator();
         List<SystemRoleMenu> systemRoleMenus = new ArrayList<>();
-        if (menuIds != null && !menuIds.isEmpty()){
-            for (Long menuId : menuIds){
-                SystemRoleMenu systemRoleMenu = new SystemRoleMenu();
-                systemRoleMenu.setRoleId(roleId);
-                systemRoleMenu.setMenuId(menuId);
-                systemRoleMenu.setCreatePerson(createPerson);
-                systemRoleMenus.add(systemRoleMenu);
-            }
+        for (String menuId : menuIds) {
+            SystemRoleMenu systemRoleMenu = new SystemRoleMenu();
+            systemRoleMenu.setRoleId(roleId);
+            systemRoleMenu.setMenuId(Long.valueOf(menuId));
+            systemRoleMenu.setCreatePerson(createPerson);
+            systemRoleMenus.add(systemRoleMenu);
         }
         systemRoleMapper.deleteRoleMenuByRoleId(roleId);
-        if (!systemRoleMenus.isEmpty()){
-            systemRoleMapper.batchInsertRoleMenu(systemRoleMenus);
-        }
+        systemRoleMapper.batchInsertRoleMenu(systemRoleMenus);
         int i = systemRoleMapper.updateByPrimaryKey(systemRole);
-        return ResultUtil.newSuccessResult(i>0);
+        return ResultUtil.newSuccessResult(i > 0);
     }
 
     @Override
     public Result<PagedData<SystemRole>> page(SystemRole systemRole) {
-        Page page = PageHelper.startPage(systemRole.getPageNo() , systemRole.getPageSize());
+        Page page = PageHelper.startPage(systemRole.getPageNo(), systemRole.getPageSize());
         List<SystemRole> list = systemRoleMapper.query(systemRole);
         PagedData<SystemRole> pagedData = new PagedData<>();
         pagedData.setPageNo(systemRole.getPageNo());
@@ -90,7 +95,13 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         SystemRole systemRole = new SystemRole();
         systemRole.setId(id);
         List<SystemRole> list = systemRoleMapper.query(systemRole);
-        systemRole = list.isEmpty()?null:list.get(0);
+        systemRole = list.isEmpty() ? null : list.get(0);
         return ResultUtil.newSuccessResult(systemRole);
+    }
+
+    @Override
+    public Result<List<SystemRole>> list(SystemRole systemRole) {
+        List<SystemRole> list = systemRoleMapper.query(systemRole);
+        return ResultUtil.newSuccessResult(list);
     }
 }

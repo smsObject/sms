@@ -14,6 +14,6 @@ public class SystemRole extends BaseDO implements Serializable {
     private static final long serialVersionUID = 1L;
     private String name;
     private String remarks;
-    private List<Long> menuIds;
+    private String menuIds;
     private List<SystemMenu> systemMenus;
 }

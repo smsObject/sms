@@ -6,14 +6,16 @@
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="remarks" property="remarks" />
+        <result column="parent_id" property="parentId"/>
         <result column="create_person" property="createPerson" />
         <result column="create_time" property="createTime" />
         <result column="update_person" property="updatePerson" />
         <result column="update_time" property="updateTime" />
+        <collection property="childs" column="id" select="com.hbh.sms.dal.dao.PriceTemplateMapper.getByParentId"/>
     </resultMap>
     
     <sql id="Base_Column_List" >
-        id, name, remarks, create_person, create_time, update_person, update_time
+        id, name, parent_id, remarks, create_person, create_time, update_person, update_time
     </sql>
     
     <!--查询-->
@@ -53,6 +55,12 @@
         
     </select>
     
+    <select id="getByParentId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT  <include refid="Base_Column_List" />
+          FROM  t_price_template
+         WHERE  parent_id = #{value}
+    </select>
+
     <!--删除-->
     <delete id="delete" parameterType="java.lang.Long" >
         delete from t_price_template
@@ -61,9 +69,12 @@
     
     <!--增加-->
     <insert id="insert" parameterType="com.hbh.sms.model.entity.PriceTemplate" >
-        insert into t_price_template (id, name, remarks, create_person, create_time, update_person, 
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_price_template (name,parent_id, remarks, create_person, create_time, update_person,
             update_time)
-        values (#{id}, #{name}, #{remarks}, #{createPerson}, #{createTime}, #{updatePerson}, 
+        values (#{name}, #{parentId}, #{remarks}, #{createPerson}, #{createTime}, #{updatePerson},
             #{updateTime})
     </insert>
     
