@@ -23,38 +23,9 @@
         select
         <include refid="Base_Column_List" />
             from t_price_template
-            where 1=1 
-
-        <if test="id != null" >
-              and id = #{id}
-        </if>
-        
-        <if test="name != null" >
-              and name = #{name}
-        </if>
-        
-        <if test="remarks != null" >
-              and remarks = #{remarks}
-        </if>
-        
-        <if test="createPerson != null" >
-              and create_person = #{createPerson}
-        </if>
-        
-        <if test="createTime != null" >
-              and create_time = #{createTime}
-        </if>
-        
-        <if test="updatePerson != null" >
-              and update_person = #{updatePerson}
-        </if>
-        
-        <if test="updateTime != null" >
-              and update_time = #{updateTime}
-        </if>
-        
+            where parent_id = 0
     </select>
-    
+
     <select id="getByParentId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT  <include refid="Base_Column_List" />
           FROM  t_price_template
