@@ -24,7 +24,7 @@ public interface PriceMapper {
      *
      * 查询记录
      */
-    List<Price> query();
+    List<Price> query(Price record);
 
     /**
      *

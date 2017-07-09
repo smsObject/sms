@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hbh on 2017/6/17.
@@ -37,11 +39,11 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public Result<Long> addAndUpdatePriceTemplate(PriceTemplate priceTemplate) {
-        if (priceTemplate == null){
+        if (priceTemplate == null) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
-        if (priceTemplate.getId() == null || priceTemplate.getId().longValue() == 0){
-            if (priceTemplate.getParentId() == null){
+        if (priceTemplate.getId() == null || priceTemplate.getId().longValue() == 0) {
+            if (priceTemplate.getParentId() == null) {
                 priceTemplate.setParentId(0L);
             }
             priceTemplateMapper.insert(priceTemplate);
@@ -55,7 +57,7 @@ public class PriceServiceImpl implements PriceService {
     @Override
     public Result<Boolean> deletePriceTemplate(Long id) {
         int i = priceTemplateMapper.delete(id);
-        return ResultUtil.newSuccessResult(i>0);
+        return ResultUtil.newSuccessResult(i > 0);
     }
 
     @Transactional
@@ -63,7 +65,7 @@ public class PriceServiceImpl implements PriceService {
     public Result<Long> addPrice(Price price) {
         priceMapper.insert(price);
         List<PriceItem> priceItems = price.getPriceItems();
-        for (PriceItem priceItem : priceItems){
+        for (PriceItem priceItem : priceItems) {
             priceItem.setPriceId(price.getId());
         }
         priceItemMapper.batchInsert(priceItems);
@@ -75,7 +77,7 @@ public class PriceServiceImpl implements PriceService {
     public Result<Boolean> deletePrice(Long id) {
         int i = priceMapper.delete(id);
         priceItemMapper.deleteByPriceId(id);
-        return ResultUtil.newSuccessResult(i>0);
+        return ResultUtil.newSuccessResult(i > 0);
     }
 
     @Transactional
@@ -85,18 +87,41 @@ public class PriceServiceImpl implements PriceService {
         List<PriceItem> priceItems = price.getPriceItems();
         priceItemMapper.deleteByPriceId(price.getId());
 
-        for (PriceItem priceItem: priceItems){
+        for (PriceItem priceItem : priceItems) {
             priceItem.setId(price.getId());
         }
 
         priceItemMapper.batchInsert(priceItems);
-        return ResultUtil.newSuccessResult(i>0);
+        return ResultUtil.newSuccessResult(i > 0);
     }
 
     @Override
-    public Result<List<Price>> listPrices() {
-        List<Price> prices = priceMapper.query();
+    public Result<List<Price>> listPrices(Price record) {
+        List<Price> prices = priceMapper.query(record);
         return ResultUtil.newSuccessResult(prices);
     }
 
+    @Override
+    public Result<Map<Long, String>> queryPriceNames() {
+        Price price1 = new Price();
+        List<Price> prices = priceMapper.query(price1);
+        Map<Long, String> map = new HashMap<>();
+        for (Price price : prices) {
+            map.put(price.getId(), price.getName());
+        }
+        return ResultUtil.newSuccessResult(map);
+    }
+
+    @Override
+    public Result<Price> getPriceById(Long id) {
+        Price price = new Price();
+        price.setId(id);
+        List<Price> prices = priceMapper.query(price);
+        if (prices.size() > 0){
+            price = prices.get(0);
+        }else {
+            price = null;
+        }
+        return ResultUtil.newSuccessResult(price);
+    }
 }

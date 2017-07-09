@@ -5,7 +5,6 @@
 package com.hbh.sms.model.entity;
 
 import lombok.Data;
-
 import java.util.Date;
 import java.util.List;
 
@@ -18,9 +17,15 @@ public class Price {
 
     private Long year;
 
-    private Byte timeLength;
+    /**
+     * 计费间隔:1月度|2:季度|3:半年度|4:年度
+     */
+    private Integer timeLength;
 
-    private Byte type;
+    /**
+     * 1.普通计价 2.阶梯计价
+     */
+    private Integer type;
 
     private String name;
 

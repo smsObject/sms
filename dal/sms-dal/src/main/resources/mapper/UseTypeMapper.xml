@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hbh.sms.dal.dao.UseTypeMapper">
+    <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.UseType">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="remarks" property="remarks"/>
+        <result column="create_person" property="createPerson"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_person" property="updatePerson"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name,remarks, create_person, create_time, update_person, update_time
+    </sql>
+
+    <select id="query" parameterType="com.hbh.sms.model.entity.UseType" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_use_type
+    </select>
+
+    <insert id="insert" parameterType="com.hbh.sms.model.entity.UseType">
+        insert into t_use_type (name,remarks, create_person, create_time, update_person, update_time)
+        VALUES (#{name},#{remarks},#{create_person},now(),#{create_person},now())
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        DELETE  FROM t_use_type where id = #{value}
+    </delete>
+
+    <update id="update" parameterType="com.hbh.sms.model.entity.UseType">
+        update t_use_type set name = #{name}, remarks = #{remarks}
+        WHEN id = #{id}
+    </update>
+</mapper>
