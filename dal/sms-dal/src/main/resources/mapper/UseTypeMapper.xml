@@ -22,6 +22,9 @@
     </select>
 
     <insert id="insert" parameterType="com.hbh.sms.model.entity.UseType">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
         insert into t_use_type (name,remarks, create_person, create_time, update_person, update_time)
         VALUES (#{name},#{remarks},#{create_person},now(),#{create_person},now())
     </insert>

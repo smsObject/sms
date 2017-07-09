@@ -71,10 +71,13 @@
     
     <!--增加-->
     <insert id="insert" parameterType="com.hbh.sms.model.entity.Price" >
-        insert into t_price (id, year, time_length, type, name, create_person, create_time, 
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_price ( year, time_length, type, name, create_person, create_time,
             update_person, update_time)
-        values (#{id}, #{year}, #{timeLength}, #{type}, #{name}, #{createPerson}, #{createTime}, 
-            #{updatePerson}, #{updateTime})
+        values (#{year}, #{timeLength}, #{type}, #{name}, #{createPerson}, now(),
+            #{createPerson}, now())
     </insert>
     
     <!--更新-->

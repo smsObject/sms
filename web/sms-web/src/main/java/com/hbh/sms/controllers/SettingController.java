@@ -55,8 +55,8 @@ public class SettingController {
 
     @RequestMapping("/addPrice")
     @ResponseBody
-    public Result<Long> addPrice(HttpServletRequest request,Price price) {
-        Price price1 = JSON.parseObject(request.getParameter("data"), Price.class);
+    public Result<Long> addPrice(HttpServletRequest request) {
+        Price price = JSON.parseObject(request.getParameter("data"), Price.class);
         Result<Long> result = priceService.addPrice(price);
         return result;
     }
@@ -117,7 +117,7 @@ public class SettingController {
         return result;
     }
 
-    @RequestMapping("/deleteUseType")
+        @RequestMapping("/deleteUseType")
     @ResponseBody
     public Result<Boolean> deleteUseType(Long id){
         Result<Boolean> result = useTypeService.deleteUseType(id);

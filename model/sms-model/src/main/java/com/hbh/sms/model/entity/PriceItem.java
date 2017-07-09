@@ -7,6 +7,7 @@ package com.hbh.sms.model.entity;
 import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
 
 @Data
 public class PriceItem implements Serializable{
@@ -23,6 +24,8 @@ public class PriceItem implements Serializable{
     private Long templateId;
 
     private Float price;
+
+    private Map<Long,Float> prices;
 
     private String createPerson;
 

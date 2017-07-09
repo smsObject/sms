@@ -14,9 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by hbh on 2017/6/17.
@@ -63,12 +61,26 @@ public class PriceServiceImpl implements PriceService {
     @Transactional
     @Override
     public Result<Long> addPrice(Price price) {
+        price.setCreatePerson("system");
         priceMapper.insert(price);
+        List<PriceItem> priceItemList = new ArrayList<>();
         List<PriceItem> priceItems = price.getPriceItems();
         for (PriceItem priceItem : priceItems) {
-            priceItem.setPriceId(price.getId());
+            Map<Long,Float> prices = priceItem.getPrices();
+            Iterator<Long> templateIds = prices.keySet().iterator();
+            while (templateIds.hasNext()){
+                PriceItem priceItem1 = new PriceItem();
+                priceItem1.setCreatePerson("system");
+                priceItem1.setPriceId(price.getId());
+                priceItem1.setPriceId(price.getId());
+                Long templateId = templateIds.next();
+                Float priceValue = prices.get(templateId);
+                priceItem1.setTemplateId(templateId);
+                priceItem1.setPrice(priceValue);
+                priceItemList.add(priceItem1);
+            }
         }
-        priceItemMapper.batchInsert(priceItems);
+        priceItemMapper.batchInsert(priceItemList);
         return ResultUtil.newSuccessResult(price.getId());
     }
 
