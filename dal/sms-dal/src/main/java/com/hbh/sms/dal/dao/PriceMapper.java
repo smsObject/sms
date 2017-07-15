@@ -5,6 +5,9 @@
 package com.hbh.sms.dal.dao;
 
 import com.hbh.sms.model.entity.Price;
+import com.hbh.sms.model.entity.PriceInterval;
+import com.hbh.sms.model.entity.PriceItem;
+
 import java.util.List;
 
 public interface PriceMapper {
@@ -31,4 +34,14 @@ public interface PriceMapper {
      * 更新单条记录
      */
     int update(Price record);
+
+    /**
+     * 新增区间数据
+     * @param priceInterval
+     */
+    int insertInterval(PriceInterval priceInterval);
+
+    List<PriceInterval> queryInterval(Long id);
+
+    void deleteInterValByPriceId(Long id);
 }

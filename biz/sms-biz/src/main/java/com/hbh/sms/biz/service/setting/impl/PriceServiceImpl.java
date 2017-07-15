@@ -5,6 +5,7 @@ import com.hbh.sms.dal.dao.PriceItemMapper;
 import com.hbh.sms.dal.dao.PriceMapper;
 import com.hbh.sms.dal.dao.PriceTemplateMapper;
 import com.hbh.sms.model.entity.Price;
+import com.hbh.sms.model.entity.PriceInterval;
 import com.hbh.sms.model.entity.PriceItem;
 import com.hbh.sms.model.entity.PriceTemplate;
 import com.sms.common.Result;
@@ -61,27 +62,47 @@ public class PriceServiceImpl implements PriceService {
     @Transactional
     @Override
     public Result<Long> addPrice(Price price) {
+        if (price.getId() != null && price.getId() != 0){
+            Result result = updatePrice(price);
+            return result;
+        }
         price.setCreatePerson("system");
         priceMapper.insert(price);
+        insert(price);
+        return ResultUtil.newSuccessResult(price.getId());
+    }
+
+    private void insert(Price price) {
         List<PriceItem> priceItemList = new ArrayList<>();
         List<PriceItem> priceItems = price.getPriceItems();
         for (PriceItem priceItem : priceItems) {
             Map<Long,Float> prices = priceItem.getPrices();
             Iterator<Long> templateIds = prices.keySet().iterator();
+
+            PriceInterval priceInterval = new PriceInterval();
+            if (priceItem.getEndValue() == null){
+                priceInterval.setEndValue(0f);
+            }else {
+                priceInterval.setEndValue(priceItem.getEndValue());
+            }
+            priceInterval.setStartValue(priceItem.getStartValue());
+            priceInterval.setPriceId(price.getId());
+            priceMapper.insertInterval(priceInterval);
+            Long intervalId = priceInterval.getId();
+
             while (templateIds.hasNext()){
                 PriceItem priceItem1 = new PriceItem();
                 priceItem1.setCreatePerson("system");
                 priceItem1.setPriceId(price.getId());
-                priceItem1.setPriceId(price.getId());
                 Long templateId = templateIds.next();
                 Float priceValue = prices.get(templateId);
                 priceItem1.setTemplateId(templateId);
+                priceItem1.setIntervalId(intervalId);
                 priceItem1.setPrice(priceValue);
                 priceItemList.add(priceItem1);
             }
         }
         priceItemMapper.batchInsert(priceItemList);
-        return ResultUtil.newSuccessResult(price.getId());
     }
 
     @Transactional
@@ -96,14 +117,9 @@ public class PriceServiceImpl implements PriceService {
     @Override
     public Result<Boolean> updatePrice(Price price) {
         int i = priceMapper.update(price);
-        List<PriceItem> priceItems = price.getPriceItems();
+        priceMapper.deleteInterValByPriceId(price.getId());
         priceItemMapper.deleteByPriceId(price.getId());
-
-        for (PriceItem priceItem : priceItems) {
-            priceItem.setId(price.getId());
-        }
-
-        priceItemMapper.batchInsert(priceItems);
+        insert(price);
         return ResultUtil.newSuccessResult(i > 0);
     }
 
@@ -129,8 +145,30 @@ public class PriceServiceImpl implements PriceService {
         Price price = new Price();
         price.setId(id);
         List<Price> prices = priceMapper.query(price);
+        List<PriceItem> priceItems = new ArrayList<>();
+
         if (prices.size() > 0){
             price = prices.get(0);
+            price.setPriceItems(priceItems);
+
+            //获取区间值
+            List<PriceInterval> list = priceMapper.queryInterval(id);
+            for (PriceInterval priceInterval : list){
+                PriceItem priceItem = new PriceItem();
+                priceItem.setIntervalId(priceInterval.getId());
+                //获取水费值
+                List<PriceItem> items = priceItemMapper.query(priceItem);
+                Map<Long,Float> priceMap = new HashMap<>();
+
+                PriceItem priceItem2 = new PriceItem();
+                priceItem2.setStartValue(priceInterval.getStartValue());
+                priceItem2.setEndValue(priceInterval.getEndValue());
+                priceItem2.setPrices(priceMap);
+                priceItems.add(priceItem2);
+                for(PriceItem priceItem1 : items){
+                    priceMap.put(priceItem1.getTemplateId(),priceItem1.getPrice());
+                }
+            }
         }else {
             price = null;
         }

@@ -13,6 +13,18 @@
         <result column="update_person" property="updatePerson" />
         <result column="update_time" property="updateTime" />
     </resultMap>
+
+    <resultMap id="PriceIntervalMap" type="com.hbh.sms.model.entity.PriceInterval" >
+        <id column="id" property="id" />
+        <id column="price_id" property="priceId" />
+        <id column="start_value" property="startValue" />
+        <id column="end_value" property="endValue" />
+        <result column="create_person" property="createPerson" />
+        <result column="create_time" property="createTime" />
+        <result column="update_person" property="updatePerson" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
     
     <sql id="Base_Column_List" >
         id, year, time_length, type, name, create_person, create_time, update_person, update_time
@@ -62,11 +74,23 @@
         </if>
         
     </select>
-    
+
+    <select id="queryInterval" parameterType="java.lang.Long" resultMap="PriceIntervalMap">
+      SELECT *
+      FROM t_price_interval
+      WHERE price_id = #{value}
+      order by start_value asc;
+    </select>
+
     <!--删除-->
     <delete id="delete" parameterType="java.lang.Long" >
         delete from t_price
         where id = #{id}
+    </delete>
+    
+    <delete id="deleteInterValByPriceId" parameterType="java.lang.Long">
+        DELETE from t_price_interval
+        where price_id = #{value}
     </delete>
     
     <!--增加-->
@@ -78,6 +102,16 @@
             update_person, update_time)
         values (#{year}, #{timeLength}, #{type}, #{name}, #{createPerson}, now(),
             #{createPerson}, now())
+    </insert>
+    
+    <insert id="insertInterval" parameterType="com.hbh.sms.model.entity.PriceInterval">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT  INTO t_price_interval(price_id,start_value,end_value,create_person,
+        create_time,update_person,update_time)
+        VALUES (#{priceId},#{startValue},#{endValue},'system', now(),
+        'system', now())
     </insert>
     
     <!--更新-->

@@ -23,19 +23,20 @@ public class UseTypeServiceImpl implements UseTypeService {
 
     @Override
     public Result<Long> addUseType(UseType useType) {
+        useType.setCreatePerson("system");
         useTypeMapper.insert(useType);
         return ResultUtil.newSuccessResult(useType.getId());
     }
 
     @Override
     public Result<Boolean> updateUseType(UseType useType) {
-        int i = useTypeMapper.updateByPrimaryKey(useType);
+        int i = useTypeMapper.update(useType);
         return ResultUtil.newSuccessResult(i>0);
     }
 
     @Override
     public Result<Boolean> deleteUseType(Long id) {
-        int i = useTypeMapper.deleteByPrimaryKey(id);
+        int i = useTypeMapper.delete(id);
         return ResultUtil.newSuccessResult(i>0);
     }
 }

@@ -75,20 +75,6 @@ public class SettingController {
         return result;
     }
 
-    @RequestMapping("/deletePrice")
-    @ResponseBody
-    public Result<Boolean> deletePrice(Long id) {
-        Result<Boolean> result = priceService.deletePrice(id);
-        return result;
-    }
-
-    @RequestMapping("/updatePrice")
-    @ResponseBody
-    public Result<Boolean> updatePrice(Price price) {
-        Result<Boolean> result = priceService.updatePrice(price);
-        return result;
-    }
-
     @RequestMapping("/listPrices")
     @ResponseBody
     public Result<List<Price>> listPrices(Price price) {
@@ -117,7 +103,7 @@ public class SettingController {
         return result;
     }
 
-        @RequestMapping("/deleteUseType")
+    @RequestMapping("/deleteUseType")
     @ResponseBody
     public Result<Boolean> deleteUseType(Long id){
         Result<Boolean> result = useTypeService.deleteUseType(id);

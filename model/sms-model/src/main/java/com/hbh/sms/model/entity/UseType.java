@@ -8,5 +8,5 @@ import lombok.Data;
 @Data
 public class UseType extends BaseDO{
     private String name;
-    private String marks;
+    private String remarks;
 }

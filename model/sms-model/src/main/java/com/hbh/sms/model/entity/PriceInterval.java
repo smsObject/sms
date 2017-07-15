@@ -1,16 +1,16 @@
-/**
- * qccr.com Inc.
- * Copyright (c) 2014-2017 All Rights Reserved.
- */
 package com.hbh.sms.model.entity;
 
 import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Map;
+
+/**
+ * Created by hbh on 2017/7/15.
+ */
 
 @Data
-public class PriceItem implements Serializable{
+public class PriceInterval implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -20,14 +20,6 @@ public class PriceItem implements Serializable{
     private Float endValue;
 
     private Long priceId;
-
-    private Long templateId;
-
-    private Float price;
-
-    private Long intervalId ;
-
-    private Map<Long,Float> prices;
 
     private String createPerson;
 

@@ -26,7 +26,7 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into t_use_type (name,remarks, create_person, create_time, update_person, update_time)
-        VALUES (#{name},#{remarks},#{create_person},now(),#{create_person},now())
+        VALUES (#{name},#{remarks},#{createPerson},now(),#{createPerson},now())
     </insert>
 
     <delete id="delete" parameterType="java.lang.Long">
@@ -35,6 +35,6 @@
 
     <update id="update" parameterType="com.hbh.sms.model.entity.UseType">
         update t_use_type set name = #{name}, remarks = #{remarks}
-        WHEN id = #{id}
+        WHERE id = #{id}
     </update>
 </mapper>

@@ -7,6 +7,7 @@
         <result column="price_id" property="priceId"/>
         <result column="template_id" property="templateId"/>
         <result column="price" property="price"/>
+        <result column="interval_id" property="intervalId"/>
         <result column="create_person" property="createPerson"/>
         <result column="create_time" property="createTime"/>
         <result column="update_person" property="updatePerson"/>
@@ -14,7 +15,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, price_id, template_id, price, create_person, create_time, update_person, update_time
+        id, price_id,interval_id, template_id, price, create_person, create_time, update_person, update_time
     </sql>
 
     <!--查询-->
@@ -27,7 +28,9 @@
         <if test="id != null">
             and id = #{id}
         </if>
-
+        <if test="intervalId != null and intervalId != 0">
+            and interval_id = #{intervalId}
+        </if>
         <if test="priceId != null">
             and price_id = #{priceId}
         </if>
@@ -69,21 +72,26 @@
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into t_price_item (price_id, template_id, price, create_person, create_time,
+        insert into t_price_item (price_id,interval_id, template_id, price, create_person, create_time,
         update_person, update_time)
-        values (#{priceId}, #{templateId}, #{price}, #{createPerson}, now(),
+        values (#{priceId},#{intervalId},#{templateId}, #{price}, #{createPerson}, now(),
         #{createPerson}, now())
     </insert>
 
     <insert id="batchInsert" parameterType="java.util.List">
-        insert into t_price_item (price_id, template_id, price, create_person, create_time,
+        insert into t_price_item (price_id,interval_id, template_id, price, create_person, create_time,
         update_person, update_time)
         values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.priceId}, #{item.templateId}, #{item.price}, #{item.createPerson}, now(),
+            (#{item.priceId},#{item.intervalId}, #{item.templateId}, #{item.price}, #{item.createPerson}, now(),
             #{item.createPerson}, now())
         </foreach>
     </insert>
+
+    <delete id="deleteByPriceId" parameterType="java.lang.Long">
+        DELETE  from t_price_item
+        where price_id = #{value}
+    </delete>
 
     <!--更新-->
     <update id="update" parameterType="com.hbh.sms.model.entity.PriceItem">
