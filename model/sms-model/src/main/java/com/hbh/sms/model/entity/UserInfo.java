@@ -1,8 +1,8 @@
 package com.hbh.sms.model.entity;
 
 import lombok.Data;
-
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 public class UserInfo extends BaseDO implements Serializable {
@@ -19,7 +19,7 @@ public class UserInfo extends BaseDO implements Serializable {
     private Float remainingBalance;
     private Integer status;
     private Integer valveStatus;
-    private Integer payType;
+    private String payType;
     private Integer householdPerson;
     private String remarks;
     private static final long serialVersionUID = 1L;

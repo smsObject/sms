@@ -109,4 +109,8 @@ public class SettingController {
         Result<Boolean> result = useTypeService.deleteUseType(id);
         return result;
     }
+
+//    public Result<BusinessManager> getBusinessData(String meterCode,String userName,String address){
+//
+//    }
 }
