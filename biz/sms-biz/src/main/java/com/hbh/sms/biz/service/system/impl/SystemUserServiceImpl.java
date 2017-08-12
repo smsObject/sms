@@ -34,7 +34,18 @@ public class SystemUserServiceImpl implements SystemUserService {
         if (roleIdStr == null || roleIdStr.trim().length() == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "岗位必填");
         }
+
+        
         systemUserMapper.insert(systemUser);
+
+        //判断手机不能重复
+        SystemUser search = new SystemUser();
+        search.setPhone(systemUser.getPhone());
+        List<SystemUser> list = systemUserMapper.query(search);
+        if (list.size() > 0){
+            return ResultUtil.newFailedResult(StateCode.ERROR,"手机号已存在");
+        }
+
         Long userId = systemUser.getId();
         String[] roleIds = roleIdStr.split(",");
         String createPerson = "system";
@@ -64,6 +75,18 @@ public class SystemUserServiceImpl implements SystemUserService {
         if (roleIdStr == null || roleIdStr.trim().length() == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "岗位必填");
         }
+
+        //判断手机不能重复
+        SystemUser search = new SystemUser();
+        search.setPhone(systemUser.getPhone());
+        List<SystemUser> list = systemUserMapper.query(search);
+        if(list.size() > 0){
+            SystemUser systemUser1 = list.get(0);
+            if (systemUser.getId().longValue() != systemUser1.getId().longValue()){
+                return ResultUtil.newFailedResult(StateCode.ERROR, "手机号已存在");
+            }
+        }
+
         int i = systemUserMapper.updateByPrimaryKey(systemUser);
         systemRoleMapper.deleteUserRoleByUserId(userId);
         String[] roleIds = roleIdStr.split(",");

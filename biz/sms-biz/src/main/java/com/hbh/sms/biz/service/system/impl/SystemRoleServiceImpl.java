@@ -6,6 +6,8 @@ import com.hbh.sms.biz.service.system.SystemRoleService;
 import com.hbh.sms.dal.dao.SystemRoleMapper;
 import com.hbh.sms.model.entity.SystemRole;
 import com.hbh.sms.model.entity.SystemRoleMenu;
+import com.hbh.sms.model.entity.SystemUser;
+import com.hbh.sms.model.entity.SystemUserRole;
 import com.sms.common.PagedData;
 import com.sms.common.Result;
 import com.sms.common.ResultUtil;
@@ -33,6 +35,12 @@ public class SystemRoleServiceImpl implements SystemRoleService {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
         String[] menuIds = str.split(",");
+        SystemRole search = new SystemRole();
+        search.setName(systemRole.getName());
+        List<SystemRole> list = systemRoleMapper.query(search);
+        if (list.size() > 0){
+            return ResultUtil.newFailedResult(StateCode.ERROR,"角色已存在无需再建");
+        }
 
         systemRoleMapper.insert(systemRole);
         Long roleId = systemRole.getId();
@@ -51,7 +59,19 @@ public class SystemRoleServiceImpl implements SystemRoleService {
 
     @Override
     public Result<Boolean> deleteById(Long id) {
+        //查询该岗位下是否有用户
+        Result<SystemRole> result = getRoleById(id);
+        SystemRole systemRole = result.getData();
+        if (systemRole == null){
+            return ResultUtil.newFailedResult(StateCode.ERROR,"该角色不存在");
+        }
+        List<SystemUserRole> systemUserRoles = systemRoleMapper.queryUserRoleByRoleId(id);
+        if (systemUserRoles.size() > 0){
+            return ResultUtil.newFailedResult(StateCode.ERROR,"该角色下有用户不能删除");
+        }
+
         int i = systemRoleMapper.deleteByPrimaryKey(id);
+        systemRoleMapper.deleteRoleMenuByRoleId(id);
         return ResultUtil.newSuccessResult(i > 0);
     }
 
@@ -61,6 +81,16 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         if (str == null || str.trim().length() == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
+
+        SystemRole search = new SystemRole();
+        search.setName(systemRole.getName());
+        List<SystemRole> list = systemRoleMapper.query(search);
+        if (list.size() > 0){
+            if(list.get(0).getId().longValue() == systemRole.getId().longValue()){
+                return ResultUtil.newFailedResult(StateCode.ERROR,"角色已存在");
+            }
+        }
+
         String[] menuIds = str.split(",");
         Long roleId = systemRole.getId();
         String createPerson = systemRole.getOperator();

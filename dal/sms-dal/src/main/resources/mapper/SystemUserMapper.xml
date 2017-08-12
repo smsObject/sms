@@ -23,6 +23,9 @@
         <if test="id != null" >
           AND id = #{id}
         </if>
+        <if test="phone !=null and phone !=''">
+          AND phone = #{phone}
+        </if>
     </sql>
 
     <select id="query" resultMap="BaseResultMap" parameterType="com.hbh.sms.model.entity.SystemUser">

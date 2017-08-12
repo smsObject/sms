@@ -32,7 +32,7 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public Result<List<PriceTemplate>> listPriceTemplates() {
-        List<PriceTemplate> lists = priceTemplateMapper.query();
+        List<PriceTemplate> lists = priceTemplateMapper.query(null);
         return ResultUtil.newSuccessResult(lists);
     }
 
@@ -45,9 +45,28 @@ public class PriceServiceImpl implements PriceService {
             if (priceTemplate.getParentId() == null) {
                 priceTemplate.setParentId(0L);
             }
+
+            //同一层级名称不能相同
+            PriceTemplate search = new PriceTemplate();
+            search.setName(priceTemplate.getName());
+            search.setParentId(priceTemplate.getParentId());
+            List<PriceTemplate> list = priceTemplateMapper.query(search);
+            if (list.size() > 0){
+                return ResultUtil.newFailedResult(StateCode.ERROR,"名称已存在");
+            }
+
             priceTemplateMapper.insert(priceTemplate);
             return ResultUtil.newSuccessResult(priceTemplate.getId());
         } else {
+            PriceTemplate search = new PriceTemplate();
+            search.setName(priceTemplate.getName());
+            search.setParentId(priceTemplate.getParentId());
+            List<PriceTemplate> list = priceTemplateMapper.query(search);
+            if (list.size() > 0){
+                if (list.get(0).getId().longValue() != priceTemplate.getId().longValue()){
+                    return ResultUtil.newFailedResult(StateCode.ERROR,"名称已存在,不能修改");
+                }
+            }
             int i = priceTemplateMapper.update(priceTemplate);
             return ResultUtil.newSuccessResult(priceTemplate.getId());
         }

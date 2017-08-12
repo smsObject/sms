@@ -25,6 +25,8 @@
             from t_price_template
             where parent_id = 0
     </select>
+    
+    <select id=""
 
     <select id="getByParentId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT  <include refid="Base_Column_List" />

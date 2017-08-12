@@ -19,4 +19,6 @@ public interface SystemRoleMapper {
     int deleteUserRoleByUserId(Long id);
     int batchInsertRoleMenu(List<SystemRoleMenu> systemRoleMenus);
     int deleteRoleMenuByRoleId(Long roleId);
+
+    List<SystemUserRole> queryUserRoleByRoleId(Long id);
 }

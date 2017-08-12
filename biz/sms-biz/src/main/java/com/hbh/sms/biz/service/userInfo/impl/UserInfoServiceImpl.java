@@ -27,6 +27,13 @@ public class UserInfoServiceImpl implements UserInfoService {
         if (userInfo == null) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
+        UserInfo search = new UserInfo();
+        search.setName(userInfo.getName());
+        search.setPhone(userInfo.getPhone());
+        List<UserInfo> list = userInfoMapper.query(search);
+        if (list.size() > 0){
+            return ResultUtil.newFailedResult(StateCode.ERROR,"用户已存在");
+        }
         userInfoMapper.insert(userInfo);
         return ResultUtil.newSuccessResult(userInfo.getId());
     }
@@ -45,6 +52,16 @@ public class UserInfoServiceImpl implements UserInfoService {
         if (userInfo == null) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
+        UserInfo search = new UserInfo();
+        search.setName(userInfo.getName());
+        search.setPhone(userInfo.getPhone());
+        List<UserInfo> list = userInfoMapper.query(search);
+        if (list.size() > 0){
+            if(list.get(0).getId().longValue() != userInfo.getId().longValue()){
+                return ResultUtil.newFailedResult(StateCode.ERROR,"用户名和手机号已存在");
+            }
+        }
+
         int i = userInfoMapper.updateByPrimaryKey(userInfo);
         return ResultUtil.newSuccessResult(i > 0);
     }

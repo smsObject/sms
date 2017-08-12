@@ -25,7 +25,7 @@ public interface PriceTemplateMapper {
      *
      * 查询记录
      */
-    List<PriceTemplate> query();
+    List<PriceTemplate> query(PriceTemplate p);
 
     /**
      *
