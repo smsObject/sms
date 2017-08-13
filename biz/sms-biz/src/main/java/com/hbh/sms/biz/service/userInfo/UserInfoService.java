@@ -1,6 +1,7 @@
 package com.hbh.sms.biz.service.userInfo;
 
 import com.hbh.sms.model.entity.UserInfo;
+import com.hbh.sms.model.entity.UserPrice;
 import com.sms.common.PagedData;
 import com.sms.common.Result;
 
@@ -13,4 +14,6 @@ public interface UserInfoService {
     Result<Boolean> update(UserInfo userInfo);
     Result<PagedData<UserInfo>> page(UserInfo userInfo);
     Result<UserInfo> getUserInfoById(Long id);
+    Result<UserPrice> getUserWaterValue(UserPrice userPrice);
+    Result<Boolean> buyWaterValue(UserPrice userPrice);
 }

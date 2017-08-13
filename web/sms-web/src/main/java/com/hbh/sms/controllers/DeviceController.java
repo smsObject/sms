@@ -244,6 +244,12 @@ public class DeviceController {
         return result;
     }
 
+    @RequestMapping("/queryNoCorrelationMeters")
+    @ResponseBody
+    public Result<List<Meter>> queryNoCorrelationMeters(Long userId){
+        return meterService.queryNoCorrelationMeters(userId);
+    }
+
     @RequestMapping("/addMeter")
     @ResponseBody
     public Result addMeter(Meter meter) {

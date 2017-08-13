@@ -2,6 +2,7 @@ package com.hbh.sms.controllers;
 
 import com.hbh.sms.biz.service.userInfo.UserInfoService;
 import com.hbh.sms.model.entity.UserInfo;
+import com.hbh.sms.model.entity.UserPrice;
 import com.sms.common.PagedData;
 import com.sms.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,17 @@ public class UserInfoController {
     @ResponseBody
     public Result<Boolean> delete(Long id){
         return userInfoService.deleteById(id);
+    }
+
+    @RequestMapping("/getUserWaterValue")
+    @ResponseBody
+    public Result<UserPrice> getUserWaterValue(UserPrice userPrice){
+        return  userInfoService.getUserWaterValue(userPrice);
+    }
+
+    @RequestMapping("/buyWaterValue")
+    @ResponseBody
+    public Result<Boolean> buyWaterValue(UserPrice userPrice){
+        return userInfoService.buyWaterValue(userPrice);
     }
 }

@@ -5,12 +5,14 @@ import com.github.pagehelper.PageHelper;
 import com.hbh.sms.biz.service.userInfo.UserInfoService;
 import com.hbh.sms.dal.dao.UserInfoMapper;
 import com.hbh.sms.model.entity.UserInfo;
+import com.hbh.sms.model.entity.UserPrice;
 import com.sms.common.PagedData;
 import com.sms.common.Result;
 import com.sms.common.ResultUtil;
 import com.sms.common.StateCode;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -96,5 +98,28 @@ public class UserInfoServiceImpl implements UserInfoService {
             return ResultUtil.newSuccessResult(list.get(0));
         }
         return ResultUtil.newSuccessResult(null);
+    }
+
+    @Override
+    public Result<UserPrice> getUserWaterValue(UserPrice userPrice) {
+        if (userPrice == null){
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        }
+        UserPrice userPrice1 = userInfoMapper.getUserWaterValue(userPrice);
+        return ResultUtil.newSuccessResult(userPrice1);
+    }
+
+    @Override
+    public Result<Boolean> buyWaterValue(UserPrice userPrice) {
+        if (userPrice == null){
+            return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
+        }
+        UserPrice userPrice1 = userInfoMapper.getLastBuyWaterValue(userPrice);
+        if (userPrice1 != null){
+            userPrice.setLastBuyWaterValue(userPrice1.getBuyWaterValue());
+            userPrice.setLastBuyWaterTime(new Date());
+        }
+        int i = userInfoMapper.saveBuyWaterValue(userPrice);
+        return ResultUtil.newSuccessResult(i > 0);
     }
 }

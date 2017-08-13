@@ -6,8 +6,10 @@ import java.io.Serializable;
 @Data
 public class UserInfo extends BaseDO implements Serializable {
     private String name;
+    private Long meterId;
     private Integer userType;
     private Integer buyType;
+    private Integer useType;
     private String address;
     private String idNo;
     private String phone;

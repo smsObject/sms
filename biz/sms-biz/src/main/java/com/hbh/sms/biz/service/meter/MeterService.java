@@ -16,4 +16,5 @@ public interface MeterService {
     public Result<Boolean>  delete(Long id);
     public Result<Meter> getMeterById(Long id);
     public Result<PagedData<Meter>> page(Meter meter);
+    Result<List<Meter>> queryNoCorrelationMeters(Long userId);
 }

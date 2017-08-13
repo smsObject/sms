@@ -4,11 +4,13 @@
     <resultMap id="BaseResultMap" type="com.hbh.sms.model.entity.UserInfo">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
+        <result column="meter_id" property="meterId"/>
         <result column="id_no" property="idNo"/>
         <result column="phone" property="phone"/>
         <result column="pay_type" property="payType"/>
         <result column="user_type" property="userType"/>
         <result column="buy_type" property="buyType"/>
+        <result column="use_type" property="useType"/>
         <result column="address" property="address"/>
         <result column="mobill_phone" property="mobilPhone"/>
         <result column="fix_time" property="fixTime"/>
@@ -22,8 +24,22 @@
         <result column="update_person" property="updatePerson"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
+    
+    <resultMap id="UserPriceMap" type="com.hbh.sms.model.entity.UserPrice">
+        <result column="name" property="userName"/>
+        <result column="meter_code" property="meterCode"/>
+        <result column="address" property="address"/>
+        <result column="buy_type" property="buyType"/>
+        <result column="buy_water_value" property="buyWaterValue"/>
+        <result column="last_buy_water_value" property="lastBuyWaterValue"/>
+        <result column="last_buy_water_time" property="lastBuyWaterTime"/>
+        <!--<result column="create_person" property="createPerson"/>-->
+        <!--<result column="create_time" property="createTime"/>-->
+        <!--<result column="update_person" property="updatePerson"/>-->
+        <!--<result column="update_time" property="updateTime"/>-->
+    </resultMap>
     <sql id="Base_Column_List">
-    id, name, id_no, phone, pay_type,user_type,buy_type,address,mobill_phone,fix_time,
+    id, name,meter_id,use_type, id_no, phone, pay_type,user_type,buy_type,address,mobill_phone,fix_time,
     remarks, create_person, create_time, update_person, update_time,opening_time,basic_allowance,
     remaining_balance,status
   </sql>
@@ -32,6 +48,12 @@
         where 1 = 1
         <if test="id != null">
           AND id = #{id}
+        </if>
+        <if test="name != null and name != ''">
+            AND name = #{name}
+        </if>
+        <if test="phone != null and phone != '' ">
+            AND phone = #{phone}
         </if>
     </sql>
 
@@ -48,30 +70,67 @@
         WHERE id = #{id}
     </delete>
 
+    <select id="getUserWaterValue" resultMap="UserPriceMap" parameterType="com.hbh.sms.model.entity.UserPrice">
+        SELECT  tui.name,tm.meter_code,tui.address,tui.buy_type,tup.last_buy_water_value,
+                tup.last_buy_water_time,tup.buy_water_value
+          FROM  t_user_info tui
+    INNER JOIN  t_meter tm
+            ON  tui.meter_id = tm.id
+     LEFT JOIN  t_user_price tup
+            ON  tui.id = tup.user_id
+         <where>
+             <if test="userName != null and userName != ''">
+                 tui.name = #{userName}
+             </if>
+             <if test="meterCode != null and meterCode != ''">
+                 tm.meter_code = #{meterCode}
+             </if>
+         </where>
+    </select>
+
+    <select id="getLastBuyWaterValue" resultMap="UserPriceMap" parameterType="com.hbh.sms.model.entity.UserPrice">
+      SELECT buy_water_value
+      FROM t_user_price
+      where user_id = #{userId}
+      AND   meter_id = #{meterId}
+      order BY  id desc
+      limit 1
+    </select>
+
     <insert id="insert" parameterType="com.hbh.sms.model.entity.UserInfo">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into t_user_info (
-        name, id_no, phone, pay_type,user_type,buy_type,
+        name, id_no,meter_id, phone, pay_type,user_type,buy_type,use_type,
         address,mobill_phone,fix_time, remarks, create_person,
         create_time, update_person, update_time,opening_time,
         basic_allowance,remaining_balance,status
         )
-        values (#{name}, #{idNo}, #{phone}, #{payType},#{userType},#{buyType},
+        values (#{name}, #{idNo},#{meterId}, #{phone}, #{payType},#{userType},#{buyType},#{useType},
         #{address},#{mobilPhone},#{fixTime}, #{remarks}, #{createPerson},
         now(), #{createPerson}, now(),#{openingTime},
         #{basicAllowance},#{remainingBalance},#{status})
+    </insert>
+    
+    <insert id="saveBuyWaterValue" parameterType="com.hbh.sms.model.entity.UserPrice">
+        INSERT INTO t_user_price(user_id,meter_id,buy_type,last_buy_water_value,last_buy_water_time,buy_water_value
+        ,real_amount,payable_amount,realable_amount,getback_amount)
+        VALUES
+        (#{userId},#{meterId},#{buyType},#{lastBuyWaterValue},#{lastBuyWaterTime},#{buyWaterValue}
+        ,#{realAmount},#{payableAmount},#{realableAmount},#{getbackAmount})
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.UserInfo">
       update  t_user_info
          set  name = #{name},
               id_no = #{idNo},
+              meter_id =#{meterId},
               phone = #{phone},
               pay_type = #{payType},
               user_type = #{userType},
               buy_type = #{buyType},
+              use_type = #{useType},
               address = #{address},
               mobill_phone = #{mobilPhone},
               fix_time = #{fixTime},

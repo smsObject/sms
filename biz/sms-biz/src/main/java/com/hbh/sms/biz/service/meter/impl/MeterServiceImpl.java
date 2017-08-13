@@ -69,4 +69,10 @@ public class MeterServiceImpl implements MeterService {
         result = ResultUtil.newSuccessResult(pagedData);
         return result;
     }
+
+    @Override
+    public Result<List<Meter>> queryNoCorrelationMeters(Long userId) {
+        List<Meter> meters = meterMapper.queryNoCorrelationMeters(userId);
+        return ResultUtil.newSuccessResult(meters);
+    }
 }

@@ -18,4 +18,6 @@ public interface MeterMapper {
     List<Meter> query(Meter record);
 
     int updateLastByCode(Meter record);
+
+    List<Meter> queryNoCorrelationMeters(Long userId);
 }

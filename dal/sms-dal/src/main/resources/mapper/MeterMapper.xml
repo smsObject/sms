@@ -73,6 +73,17 @@
         <include refid="meterWhere"/>
     </select>
 
+    <select id="queryNoCorrelationMeters" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT tm.id,  tm.meter_code
+        FROM t_meter tm
+        WHERE tm.id not in (SELECT meter_id from t_user_info
+        where meter_id is not null
+        <if test="value != null and value != 0">
+            AND id != #{value}
+        </if>
+        )
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_meter
     where id = #{id}
