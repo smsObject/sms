@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.math.BigDecimal;
+
 /**
  * Created by hbh on
  */
@@ -50,9 +52,16 @@ public class UserInfoController {
         return  userInfoService.getUserWaterValue(userPrice);
     }
 
-    @RequestMapping("/buyWaterValue")
+    @RequestMapping("/buyWaterPrice")
     @ResponseBody
-    public Result<Boolean> buyWaterValue(UserPrice userPrice){
+    public Result<Boolean> buyWaterPrice(UserPrice userPrice){
         return userInfoService.buyWaterValue(userPrice);
     }
+
+    @RequestMapping("/calculateWaterPrice")
+    @ResponseBody
+    public Result<BigDecimal> calculateWaterPrice(Long userId,Float waterValue){
+        return userInfoService.calculateWaterPrice(userId,waterValue);
+    }
+
 }

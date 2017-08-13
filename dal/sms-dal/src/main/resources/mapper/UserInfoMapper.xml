@@ -26,10 +26,13 @@
     </resultMap>
     
     <resultMap id="UserPriceMap" type="com.hbh.sms.model.entity.UserPrice">
+        <result column="user_id" property="userId"/>
+        <result column="meter_id" property="meterId"/>
         <result column="name" property="userName"/>
         <result column="meter_code" property="meterCode"/>
         <result column="address" property="address"/>
         <result column="buy_type" property="buyType"/>
+        <result column="user_type" property="userType"/>
         <result column="buy_water_value" property="buyWaterValue"/>
         <result column="last_buy_water_value" property="lastBuyWaterValue"/>
         <result column="last_buy_water_time" property="lastBuyWaterTime"/>
@@ -71,19 +74,20 @@
     </delete>
 
     <select id="getUserWaterValue" resultMap="UserPriceMap" parameterType="com.hbh.sms.model.entity.UserPrice">
-        SELECT  tui.name,tm.meter_code,tui.address,tui.buy_type,tup.last_buy_water_value,
-                tup.last_buy_water_time,tup.buy_water_value
+        SELECT  tui.id as user_id,tm.id as meter_id,tui.name,tm.meter_code,tui.address,tui.buy_type,
+                tui.user_type
           FROM  t_user_info tui
     INNER JOIN  t_meter tm
             ON  tui.meter_id = tm.id
      LEFT JOIN  t_user_price tup
             ON  tui.id = tup.user_id
          <where>
+             1 = 1
              <if test="userName != null and userName != ''">
-                 tui.name = #{userName}
+                 AND tui.name = #{userName}
              </if>
-             <if test="meterCode != null and meterCode != ''">
-                 tm.meter_code = #{meterCode}
+             <if test="meterCode != null and meterCode != '' ">
+                 AND tm.meter_code = #{meterCode}
              </if>
          </where>
     </select>

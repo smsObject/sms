@@ -5,6 +5,8 @@ import com.hbh.sms.model.entity.UserPrice;
 import com.sms.common.PagedData;
 import com.sms.common.Result;
 
+import java.math.BigDecimal;
+
 /**
  * Created by user on 2016/11/20.
  */
@@ -16,4 +18,5 @@ public interface UserInfoService {
     Result<UserInfo> getUserInfoById(Long id);
     Result<UserPrice> getUserWaterValue(UserPrice userPrice);
     Result<Boolean> buyWaterValue(UserPrice userPrice);
+    Result<BigDecimal> calculateWaterPrice(Long userId, Float waterValue);
 }

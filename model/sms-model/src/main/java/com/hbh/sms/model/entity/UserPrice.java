@@ -1,15 +1,14 @@
 package com.hbh.sms.model.entity;
 
-import com.sms.common.Base;
 import lombok.Data;
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  * Created by hbh on 2017/8/13.
-*/
+ */
 @Data
- public class UserPrice extends BaseDO {
+public class UserPrice extends BaseDO {
     private Long userId;
 
     private Long meterId;
@@ -20,6 +19,7 @@ import java.util.Date;
 
     private String address;
 
+    private Integer userType;
     private Integer buyType;
 
     private String buyTypeName;

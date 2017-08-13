@@ -12,6 +12,7 @@ import com.sms.common.ResultUtil;
 import com.sms.common.StateCode;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -106,6 +107,16 @@ public class UserInfoServiceImpl implements UserInfoService {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
         }
         UserPrice userPrice1 = userInfoMapper.getUserWaterValue(userPrice);
+
+        UserPrice userPrice2 = userInfoMapper.getLastBuyWaterValue(userPrice);
+        if (userPrice1 != null){
+            userPrice.setLastBuyWaterValue(userPrice1.getBuyWaterValue());
+            userPrice.setLastBuyWaterTime(new Date());
+        }else {
+            userPrice.setLastBuyWaterValue(null);
+            userPrice.setLastBuyWaterTime(null);
+        }
+
         return ResultUtil.newSuccessResult(userPrice1);
     }
 
@@ -118,8 +129,16 @@ public class UserInfoServiceImpl implements UserInfoService {
         if (userPrice1 != null){
             userPrice.setLastBuyWaterValue(userPrice1.getBuyWaterValue());
             userPrice.setLastBuyWaterTime(new Date());
+        }else {
+            userPrice.setLastBuyWaterValue(null);
+            userPrice.setLastBuyWaterTime(null);
         }
         int i = userInfoMapper.saveBuyWaterValue(userPrice);
         return ResultUtil.newSuccessResult(i > 0);
+    }
+
+    @Override
+    public Result<BigDecimal> calculateWaterPrice(Long userId, Float waterValue) {
+        return ResultUtil.newSuccessResult(new BigDecimal(20));
     }
 }
