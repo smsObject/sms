@@ -108,15 +108,16 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
         UserPrice userPrice1 = userInfoMapper.getUserWaterValue(userPrice);
 
+        userPrice.setUserId(userPrice1.getUserId());
+        userPrice.setMeterId(userPrice1.getMeterId());
         UserPrice userPrice2 = userInfoMapper.getLastBuyWaterValue(userPrice);
-        if (userPrice1 != null){
-            userPrice.setLastBuyWaterValue(userPrice1.getBuyWaterValue());
-            userPrice.setLastBuyWaterTime(new Date());
+        if (userPrice2 != null){
+            userPrice1.setLastBuyWaterValue(userPrice2.getBuyWaterValue());
+            userPrice1.setLastBuyWaterTime(userPrice2.getCreateTime());
         }else {
-            userPrice.setLastBuyWaterValue(null);
-            userPrice.setLastBuyWaterTime(null);
+            userPrice1.setLastBuyWaterValue(null);
+            userPrice1.setLastBuyWaterTime(null);
         }
-
         return ResultUtil.newSuccessResult(userPrice1);
     }
 

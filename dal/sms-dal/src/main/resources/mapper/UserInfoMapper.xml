@@ -36,6 +36,7 @@
         <result column="buy_water_value" property="buyWaterValue"/>
         <result column="last_buy_water_value" property="lastBuyWaterValue"/>
         <result column="last_buy_water_time" property="lastBuyWaterTime"/>
+        <result column="create_time" property="createTime"/>
         <!--<result column="create_person" property="createPerson"/>-->
         <!--<result column="create_time" property="createTime"/>-->
         <!--<result column="update_person" property="updatePerson"/>-->
@@ -74,13 +75,12 @@
     </delete>
 
     <select id="getUserWaterValue" resultMap="UserPriceMap" parameterType="com.hbh.sms.model.entity.UserPrice">
-        SELECT  tui.id as user_id,tm.id as meter_id,tui.name,tm.meter_code,tui.address,tui.buy_type,
+        SELECT  tui.id as user_id,tm.id as meter_id,tui.name,tm.meter_code,
+                tui.address,tui.buy_type,
                 tui.user_type
           FROM  t_user_info tui
     INNER JOIN  t_meter tm
             ON  tui.meter_id = tm.id
-     LEFT JOIN  t_user_price tup
-            ON  tui.id = tup.user_id
          <where>
              1 = 1
              <if test="userName != null and userName != ''">
@@ -93,7 +93,7 @@
     </select>
 
     <select id="getLastBuyWaterValue" resultMap="UserPriceMap" parameterType="com.hbh.sms.model.entity.UserPrice">
-      SELECT buy_water_value
+      SELECT buy_water_value , create_time
       FROM t_user_price
       where user_id = #{userId}
       AND   meter_id = #{meterId}
@@ -119,10 +119,10 @@
     
     <insert id="saveBuyWaterValue" parameterType="com.hbh.sms.model.entity.UserPrice">
         INSERT INTO t_user_price(user_id,meter_id,buy_type,last_buy_water_value,last_buy_water_time,buy_water_value
-        ,real_amount,payable_amount,realable_amount,getback_amount)
+        ,real_amount,payable_amount,realable_amount,getback_amount,create_time)
         VALUES
         (#{userId},#{meterId},#{buyType},#{lastBuyWaterValue},#{lastBuyWaterTime},#{buyWaterValue}
-        ,#{realAmount},#{payableAmount},#{realableAmount},#{getbackAmount})
+        ,#{realAmount},#{payableAmount},#{realableAmount},#{getbackAmount},now())
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.UserInfo">
