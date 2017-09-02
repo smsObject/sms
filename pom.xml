@@ -204,6 +204,27 @@
             <!--<artifactId>smslib</artifactId>-->
             <!--<version>3.5.3</version>-->
         <!--</dependency>-->
+
+        <!--shiro import-->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <!--shiro import-->
+
     </dependencies>
 
     <dependencyManagement>

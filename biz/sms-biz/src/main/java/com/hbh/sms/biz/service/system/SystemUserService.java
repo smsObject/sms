@@ -13,4 +13,5 @@ public interface SystemUserService {
     Result<Boolean> update(SystemUser systemUser);
     Result<PagedData<SystemUser>> page(SystemUser systemUser);
     Result<SystemUser> getUserInfoById(Long id);
+    SystemUser findSystemUserByUserName(String userName);
 }

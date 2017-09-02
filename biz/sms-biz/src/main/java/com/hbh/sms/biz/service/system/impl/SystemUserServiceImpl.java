@@ -123,4 +123,11 @@ public class SystemUserServiceImpl implements SystemUserService {
         systemUser = list.isEmpty() ? null : list.get(0);
         return ResultUtil.newSuccessResult(systemUser);
     }
+
+    @Override
+    public SystemUser findSystemUserByUserName(String userName) {
+        SystemUser search = new SystemUser();
+        search.setName(userName);
+        return systemUserMapper.findOne(search);
+    }
 }

@@ -11,4 +11,5 @@ public interface SystemUserMapper {
     int insert(SystemUser record);
     int updateByPrimaryKey(SystemUser record);
     List<SystemUser> query(SystemUser record);
+    SystemUser findOne(SystemUser systemUser);
 }
