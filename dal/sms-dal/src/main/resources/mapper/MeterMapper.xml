@@ -5,7 +5,6 @@
         <id column="id" property="id"/>
         <result column="meter_no" property="meterNo"/>
         <result column="meter_code" property="meterCode"/>
-        <result column="controller_id" property="controllerId"/>
         <result column="meter_name" property="meterName"/>
         <result column="fix_date" property="fixDate"/>
         <result column="use_type" property="useType"/>
@@ -18,7 +17,6 @@
         <result column="update_time" property="updateTime"/>
         <result column="update_person" property="updatePerson"/>
         <result column="unit" property="unit"/>
-        <result column="controller_name" property="controllerName"/>
         <result column="mc1" property="mc1"/>
         <result column="mc2" property="mc2"/>
         <result column="mc3" property="mc3"/>
@@ -39,7 +37,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-      tm.id, tm.meter_no, tm.meter_code, tm.controller_id,tc.name as controller_name, tm.meter_name, tm.fix_date,
+      tm.id, tm.meter_no, tm.meter_code,tm.meter_name, tm.fix_date,
       tm.use_type, tm.user_type, tm.base_value, tm.buy_way, tm.meter_model, tm.create_time, tm.create_person,
       tm.update_time, tm.update_person,tm.unit,tm.mc1,tm.mc2,tm.mc3,tm.last_upload_time,tm.last_valve_status,
       tm.last_value,tm.day1,tm.day2,tm.day3,tm.day4,tm.timing1,tm.timing2,tm.timing3,tm.timing4,tm.activate_time
@@ -61,7 +59,6 @@
         select
         <include refid="Base_Column_List"/>
         from t_meter tm
-        LEFT JOIN t_concentrator tc on tm.controller_id = tc.id
         where tm.id = #{id}
     </select>
 
@@ -69,7 +66,6 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM t_meter tm
-        LEFT JOIN t_concentrator tc on tm.controller_id = tc.id
         <include refid="meterWhere"/>
     </select>
 
@@ -93,12 +89,12 @@
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into t_meter (meter_no, meter_code, controller_id,
+        insert into t_meter (meter_no, meter_code,
         meter_name, fix_date, use_type,
         user_type, base_value, buy_way,
         meter_model, create_time, create_person,
         update_time, update_person,unit)
-        values (#{meterNo}, #{meterCode}, #{controllerId},
+        values (#{meterNo}, #{meterCode},
         #{meterName}, #{fixDate}, #{useType},
         #{userType}, #{baseValue}, #{buyWay},
         #{meterModel}, now(), #{createPerson},
@@ -109,7 +105,6 @@
     update t_meter
     set meter_no = #{meterNo},
       meter_code = #{meterCode},
-      controller_id = #{controllerId},
       meter_name = #{meterName},
       fix_date = #{fixDate},
       use_type = #{useType},

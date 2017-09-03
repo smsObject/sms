@@ -5,7 +5,6 @@ import com.github.pagehelper.PageHelper;
 import com.hbh.sms.biz.service.system.SystemUserService;
 import com.hbh.sms.dal.dao.SystemRoleMapper;
 import com.hbh.sms.dal.dao.SystemUserMapper;
-import com.hbh.sms.model.entity.SystemRole;
 import com.hbh.sms.model.entity.SystemUser;
 import com.hbh.sms.model.entity.SystemUserRole;
 import com.sms.common.PagedData;
@@ -35,16 +34,14 @@ public class SystemUserServiceImpl implements SystemUserService {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "岗位必填");
         }
 
-        
-        systemUserMapper.insert(systemUser);
-
         //判断手机不能重复
         SystemUser search = new SystemUser();
         search.setPhone(systemUser.getPhone());
         List<SystemUser> list = systemUserMapper.query(search);
-        if (list.size() > 0){
-            return ResultUtil.newFailedResult(StateCode.ERROR,"手机号已存在");
+        if (list.size() > 0) {
+            return ResultUtil.newFailedResult(StateCode.ERROR, "手机号已存在");
         }
+        systemUserMapper.insert(systemUser);
 
         Long userId = systemUser.getId();
         String[] roleIds = roleIdStr.split(",");
@@ -80,9 +77,9 @@ public class SystemUserServiceImpl implements SystemUserService {
         SystemUser search = new SystemUser();
         search.setPhone(systemUser.getPhone());
         List<SystemUser> list = systemUserMapper.query(search);
-        if(list.size() > 0){
+        if (list.size() > 0) {
             SystemUser systemUser1 = list.get(0);
-            if (systemUser.getId().longValue() != systemUser1.getId().longValue()){
+            if (systemUser.getId().longValue() != systemUser1.getId().longValue()) {
                 return ResultUtil.newFailedResult(StateCode.ERROR, "手机号已存在");
             }
         }

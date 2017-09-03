@@ -15,7 +15,7 @@ public class SystemMenu  extends BaseDO implements Serializable {
     private String name;
     private Integer level;
     private Long parentId;
-    private String path;
+    private String permissionString;
     private List<SystemMenu> childs;
     private SystemMenu buttons;
 }

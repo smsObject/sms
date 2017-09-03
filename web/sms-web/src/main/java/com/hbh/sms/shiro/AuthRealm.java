@@ -2,17 +2,15 @@ package com.hbh.sms.shiro;
 
 import com.hbh.sms.dal.dao.SystemUserMapper;
 import com.hbh.sms.model.entity.SystemUser;
-import com.sms.common.ListUtils;
 import com.sms.common.SystemConst;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by hbh on 2017/8/30.

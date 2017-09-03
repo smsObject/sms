@@ -13,7 +13,6 @@ public class Meter extends BaseDO implements Serializable {
     private static final long serialVersionUID = 1L;
     private String meterNo;
     private String meterCode;
-    private Long controllerId;
     private String meterName;
     private Date fixDate;
     private Integer useType;
@@ -23,7 +22,6 @@ public class Meter extends BaseDO implements Serializable {
     private Integer meterModel;
     private String unit;
     private Float baseValue;
-    private String controllerName;
     private Date startTime;
     private String mc1;
     private String mc2;

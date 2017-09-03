@@ -11,12 +11,12 @@
         <result column="update_person" property="updatePerson"/>
         <result column="update_time" property="updateTime"/>
         <result column="code" property="code"/>
-        <result column="path" property="path" />
+        <result column="permission_string" property="permissionString" />
         <!--<collection column="id" property="buttons" select="com.hbh.sms.dal.dao.SystemMenuMapper.getSystemMenuByParentId"/>-->
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,level,parent_id,create_person,create_time,update_person,update_time,code,path
+        id,name,level,parent_id,create_person,create_time,update_person,update_time,code,permission_string
     </sql>
 
     <select id="getSystemMenuList" resultMap="BaseResultMap">
@@ -34,7 +34,7 @@
     
     <select id="getSystemMenuByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT  m.id,m.name,m.level,m.parent_id,m.create_person,m.create_time,
-                m.update_person,m.update_time,m.code,m.path
+                m.update_person,m.update_time,m.code,m.permission_string
           FROM  t_menu m,t_role_menu rm
          WHERE  m.id = rm.menu_id
            AND  rm.role_id = #{value}

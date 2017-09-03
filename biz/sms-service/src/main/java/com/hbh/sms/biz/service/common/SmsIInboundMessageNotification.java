@@ -20,6 +20,7 @@ public class SmsIInboundMessageNotification implements IInboundMessageNotificati
     @Override
     public void process(AGateway aGateway, Message.MessageTypes messageTypes, InboundMessage msg) {
         System.out.println("IInboundMessageNotification .................");
+        System.out.println(msg.getText());
         try {
             if (msg.getText().length() != 42 && msg.getText().length() != 136 ){
                 System.out.println("长度不正确的内容:"+msg.getText());

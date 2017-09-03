@@ -121,8 +121,13 @@ public class DeviceServiceImpl extends Thread implements DeviceService {
 
     @Override
     public void run() {
-        super.run();
         while (true) {
+            try {
+                Thread.sleep(5000);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
             Concentrator concentrator = DataCenter.concentrator;
             if (concentrator.getComPort() != null) {
                 AGateway aGateway = org.smslib.Service.getInstance().getGateway(GatewayCenter.getId(concentrator));
@@ -130,7 +135,12 @@ public class DeviceServiceImpl extends Thread implements DeviceService {
                     concentrator.setIsOnline(0);
                 } else {
                     AGateway.GatewayStatuses gatewayStatuses = aGateway.getStatus();
-                        if (gatewayStatuses != AGateway.GatewayStatuses.STARTING && gatewayStatuses != AGateway.GatewayStatuses.STARTED) {
+                    System.out.println(gatewayStatuses);
+                    System.out.println();
+                    if (gatewayStatuses != AGateway.GatewayStatuses.STOPPED
+                            && gatewayStatuses != AGateway.GatewayStatuses.STARTING
+                            && gatewayStatuses != AGateway.GatewayStatuses.STARTED
+                            && gatewayStatuses != AGateway.GatewayStatuses.RESTART) {
                         try {
                             aGateway.stopGateway();
                             org.smslib.Service.getInstance().stopService();
@@ -143,11 +153,6 @@ public class DeviceServiceImpl extends Thread implements DeviceService {
             }
             if (concentrator.getIsOnline() == null || concentrator.getIsOnline() != 1) {
                 scanner();
-            }
-            try {
-                Thread.sleep(3000);
-            } catch (Exception ex) {
-                ex.printStackTrace();
             }
         }
     }
