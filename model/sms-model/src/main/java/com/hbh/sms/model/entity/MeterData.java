@@ -18,4 +18,18 @@ public class MeterData extends BaseDO implements Serializable {
     private Integer valveStatus;
     private Date startTime;
     private Date  smsDate;
+
+    private String valveStatusName;
+
+    public String getValveStatusName() {
+        if (this.valveStatus == null){
+            return null;
+        }
+        else if (this.valveStatus == 1){
+            return "ON";
+        }else if(this.valveStatus == 2){
+            return "OFF";
+        }
+        return "";
+    }
 }
