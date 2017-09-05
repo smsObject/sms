@@ -17,13 +17,23 @@
     <sql id="Base_Column_List" >
         id, name, parent_id, remarks, create_person, create_time, update_person, update_time
     </sql>
-    
+
+    <sql id="queryWhere">
+        <where>
+            <if test="parentId != null">
+               AND parent_id = #{parentId}
+            </if>
+            <if test="name != null and name !='' ">
+              AND name = #{name}
+            </if>
+        </where>
+    </sql>
     <!--查询-->
     <select id="query" resultMap="BaseResultMap" parameterType="com.hbh.sms.model.entity.PriceTemplate" >
         select
         <include refid="Base_Column_List" />
             from t_price_template
-            where parent_id = 0
+        <include refid="queryWhere"/>
     </select>
     
     <select id="getByParentId" parameterType="java.lang.Long" resultMap="BaseResultMap">

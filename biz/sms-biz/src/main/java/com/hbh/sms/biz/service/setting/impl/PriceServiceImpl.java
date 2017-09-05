@@ -32,7 +32,9 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public Result<List<PriceTemplate>> listPriceTemplates() {
-        List<PriceTemplate> lists = priceTemplateMapper.query(null);
+        PriceTemplate template = new PriceTemplate();
+        template.setParentId(0L);
+        List<PriceTemplate> lists = priceTemplateMapper.query(template);
         return ResultUtil.newSuccessResult(lists);
     }
 
