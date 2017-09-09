@@ -15,6 +15,6 @@ public class SystemUser extends BaseDO implements Serializable {
     private String name;
     private String password;
     private String phone;
-    private String roleIds;
-    private List<SystemRole> systemRoles;
+    private Long roleId;
+    private String roleName;
 }

@@ -73,31 +73,6 @@
         WHERE id = #{id}
     </delete>
 
-    <select id="getRoleByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-      SELECT  r.id,r.name,r.create_person,r.remarks,
-              r.create_time,r.update_person,r.update_time
-        FROM  t_role r,t_user_role ur
-       WHERE  r.id = ur.role_id
-         AND  ur.user_id = #{value}
-    </select>
-    
-    <insert id="batchInsertUserRole" parameterType="java.util.List">
-        INSERT INTO t_user_role(
-        user_id,role_id,create_person,
-        create_time,update_person,update_time
-        )
-        VALUES
-        <foreach collection="list" item="item" index="index" separator="," >
-            (#{item.userId},#{item.roleId},#{item.createPerson},
-            now(),#{item.createPerson},now())
-        </foreach>
-    </insert>
-
-    <delete id="deleteUserRoleByUserId" parameterType="java.lang.Long">
-        DELETE FROM t_user_role
-        WHERE user_id = #{value}
-    </delete>
-
     <delete id="deleteRoleMenuByRoleId" parameterType="java.lang.Long">
         DELETE FROM t_role_menu
         WHERE role_id = #{value}

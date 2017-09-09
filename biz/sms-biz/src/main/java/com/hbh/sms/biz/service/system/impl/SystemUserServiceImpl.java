@@ -7,10 +7,7 @@ import com.hbh.sms.dal.dao.SystemRoleMapper;
 import com.hbh.sms.dal.dao.SystemUserMapper;
 import com.hbh.sms.model.entity.SystemUser;
 import com.hbh.sms.model.entity.SystemUserRole;
-import com.sms.common.PagedData;
-import com.sms.common.Result;
-import com.sms.common.ResultUtil;
-import com.sms.common.StateCode;
+import com.sms.common.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,32 +26,18 @@ public class SystemUserServiceImpl implements SystemUserService {
 
     @Override
     public Result<Long> add(SystemUser systemUser) {
-        String roleIdStr = systemUser.getRoleIds();
-        if (roleIdStr == null || roleIdStr.trim().length() == 0) {
+        if (systemUser == null || systemUser.getRoleId() == null) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "岗位必填");
         }
-
         //判断手机不能重复
         SystemUser search = new SystemUser();
-        search.setPhone(systemUser.getPhone());
+        search.setName(systemUser.getName());
         List<SystemUser> list = systemUserMapper.query(search);
         if (list.size() > 0) {
-            return ResultUtil.newFailedResult(StateCode.ERROR, "手机号已存在");
+            return ResultUtil.newFailedResult(StateCode.ERROR, "用户名已存在");
         }
+        systemUser.setPassword(MD5Util.getMD5(systemUser.getName()));
         systemUserMapper.insert(systemUser);
-
-        Long userId = systemUser.getId();
-        String[] roleIds = roleIdStr.split(",");
-        String createPerson = "system";
-        List<SystemUserRole> systemUserRoles = new ArrayList<>();
-        for (String roleId : roleIds) {
-            SystemUserRole systemUserRole = new SystemUserRole();
-            systemUserRole.setRoleId(Long.parseLong(roleId));
-            systemUserRole.setUserId(userId);
-            systemUserRole.setCreatePerson(createPerson);
-            systemUserRoles.add(systemUserRole);
-        }
-        systemRoleMapper.batchInsertUserRole(systemUserRoles);
         return ResultUtil.newSuccessResult(systemUser.getId());
     }
 
@@ -66,37 +49,21 @@ public class SystemUserServiceImpl implements SystemUserService {
 
     @Override
     public Result<Boolean> update(SystemUser systemUser) {
-        String roleIdStr = systemUser.getRoleIds();
-        Long userId = systemUser.getId();
-        String updatePerson = "system";
-        if (roleIdStr == null || roleIdStr.trim().length() == 0) {
+        if (systemUser == null || systemUser.getRoleId() == null) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED, "岗位必填");
         }
 
         //判断手机不能重复
         SystemUser search = new SystemUser();
-        search.setPhone(systemUser.getPhone());
+        search.setName(systemUser.getName());
         List<SystemUser> list = systemUserMapper.query(search);
         if (list.size() > 0) {
             SystemUser systemUser1 = list.get(0);
             if (systemUser.getId().longValue() != systemUser1.getId().longValue()) {
-                return ResultUtil.newFailedResult(StateCode.ERROR, "手机号已存在");
+                return ResultUtil.newFailedResult(StateCode.ERROR, "用户名称已存在");
             }
         }
-
-        int i = systemUserMapper.updateByPrimaryKey(systemUser);
-        systemRoleMapper.deleteUserRoleByUserId(userId);
-        String[] roleIds = roleIdStr.split(",");
-        List<SystemUserRole> systemUserRoles = new ArrayList<>();
-        for (String roleId : roleIds) {
-            SystemUserRole systemUserRole = new SystemUserRole();
-            systemUserRole.setCreatePerson(updatePerson);
-            systemUserRole.setUserId(userId);
-            systemUserRole.setRoleId(Long.parseLong(roleId));
-            systemUserRoles.add(systemUserRole);
-        }
-        systemRoleMapper.batchInsertUserRole(systemUserRoles);
-        return ResultUtil.newSuccessResult(i > 0);
+        return ResultUtil.newSuccessResult(systemUserMapper.updateByPrimaryKey(systemUser) > 0);
     }
 
     @Override

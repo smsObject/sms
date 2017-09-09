@@ -10,37 +10,42 @@
         <result column="create_time" property="createTime"/>
         <result column="update_person" property="updatePerson"/>
         <result column="update_time" property="updateTime"/>
-        <collection property="systemRoles" column="id"  select="com.hbh.sms.dal.dao.SystemRoleMapper.getRoleByUserId" />
+        <result column="role_id" property="roleId"/>
+        <result column="role_name" property="roleName"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,phone,password,create_person,
-        create_time,update_person,update_time
+        tu.id,tu.name,tu.phone,tu.password,tu.create_person,
+        tu.create_time,tu.update_person,tu.update_time,tu.role_id,tr.name as role_name
     </sql>
     
     <sql id="queryWhere" >
         <where>
             <if test="id != null" >
-                AND id = #{id}
+                AND tu.id = #{id}
             </if>
             <if test="phone !=null and phone !=''">
-                AND phone = #{phone}
+                AND tu.phone = #{phone}
             </if>
             <if test="name != null and name !=''">
-                AND name = #{name}
+                AND tu.name = #{name}
             </if>
         </where>
     </sql>
 
     <select id="query" resultMap="BaseResultMap" parameterType="com.hbh.sms.model.entity.SystemUser">
         SELECT  <include refid="Base_Column_List"/>
-          FROM  t_system_user
+          FROM  t_system_user tu
+    INNER JOIN  t_role tr
+            ON  tu.role_id = tr.id
         <include refid="queryWhere"/>
     </select>
     
     <select id="findOne" resultMap="BaseResultMap" parameterType="com.hbh.sms.model.entity.SystemUser">
         SELECT  <include refid="Base_Column_List"/>
-        FROM  t_system_user
+        FROM  t_system_user tu
+  INNER JOIN  t_role tr
+          ON  tu.role_id = tr.id
         <include refid="queryWhere"/>
         limit 1
     </select>
@@ -50,10 +55,10 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         INSERT INTO t_system_user(name,phone,password,create_person,
-        create_time,update_person,update_time
+        create_time,update_person,update_time,role_id
         )
         VALUES (#{name},#{phone},#{password},#{createPerson},
-                now(),#{createPerson},now())
+                now(),#{createPerson},now(),#{roleId})
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.SystemUser">
@@ -62,6 +67,7 @@
                 password = #{password},
                 update_person = #{updatePerson},
                 update_time = now()
+                role_id = #{releId}
          WHERE  id = #{id}
     </update>
 

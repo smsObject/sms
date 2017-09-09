@@ -1,16 +1,19 @@
 package com.hbh.sms.shiro;
 
 import com.hbh.sms.dal.dao.SystemUserMapper;
+import com.hbh.sms.model.entity.SystemMenu;
 import com.hbh.sms.model.entity.SystemUser;
 import com.sms.common.SystemConst;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by hbh on 2017/8/30.
@@ -25,12 +28,13 @@ public class AuthRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         String username = (String) getAvailablePrincipal(principalCollection);
         HashMap<String, Object> sqlParams = new HashMap<>();
-//        sqlParams.put("qUsername", username);
-//        User user = userDao.findOne(sqlParams);
-//        if (user != null) {
-//            //权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
+        SystemUser search = new SystemUser();
+        search.setName(username);
+        SystemUser user = systemUserMapper.findOne(search);
+        if (user != null) {
+            //权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
 //            SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-//            List<Menu> menuList = null;
+//            List<SystemMenu> menuList = null;
 //            List<Integer> menuIdList = roleDao.findAllRoleMenuIdList(user.getRoleId());
 //            if (ListUtils.isNotEmpty(menuIdList)) {
 //                sqlParams.clear();
@@ -43,7 +47,7 @@ public class AuthRealm extends AuthorizingRealm {
 //                }
 //            }
 //            return simpleAuthorizationInfo;
-//        }
+        }
         return null;
     }
 

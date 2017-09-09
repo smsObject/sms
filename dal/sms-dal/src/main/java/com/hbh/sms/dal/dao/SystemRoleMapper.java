@@ -14,11 +14,7 @@ public interface SystemRoleMapper {
     int insert(SystemRole record);
     int updateByPrimaryKey(SystemRole record);
     List<SystemRole> query(SystemRole record);
-    List<SystemRole> getRoleByUserId(Long id);
-    int batchInsertUserRole(List<SystemUserRole> systemUserRoles);
-    int deleteUserRoleByUserId(Long id);
     int batchInsertRoleMenu(List<SystemRoleMenu> systemRoleMenus);
     int deleteRoleMenuByRoleId(Long roleId);
-
     List<SystemUserRole> queryUserRoleByRoleId(Long id);
 }

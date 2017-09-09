@@ -1,8 +1,13 @@
 package com.hbh.sms.controllers;
 
 import com.hbh.sms.biz.service.system.SystemUserService;
+import com.hbh.sms.dal.dao.SystemMenuMapper;
+import com.hbh.sms.model.entity.SystemMenu;
 import com.hbh.sms.model.entity.SystemUser;
+import com.hbh.sms.shiro.UserUtil;
 import com.sms.common.MD5Util;
+import com.sms.common.Result;
+import com.sms.common.ResultUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -11,10 +16,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 登录、登出
@@ -28,7 +37,9 @@ public class AuthController {
 
     private Logger logger = LoggerFactory.getLogger(AuthController.class);
     @Autowired
-    SystemUserService systemUserService;
+    private SystemUserService systemUserService;
+    @Autowired
+    private SystemMenuMapper systemMenuMapper;
 
     @RequestMapping("/index")
     public String index() {
@@ -62,6 +73,19 @@ public class AuthController {
             redirectAttributes.addFlashAttribute("userName", userName);
             return "redirect:/auth/login";
         }
+    }
+
+    @RequestMapping("/getUserPermission")
+    @ResponseBody
+    public Result<Map<String,Integer>> getUserPermission(){
+        SystemUser systemUser = UserUtil.getCurrentUser();
+        Long roleId = systemUser.getRoleId();
+        List<SystemMenu> systemMenus = systemMenuMapper.getSystemMenuByRoleId(roleId);
+        Map<String,Integer> systemMenuMap = new HashMap<>();
+        for (SystemMenu systemMenu : systemMenus){
+            systemMenuMap.put(systemMenu.getCode(),1);
+        }
+        return ResultUtil.newSuccessResult(systemMenuMap);
     }
 
     @RequestMapping("/signOut")
