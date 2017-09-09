@@ -45,7 +45,7 @@ public class DeviceController {
         return "device/gsmManager";
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void scanner() {
         Concentrator concentrator = DataCenter.concentrator;
         concentrator.setIsOnline(0);
