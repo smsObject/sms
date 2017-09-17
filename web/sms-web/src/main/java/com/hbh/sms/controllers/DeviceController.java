@@ -267,6 +267,7 @@ public class DeviceController {
     }
 
     @RequestMapping("/deleteMeter")
+    @ResponseBody
     public Result deleteMeter(Long id) {
         if (id == null || id.longValue() == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
