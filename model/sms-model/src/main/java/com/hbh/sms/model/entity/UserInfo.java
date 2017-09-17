@@ -13,7 +13,7 @@ public class UserInfo extends BaseDO implements Serializable {
     private String address;
     private String idNo;
     private String phone;
-    private String mobilPhone;
+    private String mobilePhone;
     private String fixTime;
     private String openingTime;
     private Float basicAllowance;
@@ -23,5 +23,7 @@ public class UserInfo extends BaseDO implements Serializable {
     private String payType;
     private Integer householdPerson;
     private String remarks;
+    private String useTypeName;
+    private String buyTypeName;
     private static final long serialVersionUID = 1L;
 }

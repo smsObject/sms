@@ -13,24 +13,11 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/sms")
 public class MainController {
 
-    @RequestMapping("/")
+    @RequestMapping("/index")
     public String index(HttpServletRequest request){
-        HttpSession session = request.getSession();
         return "index";
-    }
-
-    @RequestMapping(value="main")
-    public String test(){
-        return "main" ;
-    }
-
-    @RequestMapping(value="body")
-    public Map body(){
-        Map map = new HashMap();
-        map.put("aa","qq");
-        return map;
     }
 }

@@ -155,4 +155,8 @@
         </set>
         where id = #{id}
     </update>
+    
+    <select id="getNameById" resultType="java.lang.String" parameterType="java.lang.Long">
+      SELECT name FROM t_price where id = #{value}
+    </select>
 </mapper>

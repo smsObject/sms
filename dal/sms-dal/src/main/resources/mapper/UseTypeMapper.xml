@@ -37,4 +37,8 @@
         update t_use_type set name = #{name}, remarks = #{remarks}
         WHERE id = #{id}
     </update>
+    
+    <select id="getNameById" parameterType="java.lang.Long" resultType="java.lang.String">
+      SELECT name FROM t_use_type WHERE id = #{value}
+    </select>
 </mapper>

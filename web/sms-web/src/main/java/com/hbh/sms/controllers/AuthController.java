@@ -48,7 +48,7 @@ public class AuthController {
 
     @RequestMapping("/login")
     public String login() {
-        return "/auth/login";
+        return "login";
     }
 
     @RequestMapping("/signIn")
@@ -66,7 +66,7 @@ public class AuthController {
 //            if (!userService.updateSelective(userForUpdate)) {
 //                throw new RuntimeException("登录信息保存失败!");
 //            }
-            return "redirect:/home/index";
+            return "redirect:/sms/index";
         } catch (AuthenticationException e) {
             logger.info(userName + "登录失败!");
             redirectAttributes.addFlashAttribute("flash_message", "用户名或密码错误!");
