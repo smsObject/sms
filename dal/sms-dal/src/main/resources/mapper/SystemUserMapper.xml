@@ -66,8 +66,8 @@
            SET  name = #{name},
                 password = #{password},
                 update_person = #{updatePerson},
-                update_time = now()
-                role_id = #{releId}
+                update_time = now(),
+                role_id = #{roleId}
          WHERE  id = #{id}
     </update>
 

@@ -1,5 +1,8 @@
 package com.hbh.sms.shiro;
 
+import com.hbh.sms.biz.service.system.SystemRoleService;
+import com.hbh.sms.dal.dao.SystemMenuMapper;
+import com.hbh.sms.dal.dao.SystemRoleMapper;
 import com.hbh.sms.dal.dao.SystemUserMapper;
 import com.hbh.sms.model.entity.SystemMenu;
 import com.hbh.sms.model.entity.SystemUser;
@@ -23,7 +26,8 @@ public class AuthRealm extends AuthorizingRealm {
     private static final String NAME = "安全认证:";
     @Autowired
     private SystemUserMapper systemUserMapper;
-
+    @Autowired
+    private SystemMenuMapper systemMenuMapper;
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         String username = (String) getAvailablePrincipal(principalCollection);
@@ -33,20 +37,14 @@ public class AuthRealm extends AuthorizingRealm {
         SystemUser user = systemUserMapper.findOne(search);
         if (user != null) {
             //权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
-//            SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-//            List<SystemMenu> menuList = null;
-//            List<Integer> menuIdList = roleDao.findAllRoleMenuIdList(user.getRoleId());
-//            if (ListUtils.isNotEmpty(menuIdList)) {
-//                sqlParams.clear();
-//                sqlParams.put("qMenuIds", ListUtils.join(menuIdList, BaseConst.SEPARATOR));
-//                menuList = menuDao.findAll(sqlParams);
-//            }
-//            if (menuList != null) {
-//                for (Menu menu : menuList) {
-//                    simpleAuthorizationInfo.addStringPermission(menu.getPermissionString());
-//                }
-//            }
-//            return simpleAuthorizationInfo;
+            SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+            List<SystemMenu> systemMenus = systemMenuMapper.getSystemMenuByRoleId(user.getRoleId());
+            if (systemMenus != null) {
+                for (SystemMenu menu : systemMenus) {
+                    simpleAuthorizationInfo.addStringPermission(menu.getPermissionString());
+                }
+            }
+            return simpleAuthorizationInfo;
         }
         return null;
     }

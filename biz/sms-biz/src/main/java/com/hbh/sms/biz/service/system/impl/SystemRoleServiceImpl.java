@@ -86,7 +86,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         search.setName(systemRole.getName());
         List<SystemRole> list = systemRoleMapper.query(search);
         if (list.size() > 0){
-            if(list.get(0).getId().longValue() == systemRole.getId().longValue()){
+            if(list.get(0).getId().longValue() != systemRole.getId().longValue()){
                 return ResultUtil.newFailedResult(StateCode.ERROR,"角色已存在");
             }
         }

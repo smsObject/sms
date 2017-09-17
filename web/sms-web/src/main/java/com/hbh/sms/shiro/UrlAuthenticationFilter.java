@@ -24,7 +24,8 @@ public class UrlAuthenticationFilter extends AccessControlFilter {
         String uri = ((HttpServletRequest) request).getServletPath();
         Subject subject = SecurityUtils.getSubject();
         String logHead = NAME + "[" + subject.getPrincipal() + "][" + uri + "] -> ";
-        String permissionStr = uri.replaceFirst("/", "").replaceAll("/", ":");
+        //.replaceAll("/", ":")
+        String permissionStr = uri.replaceFirst("/sms/","");
         boolean allowed = subject.isPermitted(permissionStr);
 //        logger.info(logHead + (allowed ? "认证成功" : "认证失败"));
         return allowed;
