@@ -7,7 +7,7 @@
 </head>
 <body>
 <div id=app></div>
-<script type=text/javascript src=../../resources/js/manifest.b039074d706947e05e8e.js></script>
+<script type=text/javascript src=../../resources/js/manifest.30931a25ac8c084ba6ef.js></script>
 <script type=text/javascript src=../../resources/js/vendor.524ad7c20c23089f9374.js></script>
 <script type=text/javascript src=../../resources/js/login.c526a50514607f9b258a.js></script>
 </body>

@@ -8,6 +8,8 @@ import com.hbh.sms.shiro.UserUtil;
 import com.sms.common.MD5Util;
 import com.sms.common.Result;
 import com.sms.common.ResultUtil;
+import com.sms.common.StateCode;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -52,7 +54,8 @@ public class AuthController {
     }
 
     @RequestMapping("/signIn")
-    public String signIn(String userName, String password, RedirectAttributes redirectAttributes) {
+    @ResponseBody
+    public Result<Boolean> signIn(String userName, String password, RedirectAttributes redirectAttributes) {
         UsernamePasswordToken authToken = new UsernamePasswordToken(userName, MD5Util.getMD5(password), false);
         try {
             //使用权限工具进行用户登录，登录成功后跳到shiro配置的successUrl中，与下面的return没什么关系！
@@ -66,12 +69,12 @@ public class AuthController {
 //            if (!userService.updateSelective(userForUpdate)) {
 //                throw new RuntimeException("登录信息保存失败!");
 //            }
-            return "redirect:/sms/index";
+            return ResultUtil.newSuccessResult(true);
         } catch (AuthenticationException e) {
             logger.info(userName + "登录失败!");
             redirectAttributes.addFlashAttribute("flash_message", "用户名或密码错误!");
             redirectAttributes.addFlashAttribute("userName", userName);
-            return "redirect:/auth/login";
+            return ResultUtil.newFailedResult(StateCode.ERROR,"用户名或密码错误");
         }
     }
 
@@ -89,7 +92,8 @@ public class AuthController {
     }
 
     @RequestMapping("/signOut")
-    public String signOut(HttpServletRequest request, HttpServletResponse response) {
+    @ResponseBody
+    public Result<String> signOut(HttpServletRequest request, HttpServletResponse response) {
 
         // Log the user out of the application.
         SecurityUtils.getSubject().logout();
@@ -97,6 +101,6 @@ public class AuthController {
         //AuthUtil.clearCookie(request, response);
 
         // For now, redirect back to the home page.
-        return "redirect:/";
+        return ResultUtil.newSuccessResult("");
     }
 }
