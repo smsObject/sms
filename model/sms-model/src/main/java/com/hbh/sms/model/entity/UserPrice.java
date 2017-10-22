@@ -20,6 +20,7 @@ public class UserPrice extends BaseDO {
     private String address;
 
     private Integer userType;
+
     private Integer buyType;
 
     private String buyTypeName;
@@ -37,4 +38,6 @@ public class UserPrice extends BaseDO {
     private BigDecimal realableAmount;
 
     private BigDecimal getbackAmount;
+
+    private String priceTemplateInfo;
 }

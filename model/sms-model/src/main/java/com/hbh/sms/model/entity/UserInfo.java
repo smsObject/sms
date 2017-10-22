@@ -1,5 +1,6 @@
 package com.hbh.sms.model.entity;
 
+import jdk.nashorn.internal.ir.Flags;
 import lombok.Data;
 import java.io.Serializable;
 
@@ -78,8 +79,27 @@ public class UserInfo extends BaseDO implements Serializable {
     /**
      * 备注
      */
+
+    /**
+     * 上次付费时度数
+     */
+    private Float lastPayValue;
+    /**
+     * 当前度数
+     */
+
+    private Float currentValue;
+    /**
+     * 预估费用
+     */
+    private Float expectPrice;
+
     private String remarks;
     private String useTypeName;
     private String buyTypeName;
     private static final long serialVersionUID = 1L;
+
+//    费用预估记录表
+//            用户id, 仪表id,用水类型,上次水量,本次水量,使用水量,费用,费用模版信息
+
 }
