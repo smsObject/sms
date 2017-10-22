@@ -1,4 +1,4 @@
-package com.sms.sendservice.test;
+package test;
 
 /**
  * Created by user on 2016/12/17.

@@ -1,9 +1,9 @@
-package com.sms.sendservice.test;
+package test;
 
-import com.hbh.sms.model.entity.Concentrator;
 import com.hbh.sms.biz.service.common.CyptoUtils;
 import com.hbh.sms.biz.service.impl.ReadMessageServiceImpl;
 import com.hbh.sms.biz.service.impl.SendMessageServiceImpl;
+import com.hbh.sms.model.entity.Concentrator;
 import com.hbh.sms.model.entity.SendMessageData;
 import org.smslib.InboundMessage;
 
@@ -76,13 +76,13 @@ public class Test {
     }
 
     public static void main(String[] args){
-        short [] sends = new short[5];
-        sends[0] = 0x86;
-        sends[1] = 0x01;
-        sends[2] = 0x00;
-
-        Test.crc16(sends,3);
-        System.out.println(Test.shotToHexString(sends));
+//        short [] sends = new short[5];
+//        sends[0] = 0x86;
+//        sends[1] = 0x01;
+//        sends[2] = 0x00;
+//
+//        Test.crc16(sends,3);
+//        System.out.println(Test.shotToHexString(sends));
 
 //        short[] send2 = new short[10];
 //        send2[0] = 0x00;

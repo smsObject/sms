@@ -17,6 +17,22 @@
 
     <dependencies>
         <dependency>
+            <groupId>smslib</groupId>
+            <artifactId>org.smslib</artifactId>
+            <version>3.5.4</version>
+            <scope>system</scope>
+            <systemPath>${env.JAVA_HOME}/jre/lib/ext/smslib-3.5.4.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>RXTXcomm</groupId>
+            <artifactId>gun.io</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${env.JAVA_HOME}/jre/lib/ext/RXTXcomm.jar</systemPath>
+        </dependency>
+
+        <dependency>
             <groupId>com.hbh</groupId>
             <artifactId>sms-biz</artifactId>
         </dependency>
