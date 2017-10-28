@@ -186,9 +186,12 @@ public class PriceServiceImpl implements PriceService {
                 priceItem2.setEndValue(priceInterval.getEndValue());
                 priceItem2.setPrices(priceMap);
                 priceItems.add(priceItem2);
+                float totalPrice = 0f;
                 for(PriceItem priceItem1 : items){
                     priceMap.put(priceItem1.getTemplateId(),priceItem1.getPrice());
+                    totalPrice +=priceItem1.getPrice();
                 }
+                priceItem2.setPrice(totalPrice);
             }
         }else {
             price = null;

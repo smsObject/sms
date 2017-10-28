@@ -19,13 +19,13 @@ public class UserInfo extends BaseDO implements Serializable {
      */
     private Integer userType;
     /**
-     * 购水方式
+     * 计费项
      */
-    private Integer buyType;
+    private Long buyType;
     /**
-     * 使用类型
+     * 用水类型
      */
-    private Integer useType;
+    private Long useType;
     /**
      * 用户地址
      */

@@ -41,7 +41,6 @@
         <result column="last_buy_water_value" property="lastBuyWaterValue"/>
         <result column="last_buy_water_time" property="lastBuyWaterTime"/>
         <result column="create_time" property="createTime"/>
-
         <!--<result column="create_person" property="createPerson"/>-->
         <!--<result column="create_time" property="createTime"/>-->
         <!--<result column="update_person" property="updatePerson"/>-->
@@ -88,8 +87,7 @@
 
     <select id="getUserWaterValue" resultMap="UserPriceMap" parameterType="com.hbh.sms.model.entity.UserPrice">
         SELECT  tui.id as user_id,tm.id as meter_id,tui.name,tm.meter_code,
-                tui.address,tui.buy_type,
-                tui.user_type
+                tui.address,tui.buy_type, tui.user_type, tui.current_use_value as buy_water_value
           FROM  t_user_info tui
     INNER JOIN  t_meter tm
             ON  tui.meter_id = tm.id

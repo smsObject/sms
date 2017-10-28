@@ -15,6 +15,7 @@ public class Price {
 
     private Long id;
 
+    //年份
     private Long year;
 
     /**
