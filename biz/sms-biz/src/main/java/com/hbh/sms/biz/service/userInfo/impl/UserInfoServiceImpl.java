@@ -177,13 +177,13 @@ public class UserInfoServiceImpl implements UserInfoService {
                 PriceItem priceItem = priceItems.get(0);
                 return ResultUtil.newSuccessResult(new BigDecimal(waterValue * priceItem.getPrice()));
             } else if (SmsConst.PRICE_TYPE_STEP == price.getType()) {
-                //阶梯计价
+                //阶梯计价1. 获取所有阶梯费用
                 Map<Float, PriceItem> endValueMap = new HashMap<>();
                 for (PriceItem priceItem : priceItems) {
                     endValueMap.put(priceItem.getEndValue().floatValue(), priceItem);
                 }
 
-                //排序
+                //排序 2.阶梯费用
                 List<Float> endValueList = new ArrayList<>();
                 for (float endValue : endValueMap.keySet()) {
                     endValueList.add(endValue);
@@ -201,6 +201,7 @@ public class UserInfoServiceImpl implements UserInfoService {
                     }
                 });
 
+                //3.获取到当前的水量所在阶梯位置
                 int i = 1;
                 //阶梯,阶梯值
                 int currentSetp = 0;
@@ -221,6 +222,7 @@ public class UserInfoServiceImpl implements UserInfoService {
                     return ResultUtil.newFailedResult(StateCode.ERROR,"未找到费用");
                 }
 
+                //4.开始结算费用
                 int size = setpList.size();
                 if (size >1 ){
                     BigDecimal waterPrice = BigDecimal.ZERO;
@@ -243,7 +245,6 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
         return ResultUtil.newFailedResult(StateCode.ERROR,"处理费用异常");
     }
-
 
     public static void main(String[] args) {
         List<Float> endValueList = new ArrayList<>();
