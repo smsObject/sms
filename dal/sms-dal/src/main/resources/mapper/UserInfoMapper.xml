@@ -94,9 +94,8 @@
     INNER JOIN  t_meter tm
             ON  tui.meter_id = tm.id
          <where>
-             1 = 1
              <if test="userName != null and userName != ''">
-                 AND tui.name = #{userName}
+                 tui.name = #{userName}
              </if>
              <if test="meterCode != null and meterCode != '' ">
                  AND tm.meter_code = #{meterCode}
@@ -111,6 +110,17 @@
       AND   meter_id = #{meterId}
       order BY  id desc
       limit 1
+    </select>
+    
+    <select id="get" resultMap="UserPriceMap" parameterType="com.hbh.sms.model.entity.UserPrice">
+        SELECT <include refid="Base_Column_List"/>
+        FROM t_user_info
+        <where>
+            <if test="meterId != null and meterId != 0">
+                meter_id = #{meterId}
+            </if>
+        </where>
+        limit 1
     </select>
 
     <insert id="insert" parameterType="com.hbh.sms.model.entity.UserInfo">
@@ -139,24 +149,65 @@
 
     <update id="updateByPrimaryKey" parameterType="com.hbh.sms.model.entity.UserInfo">
       update  t_user_info
-         set  name = #{name},
+      <set>
+          <if test=" name != null and name !='' ">
+              name = #{name},
+          </if>
+          <if test=" idNo != null and idNo !='' ">
               id_no = #{idNo},
+          </if>
+          <if test=" meterId != null and meterId !=0 ">
               meter_id =#{meterId},
+          </if>
+          <if test=" phone != null and phone !='' ">
               phone = #{phone},
+          </if>
+          <if test=" payType != null and payType !='' ">
               pay_type = #{payType},
+          </if>
+          <if test=" userType != null and userType !=0 ">
               user_type = #{userType},
+          </if>
+          <if test=" buyType != null and buyType !=0 ">
               buy_type = #{buyType},
+          </if>
+          <if test=" useType != null and useType !=0 ">
               use_type = #{useType},
+          </if>
+          <if test=" address != null and address !='' ">
               address = #{address},
+          </if>
+          <if test=" mobilePhone != null and mobilePhone !='' ">
               mobill_phone = #{mobilePhone},
+          </if>
+          <if test=" fixTime != null ">
               fix_time = #{fixTime},
+          </if>
+          <if test=" basicAllowance != null and basicAllowance !=0 ">
               basic_allowance = #{basicAllowance},
+          </if>
+          <if test=" remainingBalance != null and remainingBalance !=0 ">
               remaining_balance = #{remainingBalance},
+          </if>
+          <if test=" status != null and status !=0 ">
               status = #{status},
+          </if>
+          <if test=" remarks != null ">
               remarks = #{remarks},
+          </if>
+          <if test=" updatePerson != null and updatePerson !='' ">
               update_person = #{updatePerson},
+          </if>
+          <if test=" updateTime != null ">
               update_time = #{updateTime},
+          </if>
+          <if test=" openingTime != null ">
               opening_time = #{openingTime}
+          </if>
+          <if test="currentUseValue != null and currentUseValue > 0">
+              current_use_value = #{currentUseValue}
+          </if>
+      </set>
        where  id = #{id}
   </update>
 </mapper>

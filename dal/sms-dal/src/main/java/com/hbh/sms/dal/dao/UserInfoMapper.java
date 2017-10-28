@@ -13,4 +13,5 @@ public interface UserInfoMapper {
     UserPrice getUserWaterValue(UserPrice userPrice);
     UserPrice getLastBuyWaterValue(UserPrice userPrice);
     int saveBuyWaterValue(UserPrice userPrice);
+    UserInfo get(UserInfo search);
 }
