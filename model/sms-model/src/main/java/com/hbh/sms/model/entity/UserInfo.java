@@ -1,6 +1,5 @@
 package com.hbh.sms.model.entity;
 
-import jdk.nashorn.internal.ir.Flags;
 import lombok.Data;
 import java.io.Serializable;
 
@@ -52,11 +51,11 @@ public class UserInfo extends BaseDO implements Serializable {
      */
     private String openingTime;
     /**
-     * 基本余量
+     * 基本余量 预付费用户
      */
     private Float basicAllowance;
     /**
-     * 结余金额
+     * 结余金额 预付费用户
      */
     private Float remainingBalance;
     /**
@@ -76,24 +75,20 @@ public class UserInfo extends BaseDO implements Serializable {
      * 人户
      */
     private Integer householdPerson;
-    /**
-     * 备注
-     */
 
     /**
-     * 上次付费时度数
+     * 累计使用度数
      */
-    private Float lastPayValue;
+    private Float totalBuyValue;
+
     /**
      * 当前度数
      */
+    private Float currentUseValue;
 
-    private Float currentValue;
     /**
-     * 预估费用
+     * 备注
      */
-    private Float expectPrice;
-
     private String remarks;
     private String useTypeName;
     private String buyTypeName;

@@ -9,7 +9,7 @@
         <result column="fix_date" property="fixDate"/>
         <result column="use_type" property="useType"/>
         <result column="user_type" property="userType"/>
-        <result column="base_value" property="baseValue"/>
+        <result column="basic_value" property="basicValue"/>
         <result column="buy_way" property="buyWay"/>
         <result column="meter_model" property="meterModel"/>
         <result column="create_time" property="createTime"/>
@@ -38,7 +38,7 @@
 
     <sql id="Base_Column_List">
       tm.id, tm.meter_no, tm.meter_code,tm.meter_name, tm.fix_date,
-      tm.use_type, tm.user_type, tm.base_value, tm.buy_way, tm.meter_model, tm.create_time, tm.create_person,
+      tm.use_type, tm.user_type, tm.basic_value, tm.buy_way, tm.meter_model, tm.create_time, tm.create_person,
       tm.update_time, tm.update_person,tm.unit,tm.mc1,tm.mc2,tm.mc3,tm.last_upload_time,tm.last_valve_status,
       tm.last_value,tm.day1,tm.day2,tm.day3,tm.day4,tm.timing1,tm.timing2,tm.timing3,tm.timing4,tm.activate_time
   </sql>
@@ -91,12 +91,12 @@
         </selectKey>
         insert into t_meter (meter_no, meter_code,
         meter_name, fix_date, use_type,
-        user_type, base_value, buy_way,
+        user_type, basic_value, buy_way,
         meter_model, create_time, create_person,
         update_time, update_person,unit)
         values (#{meterNo}, #{meterCode},
         #{meterName}, #{fixDate}, #{useType},
-        #{userType}, #{baseValue}, #{buyWay},
+        #{userType}, #{basicValue}, #{buyWay},
         #{meterModel}, now(), #{createPerson},
         now(),#{createPerson},#{unit})
     </insert>
@@ -109,7 +109,7 @@
       fix_date = #{fixDate},
       use_type = #{useType},
       user_type = #{userType},
-      base_value = #{baseValue},
+      basic_value = #{basicValue},
       buy_way = #{buyWay},
       meter_model = #{meterModel},
       update_time = now(),

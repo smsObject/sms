@@ -23,9 +23,10 @@
         <result column="create_time" property="createTime"/>
         <result column="update_person" property="updatePerson"/>
         <result column="update_time" property="updateTime"/>
+        <result column="total_buy_value" property="totalBuyValue"/>
+        <result column="current_use_value" property="currentUseValue"/>
         <collection property="useTypeName" column="use_type" select="com.hbh.sms.dal.dao.UseTypeMapper.getNameById"/>
         <collection property="buyTypeName" column="buy_type" select="com.hbh.sms.dal.dao.PriceMapper.getNameById"/>
-
     </resultMap>
     
     <resultMap id="UserPriceMap" type="com.hbh.sms.model.entity.UserPrice">
@@ -49,7 +50,7 @@
     <sql id="Base_Column_List">
     id, name,meter_id,use_type, id_no, phone, pay_type,user_type,buy_type,address,mobill_phone,fix_time,
     remarks, create_person, create_time, update_person, update_time,opening_time,basic_allowance,
-    remaining_balance,status
+    remaining_balance,status,total_buy_value,current_use_value
   </sql>
 
     <sql id="queryWhere">
@@ -120,12 +121,12 @@
         name, id_no,meter_id, phone, pay_type,user_type,buy_type,use_type,
         address,mobill_phone,fix_time, remarks, create_person,
         create_time, update_person, update_time,opening_time,
-        basic_allowance,remaining_balance,status
+        basic_allowance,remaining_balance,status,total_use_value,current_use_value
         )
         values (#{name}, #{idNo},#{meterId}, #{phone}, #{payType},#{userType},#{buyType},#{useType},
         #{address},#{mobilePhone},#{fixTime}, #{remarks}, #{createPerson},
         now(), #{createPerson}, now(),#{openingTime},
-        #{basicAllowance},#{remainingBalance},#{status})
+        #{basicAllowance},#{remainingBalance},#{status},#{totalUseValue},#{currentUseValue})
     </insert>
     
     <insert id="saveBuyWaterValue" parameterType="com.hbh.sms.model.entity.UserPrice">
