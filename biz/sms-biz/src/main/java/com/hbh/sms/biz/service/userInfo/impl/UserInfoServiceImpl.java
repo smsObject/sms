@@ -12,6 +12,7 @@ import com.hbh.sms.model.entity.UserPrice;
 import com.sms.common.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -139,6 +140,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         return ResultUtil.newSuccessResult(userPrice1);
     }
 
+    @Transactional
     @Override
     public Result<Boolean> buyWaterValue(UserPrice userPrice) {
         if (userPrice == null) {
@@ -153,6 +155,18 @@ public class UserInfoServiceImpl implements UserInfoService {
             userPrice.setLastBuyWaterTime(null);
         }
         int i = userInfoMapper.saveBuyWaterValue(userPrice);
+        if(i ==1){
+            UserInfo userInfoForSearch = new UserInfo();
+            userInfoForSearch.setId(userPrice.getUserId());
+            UserInfo userInfo = userInfoMapper.get(userInfoForSearch);
+
+            UserInfo userInfoForUpdate = new UserInfo();
+            userInfoForUpdate.setId(userPrice.getUserId());
+            userInfoForUpdate.setCurrentUseValue(0f);
+            float totalBuyValue = userInfo.getTotalBuyValue() == null ? 0 : userInfo.getTotalBuyValue();
+            userInfoForUpdate.setTotalBuyValue(totalBuyValue + userPrice.getBuyWaterValue());
+            userInfoMapper.updateByPrimaryKey(userInfoForUpdate);
+        }
         return ResultUtil.newSuccessResult(i > 0);
     }
 
