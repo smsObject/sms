@@ -33,10 +33,10 @@
             </list>
         </property>
     </bean>
-    <mvc:resources location="/WEB-INF/resources/" mapping="/resources/**"/>
+    <mvc:resources location="/resources/" mapping="/resources/**"/>
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="order" value="1"/>
-        <property name="prefix" value="/WEB-INF/views/html/"/>
+        <property name="prefix" value="/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 </beans>

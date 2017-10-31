@@ -1,0 +1,2 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html><html><head><meta charset=utf-8><title>远程抄表管理系统</title><link href=../resources/css/login.aaf2ca799f847bb4b09c976ff83dabe3.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=../resources/js/manifest.b9e9476c0a935d7c01e7.js></script><script type=text/javascript src=../resources/js/vendor.35ac0c3edcf6e5ead32e.js></script><script type=text/javascript src=../resources/js/login.b66326666c56db2d2c12.js></script></body></html>

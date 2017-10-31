@@ -1,0 +1,66 @@
+/*
+** 公共部分样式和修改element UI 样式
+*/
+
+@charset "utf-8";
+
+#app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    margin:10px 20px;
+    border: 1px solid;
+}
+.float-right{
+    float:right !important;
+}
+.float-left{
+    float:left !important;
+}
+
+
+.table-wrap{
+    padding:10px;
+}
+
+.pagination-wrap{
+    padding:10px;
+    text-align: center;
+}
+
+.btn-wrap{
+    padding:10px;
+}
+
+.flex-sb{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.flex-box{
+    display: flex;
+}
+.flex-grow{
+    flex-grow:1
+}
+
+.cr-relative{
+    position:relative;
+}
+.cr-absolute-right{
+    position:absolute;
+    right:0;
+    top:50%;
+    transform: translateY(-60%);
+}
+
+.el-dialog--little {
+    width: 18%;
+}
+
