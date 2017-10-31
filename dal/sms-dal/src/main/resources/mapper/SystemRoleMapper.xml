@@ -40,12 +40,6 @@
         <include refid="queryWhere"/>
     </select>
 
-    <select id="queryUserRoleByRoleId" resultMap="UserRoleMap" parameterType="java.lang.Long">
-        SELECT  id,user_id,role_id
-          FROM  t_user_role
-         WHERE  role_id =#{value}
-    </select>
-    
     <insert id="insert" parameterType="com.hbh.sms.model.entity.SystemRole">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()

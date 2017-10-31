@@ -30,6 +30,9 @@
             <if test="name != null and name !=''">
                 AND tu.name = #{name}
             </if>
+            <if test="roleId != null and roleId != 0">
+                AND tu.role_id = #{roleId}
+            </if>
         </where>
     </sql>
 

@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hbh.sms.biz.service.system.SystemRoleService;
 import com.hbh.sms.dal.dao.SystemRoleMapper;
+import com.hbh.sms.dal.dao.SystemUserMapper;
 import com.hbh.sms.model.entity.SystemRole;
 import com.hbh.sms.model.entity.SystemRoleMenu;
 import com.hbh.sms.model.entity.SystemUser;
@@ -12,6 +13,7 @@ import com.sms.common.PagedData;
 import com.sms.common.Result;
 import com.sms.common.ResultUtil;
 import com.sms.common.StateCode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,8 @@ import java.util.List;
 public class SystemRoleServiceImpl implements SystemRoleService {
     @Resource
     private SystemRoleMapper systemRoleMapper;
+    @Resource
+    private SystemUserMapper systemUserMapper;
 
     @Override
     @Transactional
@@ -65,8 +69,11 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         if (systemRole == null){
             return ResultUtil.newFailedResult(StateCode.ERROR,"该角色不存在");
         }
-        List<SystemUserRole> systemUserRoles = systemRoleMapper.queryUserRoleByRoleId(id);
-        if (systemUserRoles.size() > 0){
+        SystemUser search = new SystemUser();
+        search.setRoleId(id);
+        SystemUser systemUserMapperOne = systemUserMapper.findOne(search);
+
+        if (systemUserMapperOne != null){
             return ResultUtil.newFailedResult(StateCode.ERROR,"该角色下有用户不能删除");
         }
 

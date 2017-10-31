@@ -6,12 +6,10 @@ import com.hbh.sms.biz.service.system.SystemUserService;
 import com.hbh.sms.dal.dao.SystemRoleMapper;
 import com.hbh.sms.dal.dao.SystemUserMapper;
 import com.hbh.sms.model.entity.SystemUser;
-import com.hbh.sms.model.entity.SystemUserRole;
 import com.sms.common.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,8 +19,6 @@ import java.util.List;
 public class SystemUserServiceImpl implements SystemUserService {
     @Resource
     private SystemUserMapper systemUserMapper;
-    @Resource
-    private SystemRoleMapper systemRoleMapper;
 
     @Override
     public Result<Long> add(SystemUser systemUser) {
