@@ -14,6 +14,7 @@ import org.smslib.helper.SerialPort;
 import org.smslib.modem.SerialModemGateway;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class DeviceServiceImpl extends Thread implements DeviceService {
     private static CommPortIdentifier portId;
     static Enumeration portList;
     static int bauds[] = {19200, 9600, 57600, 115200};    //检测端口所支持的波特率
-
+    private static int flag = 1;
     //AT+CGMM  TC35i AT+CGMI SIEMENS
     public Result<List<Concentrator>> scanner() {
         portList = CommPortIdentifier.getPortIdentifiers();
@@ -154,6 +155,17 @@ public class DeviceServiceImpl extends Thread implements DeviceService {
             if (concentrator.getIsOnline() == null || concentrator.getIsOnline() != 1) {
                 scanner();
             }
+        }
+    }
+
+    @PostConstruct
+    public synchronized void doScanner() {
+        if(flag == 1) {
+            flag = 2;
+            Concentrator concentrator = DataCenter.concentrator;
+            concentrator.setIsOnline(0);
+            DeviceServiceImpl deviceService = new DeviceServiceImpl();
+            deviceService.start();
         }
     }
 

@@ -2,7 +2,6 @@ package com.hbh.sms.controllers;
 
 import com.hbh.sms.biz.service.common.DataCenter;
 import com.hbh.sms.biz.service.concentrator.ConcentratorService;
-import com.hbh.sms.biz.service.impl.DeviceServiceImpl;
 import com.hbh.sms.biz.service.message.BizDeviceService;
 import com.hbh.sms.biz.service.meter.MeterService;
 import com.hbh.sms.biz.service.meterData.MeterDataService;
@@ -45,14 +44,6 @@ public class DeviceController {
     @RequestMapping("/gsmManager")
     public String gsmManager() {
         return "device/gsmManager";
-    }
-
-//    @PostConstruct
-    public void scanner() {
-        Concentrator concentrator = DataCenter.concentrator;
-        concentrator.setIsOnline(0);
-        DeviceServiceImpl deviceService = new DeviceServiceImpl();
-        deviceService.start();
     }
 
     //发送短信 读数据命令
