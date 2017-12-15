@@ -8,7 +8,7 @@
             <div style="padding-bottom:20px;">
                 <!--button -->
                 <el-button v-show="userPermission['device:addMeter']"
-                           type="primary" size="small" @click="addMeterVisible = true;update = true">添加</el-button>
+                           type="primary" size="small" @click="addMeterVisible = true;update = false">添加</el-button>
 
                 <el-button
                         v-show="userPermission['device:readMeterData']"
@@ -377,7 +377,7 @@ const debug = process.env.NODE_ENV == 'production' ? "" : "sms/"
                 this.disabledOpenMeter = true
                 this.disabledCloseMeter = true
                 $.ajax({
-                    url: debug+'/device/readMeterData',
+                    url:'device/readMeterData',
                     data: {id: this.meterRow.id},
                     success: e => {
                         console.log(e);

@@ -274,6 +274,7 @@ public class DeviceController {
     }
 
     @RequestMapping("/updateMeter")
+    @ResponseBody
     public Result<Boolean> updateMeter(Meter meter) {
         if (meter == null || meter.getId() == null || meter.getId().longValue() == 0) {
             return ResultUtil.newFailedResult(StateCode.PARAMETERS_FAILED);
