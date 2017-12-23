@@ -129,12 +129,12 @@
         name, id_no,meter_id, phone, pay_type,user_type,buy_type,use_type,
         address,mobill_phone,fix_time, remarks, create_person,
         create_time, update_person, update_time,opening_time,
-        basic_allowance,remaining_balance,status,total_use_value,current_use_value
+        basic_allowance,remaining_balance,status,current_use_value
         )
         values (#{name}, #{idNo},#{meterId}, #{phone}, #{payType},#{userType},#{buyType},#{useType},
         #{address},#{mobilePhone},#{fixTime}, #{remarks}, #{createPerson},
         now(), #{createPerson}, now(),#{openingTime},
-        #{basicAllowance},#{remainingBalance},#{status},#{totalUseValue},#{currentUseValue})
+        #{basicAllowance},#{remainingBalance},#{status},#{currentUseValue})
     </insert>
     
     <insert id="saveBuyWaterValue" parameterType="com.hbh.sms.model.entity.UserPrice">
