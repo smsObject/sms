@@ -12,7 +12,12 @@
 
     <artifactId>sms-common</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0</version>
-
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>4.1.6.RELEASE</version>
+        </dependency>
+    </dependencies>
 
 </project>

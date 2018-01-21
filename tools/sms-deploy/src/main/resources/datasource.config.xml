@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dataSource_sms_center" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="url" value="${sms_center.url}"/>
+        <property name="username" value="${sms_center.username}"/>
+        <property name="password" value="${sms_center.password}"/>
+        <property name="initialSize" value="${sms_center.initialSize}"/>
+        <property name="minIdle" value="${sms_center.minIdle}"/>
+        <property name="maxActive" value="${sms_center.maxActive}"/>
+        <property name="maxWait" value="${sms_center.maxWait}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${sms_center.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${sms_center.minEvictableIdleTimeMillis}"/>
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="poolPreparedStatements" value="false"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize"
+                  value="${sms_center.maxPoolPreparedStatementPerConnectionSize}"/>
+    </bean>
+
+    <bean id="dataSource_brand" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="url" value="${brand.url}"/>
+        <property name="username" value="${brand.username}"/>
+        <property name="password" value="${brand.password}"/>
+        <property name="initialSize" value="${brand.initialSize}"/>
+        <property name="minIdle" value="${brand.minIdle}"/>
+        <property name="maxActive" value="${brand.maxActive}"/>
+        <property name="maxWait" value="${brand.maxWait}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${brand.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${brand.minEvictableIdleTimeMillis}"/>
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="poolPreparedStatements" value="false"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize"
+                  value="${brand.maxPoolPreparedStatementPerConnectionSize}"/>
+    </bean>
+</beans>
