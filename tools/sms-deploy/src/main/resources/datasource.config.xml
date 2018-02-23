@@ -21,23 +21,4 @@
         <property name="maxPoolPreparedStatementPerConnectionSize"
                   value="${sms_center.maxPoolPreparedStatementPerConnectionSize}"/>
     </bean>
-
-    <bean id="dataSource_brand" class="com.alibaba.druid.pool.DruidDataSource">
-        <property name="url" value="${brand.url}"/>
-        <property name="username" value="${brand.username}"/>
-        <property name="password" value="${brand.password}"/>
-        <property name="initialSize" value="${brand.initialSize}"/>
-        <property name="minIdle" value="${brand.minIdle}"/>
-        <property name="maxActive" value="${brand.maxActive}"/>
-        <property name="maxWait" value="${brand.maxWait}"/>
-        <property name="timeBetweenEvictionRunsMillis" value="${brand.timeBetweenEvictionRunsMillis}"/>
-        <property name="minEvictableIdleTimeMillis" value="${brand.minEvictableIdleTimeMillis}"/>
-        <property name="validationQuery" value="SELECT 'x'"/>
-        <property name="testWhileIdle" value="true"/>
-        <property name="testOnBorrow" value="true"/>
-        <property name="testOnReturn" value="false"/>
-        <property name="poolPreparedStatements" value="false"/>
-        <property name="maxPoolPreparedStatementPerConnectionSize"
-                  value="${brand.maxPoolPreparedStatementPerConnectionSize}"/>
-    </bean>
 </beans>

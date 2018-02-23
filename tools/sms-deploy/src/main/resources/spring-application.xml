@@ -44,7 +44,7 @@
         <property name="dataSource" ref="dataSource_sms_center"/>
     </bean>
 
-    <tx:advice id="txAdvice_fms_center" transaction-manager="transactionManager_sms_center">
+    <tx:advice id="txAdvice_sms_center" transaction-manager="transactionManager_sms_center">
         <tx:attributes>
             <tx:method name="save*" propagation="REQUIRED"/>
             <tx:method name="add*" propagation="REQUIRED"/>
@@ -77,7 +77,7 @@
     <aop:config>
         <aop:pointcut id="allServiceMethod" expression="execution(* com.hbh.sms.biz.service..*.*(..)) or
                                                         execution(* com.hbh.sms.biz.service..*.*(..))"/>
-        <aop:advisor pointcut-ref="allServiceMethod" advice-ref="txAdvice_fms_center"/>
+        <aop:advisor pointcut-ref="allServiceMethod" advice-ref="txAdvice_sms_center"/>
     </aop:config>
 
     <!-- 国际化词条显示 -->
