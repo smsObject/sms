@@ -124,7 +124,6 @@
 <div class="login">
     <div class="top">
         <img src="<@s.url '/css/metro-wms'/>/images/app/logo.png" alt="">
-
         <h1>远程抄表管理系统</h1>
     </div>
 </div>
